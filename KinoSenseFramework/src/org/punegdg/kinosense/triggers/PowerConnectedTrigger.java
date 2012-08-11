@@ -15,6 +15,8 @@
  */
 package org.punegdg.kinosense.triggers;
 
+import org.punegdg.kinosense.triggerReceiver.TriggerReceiver;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +32,7 @@ import android.util.Log;
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
  */
 public class PowerConnectedTrigger extends BroadcastReceiver implements
-		BroadCastBasedReceiverTrigger {
+		BroadCastReceiverBasedTrigger {
 
 	/**
 	 * Android's Application Context
@@ -88,18 +90,14 @@ public class PowerConnectedTrigger extends BroadcastReceiver implements
 		String action = intent.getAction();
 
 		if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
-			Log.d("BroadCastReceiver", "Power Connected");
-			Vibrator vibrator = (Vibrator) context
-					.getSystemService(Context.VIBRATOR_SERVICE);
-
-			vibrator.vibrate(10000);
+			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+			bcIntent.putExtra("trigger", "POWER_CONNECTED");
+			context.sendBroadcast(bcIntent);
 
 		} else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-			Log.d("BroadCastReceiver", "Power Disconnected");
-			Vibrator vibrator = (Vibrator) context
-					.getSystemService(Context.VIBRATOR_SERVICE);
-
-			vibrator.vibrate(1000);
+			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+			bcIntent.putExtra("trigger", "POWER_DISCONNECTED");
+			context.sendBroadcast(bcIntent);
 		}
 	}
 

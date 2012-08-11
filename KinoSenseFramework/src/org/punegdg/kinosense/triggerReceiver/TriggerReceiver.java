@@ -68,6 +68,14 @@ public class TriggerReceiver extends BroadcastReceiver {
 			vibrateAction.perform(null, null);
 			silentAction.perform("Restore", null);
 		}
+		
+		if ("POWER_CONNECTED".equals(trigger)) {
+			vibrateAction.perform(null, null);
+			
+		} else if ("POWER_DISCONNECTED".equals(trigger)) {
+			vibrateAction.perform(null, null);
+			
+		}
 	}
 
 }

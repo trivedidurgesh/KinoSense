@@ -16,7 +16,7 @@
 package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.eventsource.SensorService;
-import org.punegdg.kinosense.triggers.BroadCastBasedReceiverTrigger;
+import org.punegdg.kinosense.triggers.BroadCastReceiverBasedTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
 
 import android.app.Activity;
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 	/**
 	 * Power Connected Disconnected BroadCastReceiver
 	 */
-	private BroadCastBasedReceiverTrigger bbTrigger = new PowerConnectedTrigger();
+	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
 
 	
 	

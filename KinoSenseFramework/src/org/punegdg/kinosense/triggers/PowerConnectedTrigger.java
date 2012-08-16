@@ -16,6 +16,7 @@
 package org.punegdg.kinosense.triggers;
 
 import org.punegdg.kinosense.triggerReceiver.TriggerReceiver;
+import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

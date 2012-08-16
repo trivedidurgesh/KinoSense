@@ -15,6 +15,8 @@
  */
 package org.punegdg.kinosense.actions;
 
+import java.util.Map;
+
 import android.content.Context;
 import android.os.Vibrator;
 
@@ -26,7 +28,7 @@ import android.os.Vibrator;
  * 
  */
 // FIXME - We are not using all features of vibration
-public class VibrateAction implements BaseAction {
+public class VibrateAction implements AbstractAction {
 
 	/**
 	 * Android Application Context
@@ -57,7 +59,7 @@ public class VibrateAction implements BaseAction {
 	 * @see org.punegdg.kinosense.actions.BaseAction#perform(java.lang.String,
 	 * java.lang.String)
 	 */
-	public void perform(String action, String extra) {
+	public void perform(Map<String,Object> data) {
 		if (null != vibrator) {
 			vibrator.vibrate(2000);
 

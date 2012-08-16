@@ -15,6 +15,8 @@
  */
 package org.punegdg.kinosense.actions;
 
+import java.util.Map;
+
 import android.content.Context;
 import android.media.AudioManager;
 
@@ -27,7 +29,7 @@ import android.media.AudioManager;
  */
 // FIXME - Need to decide what is the scope of Silent Action, also what can we
 // do to undo this action
-public class SilentAction implements BaseAction {
+public class SilentAction implements AbstractAction {
 
 	/**
 	 * Android Application Context
@@ -63,7 +65,8 @@ public class SilentAction implements BaseAction {
 	 * @see org.punegdg.kinosense.actions.BaseAction#onAction(java.lang.String,
 	 * java.lang.String)
 	 */
-	public void perform(String action, String extra) {
+	public void perform(Map<String,Object> data) {
+		String action = (String)data.get("action");
 		if ("Silence".equals(action)) {
 			lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 			audioManager.setStreamVolume(AudioManager.STREAM_RING, 0,

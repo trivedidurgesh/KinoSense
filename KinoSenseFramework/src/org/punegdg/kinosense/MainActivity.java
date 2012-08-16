@@ -16,8 +16,8 @@
 package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.eventsource.SensorService;
-import org.punegdg.kinosense.triggers.BroadCastReceiverBasedTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
+import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -16,7 +16,7 @@
 package org.punegdg.kinosense.eventsource;
 
 import org.punegdg.kinosense.triggers.FlipTrigger;
-import org.punegdg.kinosense.triggers.SensorBasedTrigger;
+import org.punegdg.kinosense.triggers.framework.SensorBasedTrigger;
 
 import android.app.Service;
 import android.content.Intent;

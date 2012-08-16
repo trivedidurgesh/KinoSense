@@ -15,7 +15,10 @@
  */
 package org.punegdg.kinosense.triggerReceiver;
 
-import org.punegdg.kinosense.actions.BaseAction;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.punegdg.kinosense.actions.AbstractAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 
@@ -36,12 +39,12 @@ public class TriggerReceiver extends BroadcastReceiver {
 	/** 
 	 * Silent Action 
 	 */
-	private BaseAction silentAction = new SilentAction();
+	private AbstractAction silentAction = new SilentAction();
 	
 	/**
 	 * Vibrate Action
 	 */
-	private BaseAction vibrateAction = new VibrateAction();
+	private AbstractAction vibrateAction = new VibrateAction();
 
 	/*
 	 * (non-Javadoc)
@@ -62,18 +65,22 @@ public class TriggerReceiver extends BroadcastReceiver {
 
 		String trigger = intent.getStringExtra("trigger");
 		if ("FLIPPED_DOWN".equals(trigger)) {
-			vibrateAction.perform(null, null);
-			silentAction.perform("Silence", null);
+			vibrateAction.perform(null);
+			Map<String,Object> data = new HashMap<String,Object>();
+			data.put("action","Silence");
+			silentAction.perform(data);
 		} else if ("FLIPPED_UP".equals(trigger)) {
-			vibrateAction.perform(null, null);
-			silentAction.perform("Restore", null);
+			vibrateAction.perform(null);
+			Map<String,Object> data = new HashMap<String,Object>();
+			data.put("action","Restore");
+			silentAction.perform(data);
 		}
 		
 		if ("POWER_CONNECTED".equals(trigger)) {
-			vibrateAction.perform(null, null);
+			vibrateAction.perform(null);
 			
 		} else if ("POWER_DISCONNECTED".equals(trigger)) {
-			vibrateAction.perform(null, null);
+			vibrateAction.perform(null);
 			
 		}
 	}

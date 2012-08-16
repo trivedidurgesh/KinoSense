@@ -16,6 +16,7 @@
 package org.punegdg.kinosense.triggers;
 
 import org.punegdg.kinosense.triggerReceiver.TriggerReceiver;
+import org.punegdg.kinosense.triggers.framework.SensorBasedTrigger;
 
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +57,7 @@ public class FlipTrigger implements SensorBasedTrigger, SensorEventListener {
 		this.sensorManager = sensorManager;
 		sensorManager.registerListener(this.getSensorEventListener(),
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				30000);
+				SensorManager.SENSOR_DELAY_NORMAL);
 
 	}
 	/* (non-Javadoc)
@@ -103,7 +104,7 @@ public class FlipTrigger implements SensorBasedTrigger, SensorEventListener {
 		if (isFlippedDown == true) {
 			isFlippedDown = false;
 			Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-
+			
 			intent.putExtra("trigger", "FLIPPED_UP");
 			context.sendBroadcast(intent);
 		}

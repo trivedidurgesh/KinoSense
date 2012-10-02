@@ -18,6 +18,7 @@ import java.util.Map;
 import org.punegdg.kinosense.actions.AbstractAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.VibrateAction;
+import org.punegdg.kinosense.actions.WifiAction;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,6 +44,12 @@ public class TriggerReceiver extends BroadcastReceiver
 	 */
 	private AbstractAction vibrateAction = new VibrateAction();
 
+	/**
+	 * Wifi Action
+	 */
+
+	private AbstractAction wifiAction = new WifiAction();
+
 
 	/*
 	 * (non-Javadoc)
@@ -55,35 +62,40 @@ public class TriggerReceiver extends BroadcastReceiver
 		// -----------------------------
 		// FIXME Fix the following
 		// -----------------------------
-		silentAction.onCreate(context);
-		vibrateAction.onCreate(context);
-
+		this.silentAction.onCreate(context);
+		this.vibrateAction.onCreate(context);
+		this.wifiAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Silence");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
+
+			Map<String, Object> wifiData = new HashMap<String, Object>();
+			// Map data object for Wifi Action
+			wifiData.put("wifiaction", "WIFI_OFF");
+			this.wifiAction.perform(wifiData);
 		}
 		else if ( "FLIPPED_UP".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Restore");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
 		}
 
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 
 		}
 	}

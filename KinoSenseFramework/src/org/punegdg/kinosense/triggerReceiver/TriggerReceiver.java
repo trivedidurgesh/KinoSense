@@ -75,10 +75,10 @@ public class TriggerReceiver extends BroadcastReceiver
 			data.put("action", "Silence");
 			this.silentAction.perform(data);
 
-			Map<String, Object> WifiData = new HashMap<String, Object>();
+			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
-			WifiData.put("wifiaction", "WIFI_OFF");
-			this.wifiAction.perform(WifiData);
+			wifiData.put("wifiaction", "WIFI_OFF");
+			this.wifiAction.perform(wifiData);
 		}
 		else if ( "FLIPPED_UP".equals(trigger) )
 		{

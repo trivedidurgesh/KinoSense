@@ -14,17 +14,19 @@ package org.punegdg.kinosense.actions;
 
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.preference.PreferenceManager;
 
 /**
- * Action which can silent the phone and on the flip side raise the volume to max.
+ * Action which can silent the phone and on the flip side restore the volume.
  * 
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
- * 
+ * @author "Apurva Bhoite"<bhoiteapurva@gmail.com>
  */
-// FIXME - Need to decide what is the scope of Silent Action, also what can we
-// do to undo this action
+
 public class SilentAction implements AbstractAction
 {
 
@@ -42,44 +44,51 @@ public class SilentAction implements AbstractAction
 	 */
 	private int lastVolume = 0;
 
+	SharedPreferences pref = null;
+	SharedPreferences.Editor editor = null;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.actions.BaseAction#onCreate(android.content.Context )
-	 */
+
 	public void onCreate(Context context)
 	{
 		this.context = context;
 		audioManager = (AudioManager)context.getSystemService(context.AUDIO_SERVICE);
+		pref = PreferenceManager.getDefaultSharedPreferences(context);
+		editor = pref.edit();
 		// lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.actions.BaseAction#onAction(java.lang.String, java.lang.String)
-	 */
 	public void perform(Map<String, Object> data)
 	{
 		String action = (String)data.get("action");
 		if ( "Silence".equals(action) )
 		{
 			lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+			editor.putInt("volume", lastVolume);
+                                                /* 
+		                  *Store device's volume level.
+		                  */
 			audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI
 					+ AudioManager.FLAG_PLAY_SOUND);
+			/*
+			 * Device's volume set to zero.
+			 */
+			editor.commit();
 		}
 		else if ( "Restore".equals(action) )
 		{
-			audioManager.setStreamVolume(AudioManager.STREAM_RING, 7, AudioManager.FLAG_SHOW_UI
+			
+			int currentVolume = pref.getInt("volume", 7);
+
+			audioManager.setStreamVolume(AudioManager.STREAM_RING, currentVolume, AudioManager.FLAG_SHOW_UI
 					+ AudioManager.FLAG_PLAY_SOUND);
+                                                /*
+			 * Device's volume restored.
+			 */
 		}
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.actions.BaseAction#onDestroy(android.content.Context )
-	 */
 	public void onDestroy()
 	{
 		audioManager = null;

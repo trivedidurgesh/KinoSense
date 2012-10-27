@@ -37,29 +37,23 @@ public class SilentAction implements AbstractAction
 	/**
 	 * Audio Manager used to change the ringer volume
 	 */
-	private AudioManager audioManager = null;
-
-	/**
-	 * Last stored volume
-	 */
-	private int lastVolume = 0;
-
-	SharedPreferences pref = null;
-	SharedPreferences.Editor editor = null;
+	private AudioManager audioManager = null;	
+	private SharedPreferences pref = null;
+	private SharedPreferences.Editor editor = null;
 
 
 	public void onCreate(Context context)
 	{
 		this.context = context;
-		audioManager = (AudioManager)context.getSystemService(context.AUDIO_SERVICE);
-		pref = PreferenceManager.getDefaultSharedPreferences(context);
-		editor = pref.edit();
-		// lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+		audioManager = (AudioManager)context.getSystemService(context.AUDIO_SERVICE);		
 	}
 
 
 	public void perform(Map<String, Object> data)
 	{
+		int lastVolume = 0; // Contains info of last volume
+		pref = PreferenceManager.getDefaultSharedPreferences(context);
+		editor = pref.edit();		
 		String action = (String)data.get("action");
 		if ( "Silence".equals(action) )
 		{
@@ -79,7 +73,6 @@ public class SilentAction implements AbstractAction
 		{
 			
 			int currentVolume = pref.getInt("volume", 7);
-
 			audioManager.setStreamVolume(AudioManager.STREAM_RING, currentVolume, AudioManager.FLAG_SHOW_UI
 					+ AudioManager.FLAG_PLAY_SOUND);
                                                 /*

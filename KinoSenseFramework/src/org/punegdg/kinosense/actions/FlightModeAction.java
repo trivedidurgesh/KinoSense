@@ -46,48 +46,57 @@ public class FlightModeAction implements AbstractAction
 	}
 
 
-	public void perform(Map<String, Object> data)
+	public void perform(Map<String, Object> flightmodedata)
 	{
+		String action = (String)flightmodedata.get("flightmode");
+
 		/**
 		 * Turn Airplane Mode On
 		 */
-
-		if ( this.isEnabled == false )// Enable Flight mode only if already disabled
+		if ( "ON".equals(action) )
 		{
-			Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 1);
+			if ( this.isEnabled == false )// Enable Flight mode only if already disabled
+			{
+				Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 1);
 
-			Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-			intent.putExtra("state", true);
-			this.context.sendBroadcast(intent);
+				Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+				intent.putExtra("state", true);
+				this.context.sendBroadcast(intent);
 
-			Toast.makeText(this.context, "Flight Mode On !", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this.context, "Flight Mode On !", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Toast.makeText(this.context, "Flight Mode Already On !", Toast.LENGTH_SHORT).show();
+			}
 		}
-		else
+
+		/**
+		 * Turn Airplane Mode Off
+		 */
+		if ( "OFF".equals(action) )
 		{
-			Toast.makeText(this.context, "Flight Mode Already On !", Toast.LENGTH_SHORT).show();
+			if ( this.isEnabled == true ) // Disable only if already enabled
+			{
+				Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0);
+
+				Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+				intent.putExtra("state", false);
+				this.context.sendBroadcast(intent);
+
+				Toast.makeText(this.context, "Flight Mode Off !", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Toast.makeText(this.context, "Flight Mode Already Off !", Toast.LENGTH_SHORT).show();
+			}
 		}
+
 	}
 
 
 	public void onDestroy()
 	{
-		/**
-		 * Turn Airplane Mode Off
-		 */
-		if ( this.isEnabled == true ) // Disable only if already enabled
-		{
-			Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0);
-
-			Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-			intent.putExtra("state", false);
-			this.context.sendBroadcast(intent);
-
-			Toast.makeText(this.context, "Flight Mode Off !", Toast.LENGTH_SHORT).show();
-		}
-		else
-		{
-			Toast.makeText(this.context, "Flight Mode Already Off !", Toast.LENGTH_SHORT).show();
-		}
 	}
 
 }

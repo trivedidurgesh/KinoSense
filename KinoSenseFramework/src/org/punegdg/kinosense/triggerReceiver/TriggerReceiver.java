@@ -98,12 +98,19 @@ public class TriggerReceiver extends BroadcastReceiver
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
 			this.vibrateAction.perform(null);
-			this.flightaction.perform(null);
+
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
+			// Map data object for Flight Mode Action
+			flightmodeData.put("flightmode", "ON");
+			this.flightaction.perform(flightmodeData);
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
 			this.vibrateAction.perform(null);
-			this.flightaction.onDestroy();
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
+			// Map data object for Flight Mode Action
+			flightmodeData.put("flightmode", "OFF");
+			this.flightaction.perform(flightmodeData);
 		}
 	}
 

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.punegdg.kinosense.actions.AbstractAction;
+import org.punegdg.kinosense.actions.FlightModeAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
@@ -50,6 +51,11 @@ public class TriggerReceiver extends BroadcastReceiver
 
 	private AbstractAction wifiAction = new WifiAction();
 
+	/**
+	 * Filght Mode Action
+	 */
+	private AbstractAction flightaction = new FlightModeAction();
+
 
 	/*
 	 * (non-Javadoc)
@@ -65,6 +71,7 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.silentAction.onCreate(context);
 		this.vibrateAction.onCreate(context);
 		this.wifiAction.onCreate(context);
+		this.flightaction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
@@ -92,11 +99,18 @@ public class TriggerReceiver extends BroadcastReceiver
 		{
 			this.vibrateAction.perform(null);
 
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
+			// Map data object for Flight Mode Action
+			flightmodeData.put("flightmode", "ON");
+			this.flightaction.perform(flightmodeData);
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
 			this.vibrateAction.perform(null);
-
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
+			// Map data object for Flight Mode Action
+			flightmodeData.put("flightmode", "OFF");
+			this.flightaction.perform(flightmodeData);
 		}
 	}
 

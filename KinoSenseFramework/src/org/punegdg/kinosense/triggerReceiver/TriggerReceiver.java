@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.punegdg.kinosense.actions.AbstractAction;
+import org.punegdg.kinosense.actions.AlarmAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.VibrateAction;
@@ -56,6 +57,8 @@ public class TriggerReceiver extends BroadcastReceiver
 	 */
 	private AbstractAction flightaction = new FlightModeAction();
 
+	private AbstractAction alarmAction = new AlarmAction();
+
 
 	/*
 	 * (non-Javadoc)
@@ -72,6 +75,7 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.vibrateAction.onCreate(context);
 		this.wifiAction.onCreate(context);
 		this.flightaction.onCreate(context);
+		this.alarmAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
@@ -93,6 +97,11 @@ public class TriggerReceiver extends BroadcastReceiver
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Restore");
 			this.silentAction.perform(data);
+
+			Map<String, Object> alarmData = new HashMap<String, Object>();
+			// Map data object for Alarm Time
+			alarmData.put("alarmTime", "2200"); // Time in 24hr format
+			this.alarmAction.perform(alarmData);
 		}
 
 		if ( "POWER_CONNECTED".equals(trigger) )
@@ -103,6 +112,7 @@ public class TriggerReceiver extends BroadcastReceiver
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "ON");
 			this.flightaction.perform(flightmodeData);
+
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{

@@ -53,10 +53,13 @@ public class TriggerReceiver extends BroadcastReceiver
 	private AbstractAction wifiAction = new WifiAction();
 
 	/**
-	 * Filght Mode Action
+	 * Flight Mode Action
 	 */
 	private AbstractAction flightaction = new FlightModeAction();
-
+	
+	/**
+	 * Alarm Action
+	 * */
 	private AbstractAction alarmAction = new AlarmAction();
 
 

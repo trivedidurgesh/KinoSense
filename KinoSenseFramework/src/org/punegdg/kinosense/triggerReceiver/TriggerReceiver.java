@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.punegdg.kinosense.actions.AbstractAction;
+import org.punegdg.kinosense.actions.AlarmAction;
+import org.punegdg.kinosense.actions.BrightnessAction;
+import org.punegdg.kinosense.actions.FlightModeAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
@@ -50,6 +53,21 @@ public class TriggerReceiver extends BroadcastReceiver
 
 	private AbstractAction wifiAction = new WifiAction();
 
+	/**
+	 * Filght Mode Action
+	 */
+	private AbstractAction flightaction = new FlightModeAction();
+
+	/**
+	 * Alarm Action
+	 */
+	private AbstractAction alarmAction = new AlarmAction();
+
+	/**
+	 * Brightness Action
+	 */
+	private AbstractAction brightnessAction = new BrightnessAction();
+
 
 	/*
 	 * (non-Javadoc)
@@ -65,9 +83,17 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.silentAction.onCreate(context);
 		this.vibrateAction.onCreate(context);
 		this.wifiAction.onCreate(context);
+		this.flightaction.onCreate(context);
+		this.alarmAction.onCreate(context);
+		this.brightnessAction.onCreate(context);
+
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
+
+		Map<String, Object> alarmData = new HashMap<String, Object>();
+		// Map data object for Alarm Action
+
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
 			this.vibrateAction.perform(null);
@@ -78,26 +104,51 @@ public class TriggerReceiver extends BroadcastReceiver
 			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
 			wifiData.put("wifiaction", "WIFI_OFF");
-			this.wifiAction.perform(wifiData);
+			// this.wifiAction.perform(wifiData);
+
+			alarmData.put("alarmAction", "Off");
+			// this.alarmAction.perform(alarmData);
+
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
+			// Map data object for Flight Mode Action
+			flightmodeData.put("flightmode", "ON");
+			this.flightaction.perform(flightmodeData);
+
 		}
 		else if ( "FLIPPED_UP".equals(trigger) )
 		{
 			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Restore");
-			this.silentAction.perform(data);
+			// this.silentAction.perform(data);
+
+			this.vibrateAction.perform(null);
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
+			// Map data object for Flight Mode Action
+			flightmodeData.put("flightmode", "OFF");
+			this.flightaction.perform(flightmodeData);
 		}
 
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			// this.vibrateAction.perform(null);
 
+			alarmData.put("alarmAction", "On");
+			// this.alarmAction.perform(alarmData);
+
+			Map<String, Object> brightnessData = new HashMap<String, Object>();
+			brightnessData.put("brightnessAction", "LOW");
+			this.brightnessAction.perform(brightnessData);
 		}
+
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			Map<String, Object> brightnessData = new HashMap<String, Object>();
+			brightnessData.put("brightnessAction", "HIGH");
+			this.brightnessAction.perform(brightnessData);
 
 		}
+
 	}
 
 }

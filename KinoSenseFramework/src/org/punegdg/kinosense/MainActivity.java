@@ -13,7 +13,6 @@
 package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.eventsource.SensorService;
-import org.punegdg.kinosense.triggers.HeadphoneTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
@@ -36,7 +35,6 @@ public class MainActivity extends Activity
 	 * Power Connected Disconnected BroadCastReceiver
 	 */
 	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
-	private BroadCastReceiverBasedTrigger hpTrigger = new HeadphoneTrigger();
 
 
 	/*
@@ -50,7 +48,6 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		bbTrigger.onCreate(getApplicationContext());
-		hpTrigger.onCreate(getApplicationContext());
 
 		Intent startServiceIntent = new Intent(getApplicationContext(), SensorService.class);
 		startService(startServiceIntent);
@@ -79,8 +76,6 @@ public class MainActivity extends Activity
 	{
 		super.onStop();
 		bbTrigger.onDestroy();
-		hpTrigger.onDestroy();
-
 	}
 
 }

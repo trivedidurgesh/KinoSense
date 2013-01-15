@@ -25,7 +25,6 @@ import org.punegdg.kinosense.actions.WifiAction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 /**
  * Receives all the Kino Sense Triggers and runs the rules to invoke the corresponding actions
@@ -57,7 +56,7 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * Flight Mode Action
 	 */
 	private AbstractAction flightaction = new FlightModeAction();
-
+	
 	/**
 	 * Alarm Action
 	 * */
@@ -75,67 +74,56 @@ public class TriggerReceiver extends BroadcastReceiver
 		// -----------------------------
 		// FIXME Fix the following
 		// -----------------------------
-		silentAction.onCreate(context);
-		vibrateAction.onCreate(context);
-		wifiAction.onCreate(context);
-		flightaction.onCreate(context);
-		alarmAction.onCreate(context);
+		this.silentAction.onCreate(context);
+		this.vibrateAction.onCreate(context);
+		this.wifiAction.onCreate(context);
+		this.flightaction.onCreate(context);
+		this.alarmAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Silence");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
 
 			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
 			wifiData.put("wifiaction", "WIFI_OFF");
-			wifiAction.perform(wifiData);
+			this.wifiAction.perform(wifiData);
 		}
 		else if ( "FLIPPED_UP".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Restore");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
 
 			Map<String, Object> alarmData = new HashMap<String, Object>();
 			// Map data object for Alarm Time
 			alarmData.put("alarmTime", "2200"); // Time in 24hr format
-			alarmAction.perform(alarmData);
+			this.alarmAction.perform(alarmData);
 		}
 
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "ON");
-			flightaction.perform(flightmodeData);
+			this.flightaction.perform(flightmodeData);
 
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "OFF");
-			flightaction.perform(flightmodeData);
-		}
-
-		if ( "HEADSET_CONNECTED".equals(trigger) )
-		{
-			Toast.makeText(context, "Headset Connected", Toast.LENGTH_SHORT).show();
-			vibrateAction.perform(null);
-		}
-		else if ( "HEADSET_DISCONNECTED".equals(trigger) )
-		{
-			Toast.makeText(context, "Headset Disconnected", Toast.LENGTH_SHORT).show();
-			vibrateAction.perform(null);
+			this.flightaction.perform(flightmodeData);
 		}
 	}
 

@@ -125,6 +125,20 @@ public class TriggerReceiver extends BroadcastReceiver
 			flightmodeData.put("flightmode", "OFF");
 			this.flightaction.perform(flightmodeData);
 		}
+                                if ( "SIMCARD_CHANGED".equals(trigger) )
+		{
+			Toast.makeText(context, "Sim Changed", Toast.LENGTH_LONG).show();
+			SmsManager smsManager = SmsManager.getDefault();
+			smsManager.sendTextMessage("8149373415", null, "Sim Card Changed", null, null);
+			this.vibrateAction.perform(null);
+		}
+		else if ( "SIMCARD_UNCHANGED".equals(trigger) )
+		{
+			Toast.makeText(context, "Sim UnChanged", Toast.LENGTH_LONG).show();
+			SmsManager smsManager = SmsManager.getDefault();
+			smsManager.sendTextMessage("8149373415", null, "Sim Card UNChanged", null, null);
+			this.vibrateAction.perform(null);
+		}
 	}
 
 }

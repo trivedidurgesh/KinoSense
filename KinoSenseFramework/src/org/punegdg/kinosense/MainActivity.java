@@ -35,6 +35,8 @@ public class MainActivity extends Activity
 	 * Power Connected Disconnected BroadCastReceiver
 	 */
 	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
+	private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
+
 
 
 	/*
@@ -48,6 +50,7 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		bbTrigger.onCreate(getApplicationContext());
+                                simTrigger.onCreate(getApplicationContext());
 
 		Intent startServiceIntent = new Intent(getApplicationContext(), SensorService.class);
 		startService(startServiceIntent);
@@ -76,6 +79,7 @@ public class MainActivity extends Activity
 	{
 		super.onStop();
 		bbTrigger.onDestroy();
+                                simTrigger.onDestroy();
 	}
 
 }

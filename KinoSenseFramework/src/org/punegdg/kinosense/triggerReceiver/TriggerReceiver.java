@@ -19,6 +19,7 @@ import org.punegdg.kinosense.actions.AbstractAction;
 import org.punegdg.kinosense.actions.AlarmAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
 import org.punegdg.kinosense.actions.SilentAction;
+import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
 
@@ -56,11 +57,16 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * Flight Mode Action
 	 */
 	private AbstractAction flightaction = new FlightModeAction();
-	
+
 	/**
 	 * Alarm Action
 	 * */
 	private AbstractAction alarmAction = new AlarmAction();
+
+	/**
+	 * SMS Action
+	 */
+	private AbstractAction smsAction = new SmsAction();
 
 
 	/*
@@ -79,6 +85,7 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.wifiAction.onCreate(context);
 		this.flightaction.onCreate(context);
 		this.alarmAction.onCreate(context);
+		this.smsAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
@@ -115,7 +122,6 @@ public class TriggerReceiver extends BroadcastReceiver
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "ON");
 			this.flightaction.perform(flightmodeData);
-
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
@@ -124,6 +130,13 @@ public class TriggerReceiver extends BroadcastReceiver
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "OFF");
 			this.flightaction.perform(flightmodeData);
+
+			Map<String, Object> smsData = new HashMap<String, Object>();
+			// Map data object for SMS Action
+			smsData.put("action", "IsBusy");
+			smsData.put("number", "9860868444");
+			// FIXME Phone Number to be Changed later on
+			this.smsAction.perform(smsData);
 		}
 	}
 

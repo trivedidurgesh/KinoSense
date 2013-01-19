@@ -50,11 +50,11 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 		this.context = context;
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Intent.ACTION_POWER_DISCONNECTED); // should execute on BOOT_COMPLETED ideally
-		context.registerReceiver(this.getBroadCastReceiver(), filter);
+		context.registerReceiver(getBroadCastReceiver(), filter);
 
 		TelephonyManager telemamanger = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-		this.getSimSerialNumber = telemamanger.getSimSerialNumber();
-		this.getSimNumber = telemamanger.getLine1Number();
+		getSimSerialNumber = telemamanger.getSimSerialNumber();
+		getSimNumber = telemamanger.getLine1Number();
 
 		// TODO Auto-generated method stub
 
@@ -70,7 +70,7 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 
 	public void onDestroy()
 	{
-		this.context.unregisterReceiver(this.getBroadCastReceiver());
+		context.unregisterReceiver(getBroadCastReceiver());
 
 	}
 
@@ -83,9 +83,10 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 
 		String action = intent.getAction();
 
-		if ( action.equals(Intent.ACTION_POWER_DISCONNECTED) )
+		if ( action.equals(android.content.Intent.ACTION_POWER_DISCONNECTED) )
 		{
-			if ( !this.getSimSerialNumber.equals(this.SimSerialNo) ) // check for simserial nos.
+			if ( !getSimSerialNumber.equals(SimSerialNo) ) // check for simserial nos.
+			{
 				Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
 				bcIntent1.putExtra("trigger", "SIMCARD_CHANGED");
 				context.sendBroadcast(bcIntent1);

@@ -14,6 +14,7 @@ package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.eventsource.SensorService;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
+import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
 import android.app.Activity;
@@ -38,7 +39,6 @@ public class MainActivity extends Activity
 	private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
 
 
-
 	/*
 	 * (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -50,7 +50,7 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		bbTrigger.onCreate(getApplicationContext());
-                                simTrigger.onCreate(getApplicationContext());
+		simTrigger.onCreate(getApplicationContext());
 
 		Intent startServiceIntent = new Intent(getApplicationContext(), SensorService.class);
 		startService(startServiceIntent);
@@ -79,7 +79,7 @@ public class MainActivity extends Activity
 	{
 		super.onStop();
 		bbTrigger.onDestroy();
-                                simTrigger.onDestroy();
+		simTrigger.onDestroy();
 	}
 
 }

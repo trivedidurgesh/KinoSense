@@ -22,9 +22,12 @@ import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
+import android.widget.Toast;
 
 /**
  * Receives all the Kino Sense Triggers and runs the rules to invoke the corresponding actions
@@ -56,7 +59,7 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * Flight Mode Action
 	 */
 	private AbstractAction flightaction = new FlightModeAction();
-	
+
 	/**
 	 * Alarm Action
 	 * */
@@ -67,6 +70,7 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
+	@SuppressLint("NewApi")
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
@@ -74,70 +78,70 @@ public class TriggerReceiver extends BroadcastReceiver
 		// -----------------------------
 		// FIXME Fix the following
 		// -----------------------------
-		this.silentAction.onCreate(context);
-		this.vibrateAction.onCreate(context);
-		this.wifiAction.onCreate(context);
-		this.flightaction.onCreate(context);
-		this.alarmAction.onCreate(context);
+		silentAction.onCreate(context);
+		vibrateAction.onCreate(context);
+		wifiAction.onCreate(context);
+		flightaction.onCreate(context);
+		alarmAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Silence");
-			this.silentAction.perform(data);
+			silentAction.perform(data);
 
 			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
 			wifiData.put("wifiaction", "WIFI_OFF");
-			this.wifiAction.perform(wifiData);
+			wifiAction.perform(wifiData);
 		}
 		else if ( "FLIPPED_UP".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Restore");
-			this.silentAction.perform(data);
+			silentAction.perform(data);
 
 			Map<String, Object> alarmData = new HashMap<String, Object>();
 			// Map data object for Alarm Time
 			alarmData.put("alarmTime", "2200"); // Time in 24hr format
-			this.alarmAction.perform(alarmData);
+			alarmAction.perform(alarmData);
 		}
 
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "ON");
-			this.flightaction.perform(flightmodeData);
+			flightaction.perform(flightmodeData);
 
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "OFF");
-			this.flightaction.perform(flightmodeData);
+			flightaction.perform(flightmodeData);
 		}
-                                if ( "SIMCARD_CHANGED".equals(trigger) )
+		if ( "SIMCARD_CHANGED".equals(trigger) )
 		{
 			Toast.makeText(context, "Sim Changed", Toast.LENGTH_LONG).show();
 			SmsManager smsManager = SmsManager.getDefault();
 			smsManager.sendTextMessage("8149373415", null, "Sim Card Changed", null, null);
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 		}
 		else if ( "SIMCARD_UNCHANGED".equals(trigger) )
 		{
 			Toast.makeText(context, "Sim UnChanged", Toast.LENGTH_LONG).show();
 			SmsManager smsManager = SmsManager.getDefault();
 			smsManager.sendTextMessage("8149373415", null, "Sim Card UNChanged", null, null);
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 		}
 	}
 

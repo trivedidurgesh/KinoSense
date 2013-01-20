@@ -15,6 +15,7 @@ package org.punegdg.kinosense;
 import org.punegdg.kinosense.eventsource.SensorService;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
 import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
+import org.punegdg.kinosense.triggers.UnlockTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
 import android.app.Activity;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity
 	 */
 	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
 	private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
+	private final BroadCastReceiverBasedTrigger unTrigger = new UnlockTrigger();
 
 
 	/*
@@ -47,13 +49,14 @@ public class MainActivity extends Activity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		this.setContentView(R.layout.activity_main);
 
-		bbTrigger.onCreate(getApplicationContext());
-		simTrigger.onCreate(getApplicationContext());
+		this.bbTrigger.onCreate(this.getApplicationContext());
+		this.simTrigger.onCreate(this.getApplicationContext());
+		this.unTrigger.onCreate(this.getApplicationContext());
 
-		Intent startServiceIntent = new Intent(getApplicationContext(), SensorService.class);
-		startService(startServiceIntent);
+		Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
+		this.startService(startServiceIntent);
 
 	}
 
@@ -65,7 +68,7 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getMenuInflater().inflate(R.menu.activity_main, menu);
+		this.getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
@@ -78,8 +81,10 @@ public class MainActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		bbTrigger.onDestroy();
-		simTrigger.onDestroy();
+		this.bbTrigger.onDestroy();
+		this.simTrigger.onDestroy();
+		this.unTrigger.onDestroy();
+
 	}
 
 }

@@ -78,70 +78,75 @@ public class TriggerReceiver extends BroadcastReceiver
 		// -----------------------------
 		// FIXME Fix the following
 		// -----------------------------
-		silentAction.onCreate(context);
-		vibrateAction.onCreate(context);
-		wifiAction.onCreate(context);
-		flightaction.onCreate(context);
-		alarmAction.onCreate(context);
+		this.silentAction.onCreate(context);
+		this.vibrateAction.onCreate(context);
+		this.wifiAction.onCreate(context);
+		this.flightaction.onCreate(context);
+		this.alarmAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Silence");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
 
 			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
 			wifiData.put("wifiaction", "WIFI_OFF");
-			wifiAction.perform(wifiData);
+			this.wifiAction.perform(wifiData);
 		}
 		else if ( "FLIPPED_UP".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Restore");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
 
 			Map<String, Object> alarmData = new HashMap<String, Object>();
 			// Map data object for Alarm Time
 			alarmData.put("alarmTime", "2200"); // Time in 24hr format
-			alarmAction.perform(alarmData);
+			this.alarmAction.perform(alarmData);
 		}
 
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "ON");
-			flightaction.perform(flightmodeData);
+			this.flightaction.perform(flightmodeData);
 
 		}
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			// Map data object for Flight Mode Action
 			flightmodeData.put("flightmode", "OFF");
-			flightaction.perform(flightmodeData);
+			this.flightaction.perform(flightmodeData);
 		}
 		if ( "SIMCARD_CHANGED".equals(trigger) )
 		{
 			Toast.makeText(context, "Sim Changed", Toast.LENGTH_LONG).show();
 			SmsManager smsManager = SmsManager.getDefault();
 			smsManager.sendTextMessage("8149373415", null, "Sim Card Changed", null, null);
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 		}
 		else if ( "SIMCARD_UNCHANGED".equals(trigger) )
 		{
 			Toast.makeText(context, "Sim UnChanged", Toast.LENGTH_LONG).show();
 			SmsManager smsManager = SmsManager.getDefault();
 			smsManager.sendTextMessage("8149373415", null, "Sim Card UNChanged", null, null);
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
+		}
+		if ( "PHONE_UNLOCKED".equals(trigger) )
+		{
+			Toast.makeText(context, "Phone Unlocked", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
 		}
 	}
 

@@ -138,6 +138,12 @@ public class TriggerReceiver extends BroadcastReceiver
 			// FIXME Phone Number to be Changed later on
 			this.smsAction.perform(smsData);
 		}
+
+		if ( "WIFI_FOUND".equals(trigger) )
+		{
+			String wifiData = intent.getStringExtra("wifiData");
+			Toast.makeText(context, wifiData, Toast.LENGTH_LONG).show();
+		}
 	}
 
 }

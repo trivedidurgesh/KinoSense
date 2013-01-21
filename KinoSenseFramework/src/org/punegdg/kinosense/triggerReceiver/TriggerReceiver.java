@@ -148,6 +148,17 @@ public class TriggerReceiver extends BroadcastReceiver
 			Toast.makeText(context, "Phone Unlocked", Toast.LENGTH_LONG).show();
 			this.vibrateAction.perform(null);
 		}
+
+		if ( "BATTERY_LOW".equals(trigger) )
+		{
+			Toast.makeText(context, "Battery Low", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
+		}
+		else if ( "BATTERY_OKAY".equals(trigger) )
+		{
+			Toast.makeText(context, "Battery Okay", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
+		}
 	}
 
 }

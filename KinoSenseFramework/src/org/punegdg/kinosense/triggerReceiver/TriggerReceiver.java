@@ -137,6 +137,12 @@ public class TriggerReceiver extends BroadcastReceiver
 			Toast.makeText(context, "Headset Disconnected", Toast.LENGTH_SHORT).show();
 			vibrateAction.perform(null);
 		}
+		if ( "SHAKING".equals(trigger) )
+		{
+			Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
+		}
+
 	}
 
 }

@@ -13,6 +13,7 @@
 package org.punegdg.kinosense.eventsource;
 
 import org.punegdg.kinosense.triggers.FlipTrigger;
+import org.punegdg.kinosense.triggers.ShakeTrigger;
 import org.punegdg.kinosense.triggers.framework.SensorBasedTrigger;
 
 import android.app.Service;
@@ -39,7 +40,10 @@ public class SensorService extends Service
 	/**
 	 * The Trigger to handle the low level sensor events.
 	 */
+
 	private SensorBasedTrigger flipTrigger = new FlipTrigger();
+	private SensorBasedTrigger shakeTrigger = new ShakeTrigger();
+	
 
 
 	/*
@@ -52,7 +56,10 @@ public class SensorService extends Service
 		super.onCreate();
 		Log.d("SensorService", "Service Started");
 		sensorMgr = (SensorManager)getSystemService(SENSOR_SERVICE);
+
 		flipTrigger.onCreate(getApplicationContext(), sensorMgr);
+		shakeTrigger.onCreate(getApplicationContext(), sensorMgr);
+		
 
 	}
 
@@ -67,6 +74,7 @@ public class SensorService extends Service
 		super.onDestroy();
 		Log.d("SensorService", "Service Destroyed");
 		flipTrigger.onDestroy();
+		shakeTrigger.onDestroy();
 
 	}
 

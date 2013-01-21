@@ -8,6 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+/**
+ * This Trigger is for the action when the device's screen is unlocked.
+ * 
+ * @author "Apurva Bhoite"<bhoiteapurva@gmail.com>
+ */
 public class UnlockTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
 
 {
@@ -19,8 +24,6 @@ public class UnlockTrigger extends BroadcastReceiver implements BroadCastReceive
 
 		this.context = context;
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_SCREEN_ON);
-		filter.addAction(Intent.ACTION_SCREEN_OFF);
 		filter.addAction(Intent.ACTION_USER_PRESENT);
 		context.registerReceiver(this.getBroadCastReceiver(), filter);
 

@@ -107,10 +107,10 @@ public class TriggerReceiver extends BroadcastReceiver
 
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
-			this.vibrateAction.perform(null);
+			vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Silence");
-			this.silentAction.perform(data);
+			silentAction.perform(data);
 
 			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
@@ -142,7 +142,7 @@ public class TriggerReceiver extends BroadcastReceiver
 
 		if ( "POWER_CONNECTED".equals(trigger) )
 		{
-			// this.vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 
 			alarmData.put("alarmAction", "On");
 			// this.alarmAction.perform(alarmData);
@@ -199,6 +199,22 @@ public class TriggerReceiver extends BroadcastReceiver
 		else if ( "BATTERY_OKAY".equals(trigger) )
 		{
 			Toast.makeText(context, "Battery Okay", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
+		}
+
+		if ( "HEADSET_CONNECTED".equals(trigger) )
+		{
+			Toast.makeText(context, "Headset Connected", Toast.LENGTH_SHORT).show();
+			vibrateAction.perform(null);
+		}
+		else if ( "HEADSET_DISCONNECTED".equals(trigger) )
+		{
+			Toast.makeText(context, "Headset Disconnected", Toast.LENGTH_SHORT).show();
+			vibrateAction.perform(null);
+		}
+		if ( "SHAKING".equals(trigger) )
+		{
+			Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
 			this.vibrateAction.perform(null);
 		}
 	}

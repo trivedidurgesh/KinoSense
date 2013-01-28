@@ -23,9 +23,12 @@ import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
+import android.widget.Toast;
 
 /**
  * Receives all the Kino Sense Triggers and runs the rules to invoke the corresponding actions
@@ -73,6 +76,7 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
+	@SuppressLint("NewApi")
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
@@ -143,6 +147,36 @@ public class TriggerReceiver extends BroadcastReceiver
 		{
 			String wifiData = intent.getStringExtra("wifiData");
 			Toast.makeText(context, wifiData, Toast.LENGTH_LONG).show();
+		}
+		if ( "SIMCARD_CHANGED".equals(trigger) )
+		{
+			Toast.makeText(context, "Sim Changed", Toast.LENGTH_LONG).show();
+			SmsManager smsManager = SmsManager.getDefault();
+			smsManager.sendTextMessage("8149373415", null, "Sim Card Changed", null, null);
+			this.vibrateAction.perform(null);
+		}
+		else if ( "SIMCARD_UNCHANGED".equals(trigger) )
+		{
+			Toast.makeText(context, "Sim UnChanged", Toast.LENGTH_LONG).show();
+			SmsManager smsManager = SmsManager.getDefault();
+			smsManager.sendTextMessage("8149373415", null, "Sim Card UNChanged", null, null);
+			this.vibrateAction.perform(null);
+		}
+		if ( "PHONE_UNLOCKED".equals(trigger) )
+		{
+			Toast.makeText(context, "Phone Unlocked", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
+		}
+
+		if ( "BATTERY_LOW".equals(trigger) )
+		{
+			Toast.makeText(context, "Battery Low", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
+		}
+		else if ( "BATTERY_OKAY".equals(trigger) )
+		{
+			Toast.makeText(context, "Battery Okay", Toast.LENGTH_LONG).show();
+			this.vibrateAction.perform(null);
 		}
 	}
 

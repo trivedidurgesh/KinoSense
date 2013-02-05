@@ -77,7 +77,9 @@ if (Bob does X){
 Project Members
 ----
 * Rohit Ghatol
-* Hrishikesh Bhruguwar
+* Saurabh Gangarde
+* Kumar Gaurav
+* Sagar J Pawar
 * Ashish Kalbhor
 * Sandeep Mane
 * Apurva Bhoite

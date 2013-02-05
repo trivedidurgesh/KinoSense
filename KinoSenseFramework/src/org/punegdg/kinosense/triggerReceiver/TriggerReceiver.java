@@ -19,11 +19,11 @@ import org.punegdg.kinosense.actions.AbstractAction;
 import org.punegdg.kinosense.actions.AlarmAction;
 import org.punegdg.kinosense.actions.BrightnessAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
-
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
+import org.punegdg.kinosense.eventsource.SensorService;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -72,7 +72,7 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * SMS Action
 	 */
 	private AbstractAction smsAction = new SmsAction();
-	
+
 	/**
 	 * Brightness Action
 	 */
@@ -87,6 +87,11 @@ public class TriggerReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
+		if ( intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED) )
+		{
+			Intent bootIntent = new Intent(context, SensorService.class);
+			context.startService(bootIntent);
+		}
 
 		// -----------------------------
 		// FIXME Fix the following
@@ -107,10 +112,10 @@ public class TriggerReceiver extends BroadcastReceiver
 
 		if ( "FLIPPED_DOWN".equals(trigger) )
 		{
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("action", "Silence");
-			silentAction.perform(data);
+			this.silentAction.perform(data);
 
 			Map<String, Object> wifiData = new HashMap<String, Object>();
 			// Map data object for Wifi Action
@@ -164,6 +169,7 @@ public class TriggerReceiver extends BroadcastReceiver
 			smsData.put("number", "9860868444");
 			// FIXME Phone Number to be Changed later on
 			this.smsAction.perform(smsData);
+
 		}
 
 		if ( "WIFI_FOUND".equals(trigger) )
@@ -205,12 +211,12 @@ public class TriggerReceiver extends BroadcastReceiver
 		if ( "HEADSET_CONNECTED".equals(trigger) )
 		{
 			Toast.makeText(context, "Headset Connected", Toast.LENGTH_SHORT).show();
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 		}
 		else if ( "HEADSET_DISCONNECTED".equals(trigger) )
 		{
 			Toast.makeText(context, "Headset Disconnected", Toast.LENGTH_SHORT).show();
-			vibrateAction.perform(null);
+			this.vibrateAction.perform(null);
 		}
 		if ( "SHAKING".equals(trigger) )
 		{

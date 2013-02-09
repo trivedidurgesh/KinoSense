@@ -12,8 +12,15 @@
  */
 package org.punegdg.kinosense.eventsource;
 
+import org.punegdg.kinosense.triggers.BatteryTrigger;
 import org.punegdg.kinosense.triggers.FlipTrigger;
+import org.punegdg.kinosense.triggers.HeadphoneTrigger;
+import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
 import org.punegdg.kinosense.triggers.ShakeTrigger;
+import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
+import org.punegdg.kinosense.triggers.UnlockTrigger;
+import org.punegdg.kinosense.triggers.WifiTrigger;
+import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 import org.punegdg.kinosense.triggers.framework.SensorBasedTrigger;
 
 import android.app.Service;
@@ -43,7 +50,13 @@ public class SensorService extends Service
 
 	private SensorBasedTrigger flipTrigger = new FlipTrigger();
 	private SensorBasedTrigger shakeTrigger = new ShakeTrigger();
-	
+
+	private BroadCastReceiverBasedTrigger batteryTrigger = new BatteryTrigger();
+	private BroadCastReceiverBasedTrigger headphoneTrigger = new HeadphoneTrigger();
+	private BroadCastReceiverBasedTrigger powerConnectedTrigger = new PowerConnectedTrigger();
+	private BroadCastReceiverBasedTrigger simcardChangedTrigger = new SimCardChangedTrigger();
+	private BroadCastReceiverBasedTrigger unlockTrigger = new UnlockTrigger();
+	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
 
 
 	/*
@@ -55,12 +68,16 @@ public class SensorService extends Service
 	{
 		super.onCreate();
 		Log.d("SensorService", "Service Started");
-		sensorMgr = (SensorManager)getSystemService(SENSOR_SERVICE);
+		this.sensorMgr = (SensorManager)this.getSystemService(SENSOR_SERVICE);
 
-		flipTrigger.onCreate(getApplicationContext(), sensorMgr);
-		shakeTrigger.onCreate(getApplicationContext(), sensorMgr);
-		
-
+		this.flipTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
+		this.shakeTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
+		this.batteryTrigger.onCreate(this.getApplicationContext());
+		this.headphoneTrigger.onCreate(this.getApplicationContext());
+		this.powerConnectedTrigger.onCreate(this.getApplicationContext());
+		this.simcardChangedTrigger.onCreate(this.getApplicationContext());
+		this.unlockTrigger.onCreate(this.getApplicationContext());
+		this.wifiTrigger.onCreate(this.getApplicationContext());
 	}
 
 
@@ -73,9 +90,14 @@ public class SensorService extends Service
 	{
 		super.onDestroy();
 		Log.d("SensorService", "Service Destroyed");
-		flipTrigger.onDestroy();
-		shakeTrigger.onDestroy();
-
+		this.flipTrigger.onDestroy();
+		this.shakeTrigger.onDestroy();
+		this.batteryTrigger.onDestroy();
+		this.headphoneTrigger.onDestroy();
+		this.powerConnectedTrigger.onDestroy();
+		this.simcardChangedTrigger.onDestroy();
+		this.unlockTrigger.onDestroy();
+		this.wifiTrigger.onDestroy();
 	}
 
 

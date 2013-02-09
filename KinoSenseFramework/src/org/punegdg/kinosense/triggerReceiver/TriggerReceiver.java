@@ -220,8 +220,8 @@ public class TriggerReceiver extends BroadcastReceiver
 		}
 		if ( "SHAKING".equals(trigger) )
 		{
-			Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
-			this.vibrateAction.perform(null);
+			// Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
+			// this.vibrateAction.perform(null);
 		}
 	}
 

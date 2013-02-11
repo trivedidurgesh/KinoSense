@@ -19,6 +19,7 @@ import org.punegdg.kinosense.actions.AbstractAction;
 import org.punegdg.kinosense.actions.AlarmAction;
 import org.punegdg.kinosense.actions.BrightnessAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
+import org.punegdg.kinosense.actions.MusicAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
@@ -212,11 +213,13 @@ public class TriggerReceiver extends BroadcastReceiver
 		{
 			Toast.makeText(context, "Headset Connected", Toast.LENGTH_SHORT).show();
 			this.vibrateAction.perform(null);
+			context.startService(new Intent(context, MusicAction.class));
 		}
 		else if ( "HEADSET_DISCONNECTED".equals(trigger) )
 		{
 			Toast.makeText(context, "Headset Disconnected", Toast.LENGTH_SHORT).show();
 			this.vibrateAction.perform(null);
+			context.stopService(new Intent(context, MusicAction.class));
 		}
 		if ( "SHAKING".equals(trigger) )
 		{

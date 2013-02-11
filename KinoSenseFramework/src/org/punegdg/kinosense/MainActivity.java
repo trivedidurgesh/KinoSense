@@ -16,6 +16,7 @@ import org.punegdg.kinosense.eventsource.SensorService;
 import org.punegdg.kinosense.triggers.BatteryTrigger;
 import org.punegdg.kinosense.triggers.HeadphoneTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
+import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
 import org.punegdg.kinosense.triggers.UnlockTrigger;
 import org.punegdg.kinosense.triggers.WifiTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity
 	 * Power Connected Disconnected BroadCastReceiver
 	 */
 	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
-	// private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
+    private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
 	private final BroadCastReceiverBasedTrigger unTrigger = new UnlockTrigger();
 	private final BroadCastReceiverBasedTrigger batTrigger = new BatteryTrigger();
 	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
@@ -57,7 +58,7 @@ public class MainActivity extends Activity
 		this.setContentView(R.layout.activity_main);
 
 		this.bbTrigger.onCreate(this.getApplicationContext());
-		// this.simTrigger.onCreate(this.getApplicationContext());
+		this.simTrigger.onCreate(this.getApplicationContext());
 		this.unTrigger.onCreate(this.getApplicationContext());
 		this.batTrigger.onCreate(this.getApplicationContext());
 		this.wifiTrigger.onCreate(this.getApplicationContext());
@@ -91,7 +92,7 @@ public class MainActivity extends Activity
 		super.onStop();
 		this.bbTrigger.onDestroy();
 		this.wifiTrigger.onDestroy();
-		// this.simTrigger.onDestroy();
+		this.simTrigger.onDestroy();
 		this.unTrigger.onDestroy();
 		this.batTrigger.onDestroy();
 		this.hpTrigger.onDestroy();

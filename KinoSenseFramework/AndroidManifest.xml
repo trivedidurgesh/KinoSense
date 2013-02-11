@@ -39,7 +39,7 @@
                 <action android:name="org.punegdg.kinosense.service.SensorService" />
             </intent-filter>
         </service>
-
+  <service android:enabled="true" android:name="org.punegdg.kinosense.actions.MusicAction" /> 
         <receiver android:name=".triggerReceiver.TriggerReceiver" >
             <intent-filter>
                 <action android:name="org.punegdg.kinosense.TRIGGER" />

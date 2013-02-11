@@ -49,7 +49,7 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 
 		this.context = context;
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_POWER_DISCONNECTED); // should execute on BOOT_COMPLETED ideally
+		filter.addAction(Intent.ACTION_BOOT_COMPLETED); // should execute on BOOT_COMPLETED ideally
 		context.registerReceiver(getBroadCastReceiver(), filter);
 
 		TelephonyManager telemamanger = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -83,7 +83,7 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 
 		String action = intent.getAction();
 
-		if ( action.equals(android.content.Intent.ACTION_POWER_DISCONNECTED) )
+		if ( action.equals(android.content.Intent.ACTION_BOOT_COMPLETED) )
 		{
 			if ( !getSimSerialNumber.equals(SimSerialNo) ) // check for simserial nos.
 			{

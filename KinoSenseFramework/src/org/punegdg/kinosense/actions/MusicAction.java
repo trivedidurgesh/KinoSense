@@ -5,8 +5,21 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
-import android.widget.Toast;
 
+/**
+ * Action which can start and stop music playback.
+ * 
+ * <code>
+ * 		AbstractAction action = new MusicAction();
+ * 		// Start music
+ * 		context.startService(new Intent(context, MusicAction.class));
+ * 		// Stop music
+ * 		context.stopService(new Intent(context, MusicAction.class));
+ * </code>
+ * 
+ * @author "Apurva Bhoite"<bhoiteapurva@gmail.com>
+ * 
+ */
 public class MusicAction extends Service
 {
 	private MediaPlayer mediaplayer = null;
@@ -19,7 +32,6 @@ public class MusicAction extends Service
 		Uri uri = Uri.parse("/sdcard/external_sd/AyeUdiUdi.mp3"); // address of the song, can vary.
 		this.mediaplayer = MediaPlayer.create(this, uri);
 		this.mediaplayer.setLooping(false);
-		Toast.makeText(this, "Starting music...", Toast.LENGTH_SHORT).show();
 	}
 
 

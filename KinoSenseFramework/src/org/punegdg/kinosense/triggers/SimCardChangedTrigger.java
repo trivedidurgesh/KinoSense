@@ -35,8 +35,12 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 	/**
 	 * Android's Application Context
 	 */
-
 	private Context context = null;
+
+	/**
+	 * Database Handler Object
+	 */
+	DatabaseHandler dbHandler;
 
 	TelephonyManager telemamanger = null;
 	String getSimSerialNumber;
@@ -49,43 +53,40 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 
 		this.context = context;
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_BOOT_COMPLETED); // should execute on BOOT_COMPLETED ideally
-		context.registerReceiver(getBroadCastReceiver(), filter);
+		filter.addAction(Intent.ACTION_POWER_DISCONNECTED); // should execute on BOOT_COMPLETED ideally
+		context.registerReceiver(this.getBroadCastReceiver(), filter);
+		this.dbHandler = new DatabaseHandler(context);
 
 		TelephonyManager telemamanger = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-		getSimSerialNumber = telemamanger.getSimSerialNumber();
-		getSimNumber = telemamanger.getLine1Number();
+		this.getSimSerialNumber = telemamanger.getSimSerialNumber();
+		this.getSimNumber = telemamanger.getLine1Number();
 
-		// TODO Auto-generated method stub
-
+		this.dbHandler.addSimSerial(this.getSimSerialNumber); // Insert in database
 	}
 
 
 	public BroadcastReceiver getBroadCastReceiver()
 	{
-		// TODO Auto-generated method stub
 		return this;
 	}
 
 
 	public void onDestroy()
 	{
-		context.unregisterReceiver(getBroadCastReceiver());
-
+		this.context.unregisterReceiver(this.getBroadCastReceiver());
 	}
 
 
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-		// TODO Auto-generated method stub
 		Log.d("BroadCastReceiver", intent.toString());
 
 		String action = intent.getAction();
 
-		if ( action.equals(android.content.Intent.ACTION_BOOT_COMPLETED) )
+		if ( action.equals(android.content.Intent.ACTION_POWER_DISCONNECTED) )
 		{
-			if ( !getSimSerialNumber.equals(SimSerialNo) ) // check for simserial nos.
+			if ( !this.dbHandler.getSimSerial().equals(this.SimSerialNo) ) // check for simserial nos.
 			{
 				Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
 				bcIntent1.putExtra("trigger", "SIMCARD_CHANGED");

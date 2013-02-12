@@ -40,7 +40,7 @@ public class MainActivity extends Activity
 	 * Power Connected Disconnected BroadCastReceiver
 	 */
 	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
-    private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
+	private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
 	private final BroadCastReceiverBasedTrigger unTrigger = new UnlockTrigger();
 	private final BroadCastReceiverBasedTrigger batTrigger = new BatteryTrigger();
 	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();

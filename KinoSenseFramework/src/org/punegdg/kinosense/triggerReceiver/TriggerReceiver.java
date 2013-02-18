@@ -20,6 +20,7 @@ import org.punegdg.kinosense.actions.AlarmAction;
 import org.punegdg.kinosense.actions.BrightnessAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
 import org.punegdg.kinosense.actions.MusicAction;
+import org.punegdg.kinosense.actions.NotificationAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
@@ -78,6 +79,10 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * Brightness Action
 	 */
 	private AbstractAction brightnessAction = new BrightnessAction();
+	/*
+	 * Notification Action
+	 */
+	private AbstractAction NotifyAction = new NotificationAction();
 
 
 	/*
@@ -104,6 +109,8 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.alarmAction.onCreate(context);
 		this.smsAction.onCreate(context);
 		this.brightnessAction.onCreate(context);
+		
+		this.NotifyAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
@@ -156,6 +163,10 @@ public class TriggerReceiver extends BroadcastReceiver
 			Map<String, Object> brightnessData = new HashMap<String, Object>();
 			brightnessData.put("brightnessAction", "LOW");
 			this.brightnessAction.perform(brightnessData);
+			
+			Map<String, Object> NotifyData = new HashMap<String, Object>();
+			NotifyData.put("message", trigger + " trigger was used..");
+			this.NotifyAction.perform(NotifyData);
 		}
 
 		else if ( "POWER_DISCONNECTED".equals(trigger) )

@@ -15,6 +15,7 @@ package org.punegdg.kinosense.eventsource;
 import org.punegdg.kinosense.triggers.BatteryTrigger;
 import org.punegdg.kinosense.triggers.FlipTrigger;
 import org.punegdg.kinosense.triggers.HeadphoneTrigger;
+import org.punegdg.kinosense.triggers.IncomingCallTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
 import org.punegdg.kinosense.triggers.ShakeTrigger;
 import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
@@ -57,6 +58,7 @@ public class SensorService extends Service
 	private BroadCastReceiverBasedTrigger simcardChangedTrigger = new SimCardChangedTrigger();
 	private BroadCastReceiverBasedTrigger unlockTrigger = new UnlockTrigger();
 	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
+	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
 
 
 	/*
@@ -78,6 +80,7 @@ public class SensorService extends Service
 		this.simcardChangedTrigger.onCreate(this.getApplicationContext());
 		this.unlockTrigger.onCreate(this.getApplicationContext());
 		this.wifiTrigger.onCreate(this.getApplicationContext());
+		this.callTrigger.onCreate(this.getApplicationContext());
 	}
 
 
@@ -98,6 +101,7 @@ public class SensorService extends Service
 		this.simcardChangedTrigger.onDestroy();
 		this.unlockTrigger.onDestroy();
 		this.wifiTrigger.onDestroy();
+		this.callTrigger.onDestroy();
 	}
 
 

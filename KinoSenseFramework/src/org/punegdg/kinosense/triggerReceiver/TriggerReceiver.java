@@ -20,6 +20,7 @@ import org.punegdg.kinosense.actions.AlarmAction;
 import org.punegdg.kinosense.actions.BrightnessAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
 import org.punegdg.kinosense.actions.MusicAction;
+import org.punegdg.kinosense.actions.NotificationAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
@@ -79,6 +80,11 @@ public class TriggerReceiver extends BroadcastReceiver
 	 */
 	private AbstractAction brightnessAction = new BrightnessAction();
 
+	/**
+	 * Notification Action
+	 */
+	private AbstractAction notifAction = new NotificationAction();
+
 
 	/*
 	 * (non-Javadoc)
@@ -104,6 +110,7 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.alarmAction.onCreate(context);
 		this.smsAction.onCreate(context);
 		this.brightnessAction.onCreate(context);
+		this.notifAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
@@ -225,6 +232,13 @@ public class TriggerReceiver extends BroadcastReceiver
 		{
 			// Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
 			// this.vibrateAction.perform(null);
+		}
+		if ( "INCOMING_CALL".equals(trigger) )
+		{
+			String phoneNumber = intent.getStringExtra("number");
+			Map<String, Object> notifData = new HashMap<String, Object>();
+			notifData.put("message", trigger + " Trigger invoked by NUmber:: " + phoneNumber);
+			this.notifAction.perform(notifData);
 		}
 	}
 

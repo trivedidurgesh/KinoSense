@@ -39,11 +39,16 @@
                 <action android:name="org.punegdg.kinosense.service.SensorService" />
             </intent-filter>
         </service>
-  <service android:enabled="true" android:name="org.punegdg.kinosense.actions.MusicAction" /> 
+ 		 <service android:enabled="true" android:name="org.punegdg.kinosense.actions.MusicAction" /> 
         <receiver android:name=".triggerReceiver.TriggerReceiver" >
             <intent-filter>
                 <action android:name="org.punegdg.kinosense.TRIGGER" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".triggers.IncomingCallTrigger">
+            <intent-filter>
+                  <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
         <receiver

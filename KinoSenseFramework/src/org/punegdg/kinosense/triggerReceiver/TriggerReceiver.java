@@ -79,10 +79,11 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * Brightness Action
 	 */
 	private AbstractAction brightnessAction = new BrightnessAction();
-	/*
+
+	/**
 	 * Notification Action
 	 */
-	private AbstractAction NotifyAction = new NotificationAction();
+	private AbstractAction notifAction = new NotificationAction();
 
 
 	/*
@@ -109,8 +110,7 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.alarmAction.onCreate(context);
 		this.smsAction.onCreate(context);
 		this.brightnessAction.onCreate(context);
-		
-		this.NotifyAction.onCreate(context);
+		this.notifAction.onCreate(context);
 		// -----------------------------
 
 		String trigger = intent.getStringExtra("trigger");
@@ -166,7 +166,7 @@ public class TriggerReceiver extends BroadcastReceiver
 			
 			Map<String, Object> NotifyData = new HashMap<String, Object>();
 			NotifyData.put("message", trigger + " trigger was used..");
-			this.NotifyAction.perform(NotifyData);
+			this.notifAction.perform(NotifyData);
 		}
 
 		else if ( "POWER_DISCONNECTED".equals(trigger) )
@@ -236,6 +236,13 @@ public class TriggerReceiver extends BroadcastReceiver
 		{
 			// Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
 			// this.vibrateAction.perform(null);
+		}
+		if ( "INCOMING_CALL".equals(trigger) )
+		{
+			String phoneNumber = intent.getStringExtra("number");
+			Map<String, Object> notifData = new HashMap<String, Object>();
+			notifData.put("message", trigger + " Trigger invoked by NUmber:: " + phoneNumber);
+			this.notifAction.perform(notifData);
 		}
 	}
 

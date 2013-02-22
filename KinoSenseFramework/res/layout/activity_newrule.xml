@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/back"
+    android:layout_height="match_parent" >   
+   
+   
+   			<TextView
+                 android:id="@+id/textviewAction"
+                 android:layout_width="fill_parent"
+                 android:layout_height="50dip"                
+                 android:layout_alignParentTop="true"
+                 android:text="@string/actionlist"
+                 android:layout_centerInParent="true"
+                 android:gravity="center_horizontal"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#000000"
+                 android:textSize="32sp" />
+   <!--Rule for Wifi  -->
+             <TextView
+                 android:id="@+id/textviewwifi"
+                 android:layout_width="200dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentLeft="true"
+                 android:layout_below="@+id/textviewAction"
+                 android:text="@string/wifi"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#fff8dc"
+                 android:textSize="32sp" />
+
+             <ToggleButton
+                 android:id="@+id/toggleButtonwifi"
+                 android:layout_width="100dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/textviewAction"
+                 android:layout_toRightOf="@+id/textviewwifi"
+                 android:checked="false"
+                 android:textOn="@string/texton"
+                 android:textOff="@string/textoff"
+                 android:textColor="#ffffff" />
+ <!--Rule for Keeping Phone on Silent  -->
+             <TextView
+                 android:id="@+id/textviewsilent"
+                 android:layout_width="200dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentLeft="true"
+                 android:layout_below="@+id/toggleButtonwifi"
+                 android:text="@string/Silent"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#fff8dc"
+                 android:textSize="32sp" />
+
+             <CheckBox
+                 android:id="@+id/checkBoxsilent"
+                 android:layout_width="100dip"
+                 android:layout_height="50dip"                 
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/textviewwifi"
+                 android:textColor="#ffffff"
+                 android:text="@string/activate" />
+<!--Rule for Keeping Phone on Flight mode  -->
+             <TextView
+                 android:id="@+id/textviewflight"
+                 android:layout_width="200dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentLeft="true"
+                 android:layout_below="@+id/textviewsilent"
+                 android:text="@string/flight"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#fff8dc"
+                 android:textSize="32sp" />
+
+             <CheckBox
+                 android:id="@+id/checkBoxflight"
+                 android:layout_width="100dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/checkBoxsilent"                
+                 android:text="@string/activate"
+                 android:textColor="#ffffff" />
+             
+  <!--Rule for Activating Beep mode  -->
+
+             <TextView
+                 android:id="@+id/textviewbeep"
+                 android:layout_width="200dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentLeft="true"
+                 android:layout_below="@+id/textviewflight"
+                 android:text="@string/beep"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#fff8dc"
+                 android:textSize="32sp" />
+
+             <CheckBox
+                 android:id="@+id/checkBoxbeep"
+                 android:layout_width="100dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/checkBoxflight"
+                
+                 android:text="@string/activate"
+                 android:textColor="#ffffff" />
+             
+   <!--Rule for Sending SMS  -->
+
+             <TextView
+                 android:id="@+id/textviewsms"
+                 android:layout_width="200dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentLeft="true"
+                 android:layout_below="@+id/textviewbeep"
+                 android:text="@string/sms"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#fff8dc"
+                 android:textSize="32sp" />
+
+             <CheckBox
+                 android:id="@+id/checkBoxsms"
+                 android:layout_width="100dip"
+                 android:layout_height="50dip"
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/checkBoxbeep"                 
+                 android:text="@string/activate"
+                 android:textColor="#ffffff" />
+             
+             
+             
+             <!-- Bottom view for Previous and Next Screen -->
+
+             <RelativeLayout
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentTop="true" >
+
+                 <Button
+                     android:id="@+id/buttonback"
+                     android:layout_width="wrap_content"
+                     android:layout_height="50dip"
+                     android:layout_alignParentBottom="true"
+                     android:layout_alignParentLeft="true"
+                      android:paddingLeft="5dp" 
+                     android:paddingRight="5dp" 
+                     android:background="@drawable/button"
+                     android:text="@string/back"
+                     android:textColor="#ffffff" />
+
+                 <Button
+                     android:id="@+id/buttonnext"
+                     android:layout_width="wrap_content"
+                     android:layout_height="50dip"
+                     android:paddingLeft="5dp" 
+                     android:paddingRight="5dp"  
+                     android:layout_alignParentBottom="true"
+                     android:layout_alignParentRight="true"
+                     android:background="@drawable/button"
+                     android:text="@string/next"
+                     android:textColor="#ffffff" />
+
+                 <Button
+                     android:id="@+id/buttoncancel"
+                     android:layout_width="wrap_content"
+                      android:paddingLeft="5dp" 
+                     android:paddingRight="5dp"                      
+                     android:layout_height="50dip"
+                     android:layout_alignParentBottom="true"
+                     android:layout_centerHorizontal="true"
+                     android:background="@drawable/button"
+                     android:text="@string/cancel"
+                     android:textColor="#ffffff" />
+
+             </RelativeLayout>
+    
+</RelativeLayout>

@@ -33,6 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+		<activity android:name="org.punegdg.kinosense.NewActionRuleActivity"></activity>
+        <activity android:name=".RuleReviewActivity"></activity>
+        <activity android:name=".NewTriggerRuleActivity"></activity>
 
         <service android:name=".eventsource.SensorService" >
             <intent-filter>

@@ -3,6 +3,33 @@
     <string name="app_name">KinoSense</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">MainActivity</string>    
+    <string name="Kinosense">KINOSENSE</string>
+    <string name="rule">New Rule</string>
+    <string name="reviewrule">Review Rule</string>
+    <string name="wifi">WiFi</string>
+    <string name="WiFiON">WiFi ON</string>
+    <string name="WiFiOFF">WiFi OFF</string>
+    <string name="Silent">Silent</string>
+    <string name="flight">Flight</string>
+    <string name="activate">Activate</string>
+    <string name="back">Back</string>	
+    <string name="create">Create</string>    
+    <string name="next">Next</string>
+    <string name="beep">Beep</string>
+    <string name="sms">SMS</string>
+    <string name="actionlist">Action Lists</string>
+    <string name="triggerlist">Trigger Lists</string>
+    <string name="lowbattery">Battery Low</string>
+    <string name="select">Select</string>
+    <string name="batterycharged">Battery Full</string>
+    <string name="home">Home</string>
+    <string name="office">Office</string>
+    <string name="meeting">Meeting</string>
+    <string name="texton">WiFi ON</string>
+    <string name="textoff">WiFi OFF</string>
+    <string name="cancel">Cancel</string>    
+    <string name="rulelist">Rule List</string>  
+   <!-- <string name=""></string> -->
 
 </resources>

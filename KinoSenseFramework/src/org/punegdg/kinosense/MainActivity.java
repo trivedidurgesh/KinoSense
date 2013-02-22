@@ -22,10 +22,14 @@ import org.punegdg.kinosense.triggers.UnlockTrigger;
 import org.punegdg.kinosense.triggers.WifiTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 /**
  * Currently this Activity is bootstrap to number of things in the PoC state e.g like the Service which listens to
@@ -48,6 +52,10 @@ public class MainActivity extends Activity
 	private BroadCastReceiverBasedTrigger hpTrigger = new HeadphoneTrigger();
 	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
 
+	/*
+	 * Declaration of the widget items
+	 */
+	 Button buttonnewrule, buttonreviewrule;
 
 	/*
 	 * (non-Javadoc)
@@ -70,6 +78,29 @@ public class MainActivity extends Activity
 		Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
 		this.startService(startServiceIntent);
 
+		buttonnewrule=(Button)findViewById(R.id.buttonnewrule);
+		buttonreviewrule=(Button)findViewById(R.id.buttonreviewrule);
+		/*
+		 * Switching Activity to Creating new Rule
+		 */
+		buttonnewrule.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent newruleintent=new Intent(MainActivity.this,NewActionRuleActivity.class);
+				startActivity(newruleintent);
+			}
+		});
+		/*
+		 * Switching Activity to Reviewing  Rule
+		 */
+		buttonreviewrule.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent ruleReviewintent=new Intent(MainActivity.this,RuleReviewActivity.class);
+				ruleReviewintent.putExtra("param1","");
+				startActivity(ruleReviewintent);
+			}
+		});
 	}
 
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="bottom"
+    android:background="@drawable/back"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+
+     <RelativeLayout
+         android:id="@+id/listpanel"
+         android:layout_width="fill_parent"
+         android:layout_height="420dp" >
+               
+			<TextView
+                 android:id="@+id/textviewRule"
+                 android:layout_width="fill_parent"
+                 android:layout_height="50dip" 
+                 android:text="@string/rulelist"
+                 android:gravity="center_horizontal"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:textColor="#000000"
+                 android:textSize="32sp" />
+		
+		    <ListView
+		        android:id="@+id/rulelist"
+		        android:layout_width="fill_parent"
+		        android:layout_below="@+id/textviewRule"
+		        android:layout_height="match_parent"
+		        android:drawSelectorOnTop="false"
+		        android:fastScrollEnabled="true"
+		        android:textColor="#ffffff" >
+		    </ListView>
+	   </RelativeLayout>
+     <!-- Bottom view for Previous and Next Screen -->
+
+             <RelativeLayout
+                 android:id="@+id/buttompanel"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content" >
+               
+                 <Button
+                     android:id="@+id/buttonreviewback"
+                     android:layout_width="wrap_content"
+                     android:layout_height="50dip"
+                     android:layout_alignParentBottom="true"
+                     android:layout_alignParentLeft="true"
+                     android:background="@drawable/button"
+                      android:paddingLeft="5dp" 
+                     android:paddingRight="5dp" 
+                     android:text="@string/back"
+                     android:textColor="#ffffff" />
+
+                 <Button
+                     android:id="@+id/buttonreviewnext"
+                     android:layout_width="wrap_content"
+                     android:layout_height="50dip"
+                     android:layout_alignParentBottom="true"
+                     android:layout_alignParentRight="true"
+                     android:paddingLeft="5dp" 
+                     android:paddingRight="5dp" 
+                     android:background="@drawable/button"
+                     android:text="@string/next"
+                     android:textColor="#ffffff" />
+             </RelativeLayout>
+
+</LinearLayout>

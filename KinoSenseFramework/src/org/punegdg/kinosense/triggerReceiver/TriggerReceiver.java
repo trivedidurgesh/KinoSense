@@ -31,14 +31,13 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.telephony.SmsManager;
 import android.widget.Toast;
 
 /**
  * Receives all the Kino Sense Triggers and runs the rules to invoke the corresponding actions
  * 
  * @author "Rohit Ghatol" <rohitsghatol@gmail.com>
- * 
+ * @author "Ashish Kalbhor" <ashish.kalbhor@gmail.com>
  */
 public class TriggerReceiver extends BroadcastReceiver
 {
@@ -113,137 +112,97 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.notifAction.onCreate(context);
 		// -----------------------------
 
+		Map<String, Object> silentData = new HashMap<String, Object>();
+		Map<String, Object> brightnessData = new HashMap<String, Object>();
+		Map<String, Object> smsData = new HashMap<String, Object>();
+		Map<String, Object> wifiData = new HashMap<String, Object>();
+		Map<String, Object> notifyData = new HashMap<String, Object>();
+		Map<String, Object> flightmodeData = new HashMap<String, Object>();
+
 		String trigger = intent.getStringExtra("trigger");
 
-		Map<String, Object> alarmData = new HashMap<String, Object>();
-		// Map data object for Alarm Action
-
-		if ( "FLIPPED_DOWN".equals(trigger) )
+		if ( "FLIPPED_DOWN".equals(trigger) )// Silent ON
 		{
+			silentData.put("action", "Silence");
+			this.silentAction.perform(silentData);
 			this.vibrateAction.perform(null);
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("action", "Silence");
-			this.silentAction.perform(data);
-
-			Map<String, Object> wifiData = new HashMap<String, Object>();
-			// Map data object for Wifi Action
-			wifiData.put("wifiaction", "WIFI_OFF");
-			// this.wifiAction.perform(wifiData);
-
-			alarmData.put("alarmAction", "Off");
-			// this.alarmAction.perform(alarmData);
-
-			Map<String, Object> flightmodeData = new HashMap<String, Object>();
-			// Map data object for Flight Mode Action
-			flightmodeData.put("flightmode", "ON");
-			this.flightaction.perform(flightmodeData);
-
 		}
-		else if ( "FLIPPED_UP".equals(trigger) )
+		if ( "FLIPPED_UP".equals(trigger) )// Silent OFF
 		{
-			this.vibrateAction.perform(null);
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("action", "Restore");
-			this.silentAction.perform(data);
-
-			this.vibrateAction.perform(null);
-			Map<String, Object> flightmodeData = new HashMap<String, Object>();
-			// Map data object for Flight Mode Action
-			flightmodeData.put("flightmode", "OFF");
-			this.flightaction.perform(flightmodeData);
+			silentData.put("action", "Restore");
+			this.silentAction.perform(silentData);
 		}
-
-		if ( "POWER_CONNECTED".equals(trigger) )
+		if ( "POWER_CONNECTED".equals(trigger) )// Display Brightness Full
 		{
-			this.vibrateAction.perform(null);
-
-			alarmData.put("alarmAction", "On");
-			// this.alarmAction.perform(alarmData);
-
-			Map<String, Object> brightnessData = new HashMap<String, Object>();
-			brightnessData.put("brightnessAction", "LOW");
+			brightnessData.put("action", "HIGH");
 			this.brightnessAction.perform(brightnessData);
-			
-			Map<String, Object> NotifyData = new HashMap<String, Object>();
-			NotifyData.put("message", trigger + " trigger was used..");
-			this.notifAction.perform(NotifyData);
 		}
-
-		else if ( "POWER_DISCONNECTED".equals(trigger) )
+		if ( "POWER_DISCONNECTED".equals(trigger) )// Display Brightness Low
 		{
-			Map<String, Object> brightnessData = new HashMap<String, Object>();
-			brightnessData.put("brightnessAction", "HIGH");
+			brightnessData.put("action", "LOW");
 			this.brightnessAction.perform(brightnessData);
-
-			Map<String, Object> smsData = new HashMap<String, Object>();
-			// Map data object for SMS Action
-			smsData.put("action", "IsBusy");
-			smsData.put("number", "9860868444");
-			// FIXME Phone Number to be Changed later on
+		}
+		if ( "WIFI_FOUND".equals(trigger) )// Toast of SSID
+		{
+			String wifiInfo = intent.getStringExtra("wifiData");
+			Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
+		}
+		if ( "SIM_CHANGED".equals(trigger) )// Send SMS
+		{
+			smsData.put("action", "Sim Card Changed !");
+			smsData.put("number", "8179373415");
+			// FIXME Phone Number to be set through UI
 			this.smsAction.perform(smsData);
-
 		}
-
-		if ( "WIFI_FOUND".equals(trigger) )
+		if ( "PHONE_UNLOCKED".equals(trigger) )// Turn On WIFI
 		{
-			String wifiData = intent.getStringExtra("wifiData");
-			Toast.makeText(context, wifiData, Toast.LENGTH_LONG).show();
+			wifiData.put("action", "ON");
+			this.wifiAction.perform(wifiData);
 		}
-		if ( "SIMCARD_CHANGED".equals(trigger) )
+		if ( "PHONE_LOCKED".equals(trigger) )// Turn Off WIFI
 		{
-			Toast.makeText(context, "Sim Changed", Toast.LENGTH_LONG).show();
-			SmsManager smsManager = SmsManager.getDefault();
-			smsManager.sendTextMessage("8149373415", null, "Sim Card Changed", null, null);
-			this.vibrateAction.perform(null);
+			wifiData.put("action", "OFF");
+			this.wifiAction.perform(wifiData);
 		}
-		else if ( "SIMCARD_UNCHANGED".equals(trigger) )
+		if ( "BATTERY_LOW".equals(trigger) )// Notify with Brightness Low, Wifi Off
 		{
-			Toast.makeText(context, "Sim UnChanged", Toast.LENGTH_LONG).show();
-			SmsManager smsManager = SmsManager.getDefault();
-			smsManager.sendTextMessage("8149373415", null, "Sim Card UNChanged", null, null);
-			this.vibrateAction.perform(null);
+			notifyData.put("message", "Low Battery ! Wifi has been Turned Off");
+			this.notifAction.perform(notifyData);
+			brightnessData.put("action", "LOW");
+			this.brightnessAction.perform(brightnessData);
+			wifiData.put("action", "OFF");
+			this.wifiAction.perform(wifiData);
 		}
-		if ( "PHONE_UNLOCKED".equals(trigger) )
+		if ( "BATTERY_FULL".equals(trigger) )// Notify with Brightness High,Wifi On
 		{
-			Toast.makeText(context, "Phone Unlocked", Toast.LENGTH_LONG).show();
-			this.vibrateAction.perform(null);
+			notifyData.put("message", "Battery Level Restored !");
+			this.notifAction.perform(notifyData);
+			brightnessData.put("action", "HIGH");
+			this.brightnessAction.perform(brightnessData);
+			wifiData.put("action", "ON");
+			this.wifiAction.perform(wifiData);
 		}
-
-		if ( "BATTERY_LOW".equals(trigger) )
+		if ( "HEADSET_CONNECTED".equals(trigger) )// Start Music
 		{
-			Toast.makeText(context, "Battery Low", Toast.LENGTH_LONG).show();
-			this.vibrateAction.perform(null);
-		}
-		else if ( "BATTERY_OKAY".equals(trigger) )
-		{
-			Toast.makeText(context, "Battery Okay", Toast.LENGTH_LONG).show();
-			this.vibrateAction.perform(null);
-		}
-
-		if ( "HEADSET_CONNECTED".equals(trigger) )
-		{
-			Toast.makeText(context, "Headset Connected", Toast.LENGTH_SHORT).show();
-			this.vibrateAction.perform(null);
 			context.startService(new Intent(context, MusicAction.class));
 		}
-		else if ( "HEADSET_DISCONNECTED".equals(trigger) )
+		if ( "HEADSET_DISCONNECTED".equals(trigger) )// Stop Music
 		{
-			Toast.makeText(context, "Headset Disconnected", Toast.LENGTH_SHORT).show();
-			this.vibrateAction.perform(null);
 			context.stopService(new Intent(context, MusicAction.class));
 		}
-		if ( "SHAKING".equals(trigger) )
+		if ( "SHAKING".equals(trigger) )// Flight Mode Toggle
 		{
-			// Toast.makeText(context, "SHAKING STARTED", Toast.LENGTH_LONG).show();
-			// this.vibrateAction.perform(null);
+			flightmodeData.put("action", "ON");
+			this.flightaction.perform(flightmodeData);
 		}
-		if ( "INCOMING_CALL".equals(trigger) )
+		if ( "INCOMING_CALL".equals(trigger) )// Music Pause, Notify
 		{
-			String phoneNumber = intent.getStringExtra("number");
-			Map<String, Object> notifData = new HashMap<String, Object>();
-			notifData.put("message", trigger + " Trigger invoked by NUmber:: " + phoneNumber);
-			this.notifAction.perform(notifData);
+			context.stopService(new Intent(context, MusicAction.class));
+			String mNumber = intent.getStringExtra("number");
+			notifyData.put("message", "Incoming Call from " + mNumber);
+			this.notifAction.perform(notifyData);
 		}
+
 	}
 
 }

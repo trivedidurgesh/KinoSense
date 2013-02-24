@@ -112,6 +112,7 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.notifAction.onCreate(context);
 		// -----------------------------
 
+	
 		Map<String, Object> silentData = new HashMap<String, Object>();
 		Map<String, Object> brightnessData = new HashMap<String, Object>();
 		Map<String, Object> smsData = new HashMap<String, Object>();
@@ -147,7 +148,7 @@ public class TriggerReceiver extends BroadcastReceiver
 			String wifiInfo = intent.getStringExtra("wifiData");
 			Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
 		}
-		if ( "SIM_CHANGED".equals(trigger) )// Send SMS
+		if ( "SIMCARD_CHANGED".equals(trigger) )// Send SMS
 		{
 			smsData.put("action", "Sim Card Changed !");
 			smsData.put("number", "8179373415");

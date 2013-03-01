@@ -112,44 +112,43 @@ public class TriggerReceiver extends BroadcastReceiver
 		this.notifAction.onCreate(context);
 		// -----------------------------
 
-	
-		Map<String, Object> silentData = new HashMap<String, Object>();
-		Map<String, Object> brightnessData = new HashMap<String, Object>();
-		Map<String, Object> smsData = new HashMap<String, Object>();
-		Map<String, Object> wifiData = new HashMap<String, Object>();
-		Map<String, Object> notifyData = new HashMap<String, Object>();
-		Map<String, Object> flightmodeData = new HashMap<String, Object>();
-
 		String trigger = intent.getStringExtra("trigger");
 
 		if ( "FLIPPED_DOWN".equals(trigger) )// Silent ON
 		{
+			Map<String, Object> silentData = new HashMap<String, Object>();
 			silentData.put("action", "Silence");
 			this.silentAction.perform(silentData);
 			this.vibrateAction.perform(null);
 		}
 		if ( "FLIPPED_UP".equals(trigger) )// Silent OFF
 		{
+			Map<String, Object> silentData = new HashMap<String, Object>();
 			silentData.put("action", "Restore");
 			this.silentAction.perform(silentData);
 		}
 		if ( "POWER_CONNECTED".equals(trigger) )// Display Brightness Full
 		{
+			Map<String, Object> brightnessData = new HashMap<String, Object>();
 			brightnessData.put("action", "HIGH");
 			this.brightnessAction.perform(brightnessData);
 		}
 		if ( "POWER_DISCONNECTED".equals(trigger) )// Display Brightness Low
 		{
+			Map<String, Object> brightnessData = new HashMap<String, Object>();
 			brightnessData.put("action", "LOW");
 			this.brightnessAction.perform(brightnessData);
 		}
 		if ( "WIFI_FOUND".equals(trigger) )// Toast of SSID
 		{
 			String wifiInfo = intent.getStringExtra("wifiData");
+			String[] InfoParts = wifiInfo.split(",");
+			wifiInfo = InfoParts[0];
 			Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
 		}
 		if ( "SIMCARD_CHANGED".equals(trigger) )// Send SMS
 		{
+			Map<String, Object> smsData = new HashMap<String, Object>();
 			smsData.put("action", "Sim Card Changed !");
 			smsData.put("number", "8179373415");
 			// FIXME Phone Number to be set through UI
@@ -157,16 +156,21 @@ public class TriggerReceiver extends BroadcastReceiver
 		}
 		if ( "PHONE_UNLOCKED".equals(trigger) )// Turn On WIFI
 		{
+			Map<String, Object> wifiData = new HashMap<String, Object>();
 			wifiData.put("action", "ON");
 			this.wifiAction.perform(wifiData);
 		}
 		if ( "PHONE_LOCKED".equals(trigger) )// Turn Off WIFI
 		{
+			Map<String, Object> wifiData = new HashMap<String, Object>();
 			wifiData.put("action", "OFF");
 			this.wifiAction.perform(wifiData);
 		}
 		if ( "BATTERY_LOW".equals(trigger) )// Notify with Brightness Low, Wifi Off
 		{
+			Map<String, Object> wifiData = new HashMap<String, Object>();
+			Map<String, Object> brightnessData = new HashMap<String, Object>();
+			Map<String, Object> notifyData = new HashMap<String, Object>();
 			notifyData.put("message", "Low Battery ! Wifi has been Turned Off");
 			this.notifAction.perform(notifyData);
 			brightnessData.put("action", "LOW");
@@ -176,6 +180,9 @@ public class TriggerReceiver extends BroadcastReceiver
 		}
 		if ( "BATTERY_FULL".equals(trigger) )// Notify with Brightness High,Wifi On
 		{
+			Map<String, Object> wifiData = new HashMap<String, Object>();
+			Map<String, Object> brightnessData = new HashMap<String, Object>();
+			Map<String, Object> notifyData = new HashMap<String, Object>();
 			notifyData.put("message", "Battery Level Restored !");
 			this.notifAction.perform(notifyData);
 			brightnessData.put("action", "HIGH");
@@ -193,11 +200,13 @@ public class TriggerReceiver extends BroadcastReceiver
 		}
 		if ( "SHAKING".equals(trigger) )// Flight Mode Toggle
 		{
+			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			flightmodeData.put("action", "ON");
 			this.flightaction.perform(flightmodeData);
 		}
 		if ( "INCOMING_CALL".equals(trigger) )// Music Pause, Notify
 		{
+			Map<String, Object> notifyData = new HashMap<String, Object>();
 			context.stopService(new Intent(context, MusicAction.class));
 			String mNumber = intent.getStringExtra("number");
 			notifyData.put("message", "Incoming Call from " + mNumber);

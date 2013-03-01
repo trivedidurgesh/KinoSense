@@ -48,7 +48,7 @@ public class FlightModeAction implements AbstractAction
 
 	public void perform(Map<String, Object> flightmodedata)
 	{
-		String action = (String)flightmodedata.get("flightmode");
+		String action = (String)flightmodedata.get("action");
 
 		/**
 		 * Turn Airplane Mode On

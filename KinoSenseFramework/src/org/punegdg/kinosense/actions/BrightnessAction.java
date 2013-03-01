@@ -52,7 +52,7 @@ public class BrightnessAction implements AbstractAction
 	{
 
 		// Change the Brightness
-		String action = (String)brightnessData.get("brightnessAction");
+		String action = (String)brightnessData.get("action");
 		if ( "HIGH".equals(action) )
 		{
 			android.provider.Settings.System.putInt(this.context.getContentResolver(),

@@ -144,6 +144,7 @@ public class TriggerReceiver extends BroadcastReceiver
 			String wifiInfo = intent.getStringExtra("wifiData");
 			String[] InfoParts = wifiInfo.split(",");
 			wifiInfo = InfoParts[0];
+			//Showing only SSID
 			Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
 		}
 		if ( "SIMCARD_CHANGED".equals(trigger) )// Send SMS

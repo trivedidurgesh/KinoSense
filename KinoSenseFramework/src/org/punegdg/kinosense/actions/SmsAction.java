@@ -73,6 +73,10 @@ public class SmsAction implements AbstractAction
 		{
 			this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm driving right now. Will call you back later", null, null);
 		}
+		else
+		{
+			this.smsmgr.sendTextMessage(mNumber, null, action, null, null);
+		}
 		// More such Action Messages to be added.
 	}
 

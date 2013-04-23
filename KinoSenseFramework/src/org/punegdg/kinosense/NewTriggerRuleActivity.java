@@ -12,159 +12,163 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 /**
  * 
- * Activity for selecting Trigger for the rule. 
+ * Activity for selecting Trigger for the rule.
  * 
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
+ * @author "Ashish Kalbhor" <ashish.kalbhor@gmail.com>
  * 
  */
-public class NewTriggerRuleActivity extends Activity {
-	private Button buttontriggerback,buttontriggercreate,triggerbuttoncancel;
-	CheckBox checkBoxlowbattery,checkBoxbatteryfull,checkBoxhome,checkBoxoffice,checkBoxmeeting;
-	private StringBuffer triggerText=new StringBuffer();
-	private StringBuffer ruleText=new StringBuffer();
-	boolean triggerEnabled=true;
+public class NewTriggerRuleActivity extends Activity
+{
+	private Button buttontriggerback, buttontriggercreate;
+	CheckBox checkBoxlowbattery, checkBoxbatteryfull, checkBoxhome, checkBoxoffice, checkBoxmeeting;
+	private StringBuffer triggerText = new StringBuffer();
+	private StringBuffer ruleText = new StringBuffer();
+	boolean triggerEnabled = true;
 
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		Intent newTriggerRuleIntent = getIntent();
-		final String str1 = newTriggerRuleIntent.getStringExtra("param1");		
-		setContentView(R.layout.activity_newtrigger);
-		
-		
-		
-		//UI widget for Creating Trigger
-		checkBoxlowbattery=(CheckBox)findViewById(R.id.checkBoxlowbattery);
-		checkBoxbatteryfull=(CheckBox)findViewById(R.id.checkBoxbatteryfull);
-		checkBoxhome=(CheckBox)findViewById(R.id.checkBoxhome);
-		checkBoxoffice=(CheckBox)findViewById(R.id.checkBoxoffice);
-		checkBoxmeeting=(CheckBox)findViewById(R.id.checkBoxmeeting);
-		
-		
-		//Logic for selecting a  widget and creating Rule
-		checkBoxlowbattery.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxlowbattery.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When Battery Low");
-					buttontriggercreate.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
+		Intent newTriggerRuleIntent = this.getIntent();
+		final String str1 = newTriggerRuleIntent.getStringExtra("param1");
+		this.setContentView(R.layout.activity_newtrigger);
+
+		// UI widget for Creating Trigger
+		this.checkBoxlowbattery = (CheckBox)this.findViewById(R.id.checkBoxlowbattery);
+		this.checkBoxbatteryfull = (CheckBox)this.findViewById(R.id.checkBoxbatteryfull);
+		this.checkBoxhome = (CheckBox)this.findViewById(R.id.checkBoxhome);
+		this.checkBoxoffice = (CheckBox)this.findViewById(R.id.checkBoxoffice);
+		this.checkBoxmeeting = (CheckBox)this.findViewById(R.id.checkBoxmeeting);
+
+		this.buttontriggercreate = (Button)this.findViewById(R.id.buttontriggercreate);
+		this.buttontriggercreate.setEnabled(false);
+		this.buttontriggercreate.setVisibility(View.INVISIBLE);
+
+		// Logic for selecting a widget and creating Rule
+		this.checkBoxlowbattery.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if ( NewTriggerRuleActivity.this.checkBoxlowbattery.isChecked() )
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(),
+							" When Battery Low");
+					NewTriggerRuleActivity.this.buttontriggercreate.setEnabled(true);
+					NewTriggerRuleActivity.this.buttontriggercreate.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
 				}
 			}
 		});
-		
-		checkBoxbatteryfull.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxbatteryfull.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When Battery Full");
-					buttontriggercreate.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
+
+		this.checkBoxbatteryfull.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if ( NewTriggerRuleActivity.this.checkBoxbatteryfull.isChecked() )
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(),
+							" When Battery Full");
+					NewTriggerRuleActivity.this.buttontriggercreate.setEnabled(true);
+					NewTriggerRuleActivity.this.buttontriggercreate.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
 				}
 			}
 		});
-		
-		checkBoxhome.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxhome.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When at Home");
-					buttontriggercreate.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
+
+		this.checkBoxhome.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if ( NewTriggerRuleActivity.this.checkBoxhome.isChecked() )
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(),
+							" When at Home");
+					NewTriggerRuleActivity.this.buttontriggercreate.setEnabled(true);
+					NewTriggerRuleActivity.this.buttontriggercreate.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
 				}
 			}
 		});
-				
-		checkBoxoffice.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxoffice.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When at Office");
-					buttontriggercreate.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
+
+		this.checkBoxoffice.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if ( NewTriggerRuleActivity.this.checkBoxoffice.isChecked() )
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(),
+							" When at Office");
+					NewTriggerRuleActivity.this.buttontriggercreate.setEnabled(true);
+					NewTriggerRuleActivity.this.buttontriggercreate.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
 				}
 			}
 		});
-		
-		checkBoxmeeting.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxmeeting.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When at Meeting");
-					buttontriggercreate.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
+
+		this.checkBoxmeeting.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if ( NewTriggerRuleActivity.this.checkBoxmeeting.isChecked() )
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(),
+							" When at Meeting");
+					NewTriggerRuleActivity.this.buttontriggercreate.setEnabled(true);
+					NewTriggerRuleActivity.this.buttontriggercreate.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
 				}
 			}
 		});
-		
+
 		/*
 		 * BAck Button to go back to the Action Selection Screen
 		 */
-		buttontriggerback=(Button)findViewById(R.id.buttontriggerback);
-		buttontriggerback.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+		this.buttontriggerback = (Button)this.findViewById(R.id.buttontriggerback);
+		this.buttontriggerback.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v)
+			{
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(NewTriggerRuleActivity.this,NewActionRuleActivity.class);
-				startActivity(intent);
+				Intent intent = new Intent(NewTriggerRuleActivity.this, NewActionRuleActivity.class);
+				NewTriggerRuleActivity.this.startActivity(intent);
 			}
 		});
-		
-		
+
 		/*
-		 * Create Button to create the Rule and Switch the activity to ReviewRule 
+		 * Create Button to create the Rule and Switch the activity to ReviewRule
 		 */
-		buttontriggercreate=(Button)findViewById(R.id.buttontriggercreate);
-		buttontriggercreate.setEnabled(false);
-		buttontriggercreate.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+		this.buttontriggercreate.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v)
+			{
 				// TODO Auto-generated method stub
-				
-				Intent ruleReviewintent=new Intent(NewTriggerRuleActivity.this,RuleReviewActivity.class);
-				ruleText.append(str1);
-				ruleText.append(""+ triggerText );
-				String rule=ruleText.toString();
-				//Toast.makeText(getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
-				ruleReviewintent.putExtra("param2",rule);
-				startActivity(ruleReviewintent);
+
+				Intent ruleReviewintent = new Intent(NewTriggerRuleActivity.this, RuleReviewActivity.class);
+				NewTriggerRuleActivity.this.ruleText.append(str1);
+				NewTriggerRuleActivity.this.ruleText.append("" + NewTriggerRuleActivity.this.triggerText);
+				String rule = NewTriggerRuleActivity.this.ruleText.toString();
+				ruleReviewintent.putExtra("param2", rule);
+				NewTriggerRuleActivity.this.startActivity(ruleReviewintent);
 			}
 		});
-		
-		/*
-		 * 
-		 * Cancel Button to cancel the current selection of Trigger 
-		 */
-		triggerbuttoncancel=(Button)findViewById(R.id.triggerbuttoncancel);
-		triggerbuttoncancel.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {								
-				//code for changing State
-				triggerText.replace(0, triggerText.length(), "");	
-				unCheckBox();
-				changeCheckBoxState(true);
-				
-			}
-		});
+
 	}
-	
-	public void changeCheckBoxState(boolean state) {
-		checkBoxlowbattery.setEnabled(state);
-		checkBoxbatteryfull.setEnabled(state);
-		checkBoxhome.setEnabled(state);
-		checkBoxoffice.setEnabled(state);	
-		checkBoxmeeting.setEnabled(state);
-	}
-	
-	public void unCheckBox() {
-		checkBoxlowbattery.setChecked(false);
-		checkBoxbatteryfull.setChecked(false);
-		checkBoxhome.setChecked(false);
-		checkBoxoffice.setChecked(false);
-		checkBoxmeeting.setChecked(false);
-	}
+
 }

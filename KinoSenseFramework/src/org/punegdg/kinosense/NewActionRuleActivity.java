@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -19,10 +20,11 @@ import android.widget.ToggleButton;
  * 
  */
 public class NewActionRuleActivity extends Activity {
-	Button buttonback,buttoncancel,buttonnext;
+	Button buttonback,buttoncancel,buttoncreate;
 	ToggleButton toggleButtonwifi;
-	CheckBox checkBoxsilent,checkBoxflight,checkBoxbeep,checkBoxsms; 
+	CheckBox checkBoxsilent,checkBoxflight,checkBoxbeep,checkBoxsms,checkBoxalarm,checkBoxshownotification,checkBoxvibrate; 
 	StringBuffer  actionString=new StringBuffer("Set WiFi OFF");
+	private StringBuffer ruleText=new StringBuffer();
 	String actionrule;
 	boolean checkenabled=true;
 	
@@ -30,6 +32,8 @@ public class NewActionRuleActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		Intent newActionRuleIntent = getIntent();
+		final String str1 = newActionRuleIntent.getStringExtra("param1");	
 		setContentView(R.layout.activity_newrule);
 		
 		
@@ -38,9 +42,8 @@ public class NewActionRuleActivity extends Activity {
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent mainActivityIntent=new Intent(NewActionRuleActivity.this,MainActivity.class);
-				startActivity(mainActivityIntent);
-				
+				Intent triggerIntent=new Intent(NewActionRuleActivity.this,NewTriggerRuleActivity.class);
+				startActivity(triggerIntent);				
 			}
 		});
 		
@@ -57,6 +60,9 @@ public class NewActionRuleActivity extends Activity {
 			checkBoxflight=(CheckBox)findViewById(R.id.checkBoxflight);
 			checkBoxbeep=(CheckBox)findViewById(R.id.checkBoxbeep);
 			checkBoxsms=(CheckBox)findViewById(R.id.checkBoxsms);
+			checkBoxalarm=(CheckBox)findViewById(R.id.checkBoxalarm);
+			checkBoxshownotification=(CheckBox)findViewById(R.id.checkBoxshownotification);
+			checkBoxvibrate=(CheckBox)findViewById(R.id.checkBoxvibrate);			
 		
 		/**
 		 * Logic for creating Text on selection of particular Action
@@ -92,7 +98,6 @@ public class NewActionRuleActivity extends Activity {
 						}						
 					}
 				});
-				
 				checkBoxflight.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						if(checkBoxflight.isChecked()){							
@@ -104,7 +109,6 @@ public class NewActionRuleActivity extends Activity {
 						}						
 					}
 				});
-				
 				checkBoxbeep.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						if(checkBoxbeep.isChecked()){							
@@ -116,7 +120,6 @@ public class NewActionRuleActivity extends Activity {
 						}						
 					}
 				});
-				
 				checkBoxsms.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						if(checkBoxsms.isChecked()){							
@@ -128,32 +131,68 @@ public class NewActionRuleActivity extends Activity {
 						}						
 					}
 				});
+				checkBoxalarm.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(checkBoxalarm.isChecked()){							
+							actionString.replace(0, actionString.length(), "Start Alarm");
+							checkenabled=false;
+							//buttonnext.setEnabled(true);
+							changeCheckBoxState(checkenabled);	
+							toggleButtonwifi.setEnabled(false);
+						}						
+					}
+				});
+				checkBoxshownotification.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(checkBoxshownotification.isChecked()){							
+							actionString.replace(0, actionString.length(), "Show Notification");
+							checkenabled=false;
+							//buttonnext.setEnabled(true);
+							changeCheckBoxState(checkenabled);	
+							toggleButtonwifi.setEnabled(false);
+						}						
+					}
+				});
+				checkBoxvibrate.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(checkBoxvibrate.isChecked()){							
+							actionString.replace(0, actionString.length(), "Vibrate");
+							checkenabled=false;
+							//buttonnext.setEnabled(true);
+							changeCheckBoxState(checkenabled);	
+							toggleButtonwifi.setEnabled(false);
+						}						
+					}
+				});
 		
-		
-		buttonnext=(Button)findViewById(R.id.buttonnext);		
-		buttonnext.setOnClickListener(new OnClickListener() {
+				//Code for creating the new rule and navigate to the Rule Review View
+				buttoncreate=(Button)findViewById(R.id.buttoncreate);		
+				buttoncreate.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {								
 				//code for changing State
-				Intent newTriggerRuleIntent=new Intent(NewActionRuleActivity.this,NewTriggerRuleActivity.class);
+				Intent ruleReviewintent=new Intent(NewActionRuleActivity.this,RuleReviewActivity.class);
+				ruleText.append(str1);
 				actionrule=actionString.toString();
-				newTriggerRuleIntent.putExtra("param1",actionrule);
-				//Toast.makeText(getApplicationContext(), actionrule, Toast.LENGTH_SHORT).show();
-				startActivity(newTriggerRuleIntent);				
+				ruleText.append(" "+ actionrule );
+				String rule=ruleText.toString();
+				Toast.makeText(getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
+				ruleReviewintent.putExtra("param2",rule);
+				startActivity(ruleReviewintent);
 			}
 		});
 
-		
-		buttoncancel=(Button)findViewById(R.id.buttoncancel);
-		buttoncancel.setOnClickListener(new OnClickListener() {			
-			public void onClick(View v) {								
-				//code for changing State
-				actionString=null;
-				//changeCheckBoxState(true);
-				Intent intent=new Intent(NewActionRuleActivity.this,NewActionRuleActivity.class);
-				startActivity(intent);
-			}
-		});
+				//Code for cancel the current selection
+				buttoncancel=(Button)findViewById(R.id.buttoncancel);
+				buttoncancel.setOnClickListener(new OnClickListener() {			
+					public void onClick(View v) {								
+						//code for changing State
+						actionString=null;
+						//changeCheckBoxState(true);
+						Intent intent=new Intent(NewActionRuleActivity.this,NewActionRuleActivity.class);
+						startActivity(intent);
+					}
+				});
 		
 	}
 	

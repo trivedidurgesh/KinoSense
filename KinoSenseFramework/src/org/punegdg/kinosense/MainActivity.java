@@ -51,6 +51,7 @@ public class MainActivity extends Activity
 	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
 	private BroadCastReceiverBasedTrigger hpTrigger = new HeadphoneTrigger();
 	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
+	
 
 	/*
 	 * Declaration of the widget items
@@ -86,7 +87,7 @@ public class MainActivity extends Activity
 		buttonnewrule.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Intent newruleintent=new Intent(MainActivity.this,NewActionRuleActivity.class);
+				Intent newruleintent=new Intent(MainActivity.this,NewTriggerRuleActivity.class);
 				startActivity(newruleintent);
 			}
 		});
@@ -102,8 +103,6 @@ public class MainActivity extends Activity
 			}
 		});
 	}
-
-
 	/*
 	 * (non-Javadoc)
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
@@ -114,7 +113,6 @@ public class MainActivity extends Activity
 		this.getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -132,5 +130,4 @@ public class MainActivity extends Activity
 		this.hpTrigger.onDestroy();
 		this.callTrigger.onDestroy();
 	}
-
 }

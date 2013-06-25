@@ -29,7 +29,17 @@
     <string name="texton">WiFi ON</string>
     <string name="textoff">WiFi OFF</string>
     <string name="cancel">Cancel</string>    
-    <string name="rulelist">Rule List</string>  
+    <string name="rulelist">Rule List</string>   
+    <string name="headphoneconnected">Headphone Connected</string>   
+    <string name="headphonedisconnected">Headphone Removed</string>    
+    <string name="incomingcall">Incoming Call</string>    
+    <string name="shake">Phone Shake</string>   
+    <string name="simcardchange">Sim Card Changed</string>   
+    <string name="unlockdevice">Device Unlocked</string>   
+    <string name="wifidetected">WiFi Detected</string>      
+    <string name="alarm">Alarm</string>   
+    <string name="shownotification">Notification</string>   
+    <string name="vibrate">Vibrate</string>    
    <!-- <string name=""></string> -->
 
 </resources>

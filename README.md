@@ -80,8 +80,4 @@ Project Members
 * Saurabh Gangarde
 * Kumar Gaurav
 * Sagar J Pawar
-* Ashish Kalbhor
-* Sandeep Mane
-* Apurva Bhoite
-* Amruta Deshpande
 * More coming

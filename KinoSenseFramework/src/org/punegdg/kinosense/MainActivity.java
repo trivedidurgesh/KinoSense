@@ -17,6 +17,7 @@ import org.punegdg.kinosense.triggers.BatteryTrigger;
 import org.punegdg.kinosense.triggers.HeadphoneTrigger;
 import org.punegdg.kinosense.triggers.IncomingCallTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
+import org.punegdg.kinosense.triggers.SignalStrengthTrigger;
 import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
 import org.punegdg.kinosense.triggers.UnlockTrigger;
 import org.punegdg.kinosense.triggers.WifiTrigger;
@@ -51,6 +52,8 @@ public class MainActivity extends Activity
 	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
 	private BroadCastReceiverBasedTrigger hpTrigger = new HeadphoneTrigger();
 	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
+	private BroadCastReceiverBasedTrigger signalTrigger = new SignalStrengthTrigger();
+
 
 	/*
 	 * Declaration of the widget items
@@ -74,6 +77,7 @@ public class MainActivity extends Activity
 		this.wifiTrigger.onCreate(this.getApplicationContext());
 		this.hpTrigger.onCreate(this.getApplicationContext());
 		this.callTrigger.onCreate(this.getApplicationContext());
+		this.signalTrigger.onCreate(this.getApplicationContext());
 
 		Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
 		this.startService(startServiceIntent);
@@ -131,6 +135,7 @@ public class MainActivity extends Activity
 		this.batTrigger.onDestroy();
 		this.hpTrigger.onDestroy();
 		this.callTrigger.onDestroy();
+		this.signalTrigger.onDestroy();
 	}
 
 }

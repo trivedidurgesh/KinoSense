@@ -43,6 +43,8 @@ public class TriggerReceiver extends BroadcastReceiver
 {
 	public static String ACTION_KINOSENSE_TRIGGER = "org.punegdg.kinosense.TRIGGER";
 
+	public static Boolean callReceived = false;
+	public static Boolean smsSent = false;
 	/**
 	 * Silent Action
 	 */
@@ -144,16 +146,20 @@ public class TriggerReceiver extends BroadcastReceiver
 			String wifiInfo = intent.getStringExtra("wifiData");
 			String[] InfoParts = wifiInfo.split(",");
 			wifiInfo = InfoParts[0];
-			//Showing only SSID
+			// Showing only SSID
 			Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
 		}
 		if ( "SIMCARD_CHANGED".equals(trigger) )// Send SMS
 		{
 			Map<String, Object> smsData = new HashMap<String, Object>();
-			smsData.put("action", "Sim Card Changed !");
-			smsData.put("number", "8179373415");
-			// FIXME Phone Number to be set through UI
-			this.smsAction.perform(smsData);
+			if ( !smsSent )
+			{
+				smsData.put("action", "Sim Card Changed !");
+				smsData.put("number", "8179373415");
+				// FIXME Phone Number to be set through UI
+				// this.smsAction.perform(smsData);
+				smsSent = true;
+			}
 		}
 		if ( "PHONE_UNLOCKED".equals(trigger) )// Turn On WIFI
 		{
@@ -203,15 +209,39 @@ public class TriggerReceiver extends BroadcastReceiver
 		{
 			Map<String, Object> flightmodeData = new HashMap<String, Object>();
 			flightmodeData.put("action", "ON");
-			this.flightaction.perform(flightmodeData);
+			// this.flightaction.perform(flightmodeData);
 		}
 		if ( "INCOMING_CALL".equals(trigger) )// Music Pause, Notify
 		{
 			Map<String, Object> notifyData = new HashMap<String, Object>();
-			context.stopService(new Intent(context, MusicAction.class));
-			String mNumber = intent.getStringExtra("number");
-			notifyData.put("message", "Incoming Call from " + mNumber);
-			this.notifAction.perform(notifyData);
+			final String mNumber = intent.getStringExtra("number");
+
+			if ( !callReceived )
+			{
+				String mAction = intent.getStringExtra("action");
+				if ( mAction.equals("rejected") )
+				{
+					notifyData.put("message", "Rejected call from  " + mNumber);
+					this.notifAction.perform(notifyData);
+					callReceived = false;
+				}
+				else if ( mAction.equals("received") )
+				{
+					notifyData.put("message", "Received call from  " + mNumber);
+					this.notifAction.perform(notifyData);
+					callReceived = false;
+				}
+				else if ( mAction.equals("disconnected") )
+				{
+					notifyData.put("message", "Disconnected call from  " + mNumber);
+					this.notifAction.perform(notifyData);
+					callReceived = false;
+				}
+				else
+				{
+					callReceived = true;
+				}
+			}
 		}
 
 	}

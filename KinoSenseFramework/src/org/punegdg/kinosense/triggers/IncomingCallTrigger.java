@@ -30,6 +30,7 @@ import android.telephony.TelephonyManager;
  * </ul>
  * 
  * @author "Sandeep Mane"<sandeepsmane@ymail.com>
+ * @author "Ashish Kalbhor" <ashish.kalbhor@gmail.com>
  * 
  */
 
@@ -39,6 +40,26 @@ public class IncomingCallTrigger extends BroadcastReceiver implements BroadCastR
 	 * Android Application Context
 	 */
 	private Context context = null;
+
+	/**
+	 * Call state flags
+	 */
+	public static boolean wasRinging = false;
+	public static boolean wasRejected = false;
+	public static boolean wasReceived = false;
+	public static boolean wasDisconnected = false;
+
+	/**
+	 * Telephony manager
+	 */
+	TelephonyManager telephony = null;
+
+	mPhoneStateListener phonelistener;
+
+	/**
+	 * Incoming call's Phone number
+	 */
+	static String incomingNumber = null;
 
 
 	public void onCreate(Context context)
@@ -70,18 +91,47 @@ public class IncomingCallTrigger extends BroadcastReceiver implements BroadCastR
 		/**
 		 * Telephony Manager to get Call Information
 		 */
-		TelephonyManager telephony = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-		mPhoneStateListener phonelistener = new mPhoneStateListener();
-		telephony.listen(phonelistener, PhoneStateListener.LISTEN_CALL_STATE);
+		this.telephony = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+		this.phonelistener = new mPhoneStateListener();
+		this.telephony.listen(this.phonelistener, PhoneStateListener.LISTEN_CALL_STATE);
 
 		Bundle bundle = intent.getExtras();
-		String incomingNumber = bundle.getString("incoming_number"); // Read Caller's Number
+
+		if ( bundle.getString("incoming_number") != null )
+		{
+			String incomingMNumber = bundle.getString("incoming_number"); // Read Caller's Number
+			incomingNumber = incomingMNumber;
+		}
 
 		Intent callIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-		// Broadcast TriggerName and PhoneNumber
 		callIntent.putExtra("trigger", "INCOMING_CALL");
 		callIntent.putExtra("number", incomingNumber);
-		context.sendBroadcast(callIntent);
+
+		/**
+		 * Handling 3 phases after getting an Incoming call
+		 * <ul>
+		 * <li>Call Received</li>
+		 * <li>Call Rejected/Missed</li>
+		 * <li>Call Disconnected after receiving</li>
+		 * </ul>
+		 */
+
+		if ( wasRejected )
+		{
+			callIntent.putExtra("action", "rejected");
+			context.sendBroadcast(callIntent);
+		}
+		if ( wasReceived )
+		{
+			callIntent.putExtra("action", "received");
+			context.sendBroadcast(callIntent);
+		}
+		if ( wasDisconnected )
+		{
+			callIntent.putExtra("action", "disconnected");
+			context.sendBroadcast(callIntent);
+		}
+
 	}
 
 	/**
@@ -90,10 +140,39 @@ public class IncomingCallTrigger extends BroadcastReceiver implements BroadCastR
 	 */
 	public class mPhoneStateListener extends PhoneStateListener
 	{
+
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber)
 		{
+			switch ( state )
+			{
+				case TelephonyManager.CALL_STATE_RINGING:
+					wasDisconnected = false;
+					wasRejected = false;
+					wasRinging = true;
+					break;
+				case TelephonyManager.CALL_STATE_IDLE:
 
+					if ( wasReceived )// Call was received, and now disconnected
+					{
+						wasDisconnected = true;
+						wasReceived = false;
+					}
+					else if ( wasRinging )// Phone was ringing, and now missed the call
+					{
+						wasRejected = true;
+					}
+					wasRinging = false;
+					break;
+				case TelephonyManager.CALL_STATE_OFFHOOK:
+					if ( wasRinging )// Phone was ringing, and now call is received
+					{
+						wasReceived = true;
+					}
+					break;
+				default:
+					break;
+			}
 		}
 	}
 

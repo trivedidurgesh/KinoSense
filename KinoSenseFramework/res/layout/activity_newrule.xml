@@ -97,29 +97,6 @@
                  android:text="@string/activate"
                  android:textColor="#ffffff" />
              
-  <!--Rule for Activating Beep mode  -->
-
-             <TextView
-                 android:id="@+id/textviewbeep"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewflight"
-                 android:text="@string/beep"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-             <CheckBox
-                 android:id="@+id/checkBoxbeep"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxflight"
-                
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />
-             
    <!--Rule for Sending SMS  -->
 
              <TextView
@@ -127,7 +104,7 @@
                  android:layout_width="200dip"
                  android:layout_height="50dip"
                  android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewbeep"
+                 android:layout_below="@+id/textviewflight"
                  android:text="@string/sms"
                  android:textAppearance="?android:attr/textAppearanceLarge"
                  android:textColor="#fff8dc"
@@ -138,7 +115,7 @@
                  android:layout_width="100dip"
                  android:layout_height="50dip"
                  android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxbeep"                 
+                 android:layout_below="@+id/checkBoxflight"                 
                  android:text="@string/activate"
                  android:textColor="#ffffff" />
              

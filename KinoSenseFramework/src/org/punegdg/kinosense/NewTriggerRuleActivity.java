@@ -24,7 +24,7 @@ public class NewTriggerRuleActivity extends Activity {
 	private Button buttontriggerback,buttontriggernext,triggerbuttoncancel;
 	
 	//Declaring The check boxes
-	CheckBox checkBoxlowbattery,checkBoxbatteryfull,checkBoxhome,checkBoxoffice,checkBoxmeeting,checkBoxheadphoneconnected,checkBoxheadphonedisconnected,
+	CheckBox checkBoxlowbattery,checkBoxbatteryfull,checkBoxheadphoneconnected,checkBoxheadphonedisconnected,
 			 checkBoxincomingcall,checkBoxshake,checkBoxsimcardchange,checkBoxunlockdevice,checkBoxwifidetected;
 	private StringBuffer triggerText=new StringBuffer();
 	String triggerrule;
@@ -42,9 +42,6 @@ public class NewTriggerRuleActivity extends Activity {
 		//UI widget for Creating Trigger
 		checkBoxlowbattery=(CheckBox)findViewById(R.id.checkBoxlowbattery);
 		checkBoxbatteryfull=(CheckBox)findViewById(R.id.checkBoxbatteryfull);
-		checkBoxhome=(CheckBox)findViewById(R.id.checkBoxhome);
-		checkBoxoffice=(CheckBox)findViewById(R.id.checkBoxoffice);
-		checkBoxmeeting=(CheckBox)findViewById(R.id.checkBoxmeeting);
 		checkBoxheadphoneconnected=(CheckBox)findViewById(R.id.checkBoxheadphoneconnected);
 		checkBoxheadphonedisconnected=(CheckBox)findViewById(R.id.checkBoxheadphonedisconnected);
 		checkBoxincomingcall=(CheckBox)findViewById(R.id.checkBoxincomingcall);
@@ -71,39 +68,6 @@ public class NewTriggerRuleActivity extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(checkBoxbatteryfull.isChecked()){
 					triggerText.replace(0, triggerText.length(), " When Battery Full");
-					buttontriggernext.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
-				}
-			}
-		});
-
-		checkBoxhome.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxhome.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When at Home");
-					buttontriggernext.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
-				}
-			}
-		});
-
-		checkBoxoffice.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxoffice.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When at Office");
-					buttontriggernext.setEnabled(true);
-					triggerEnabled=false;					
-					changeCheckBoxState(triggerEnabled);
-				}
-			}
-		});
-
-		checkBoxmeeting.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(checkBoxmeeting.isChecked()){
-					triggerText.replace(0, triggerText.length(), " When at Meeting");
 					buttontriggernext.setEnabled(true);
 					triggerEnabled=false;					
 					changeCheckBoxState(triggerEnabled);
@@ -251,10 +215,7 @@ public class NewTriggerRuleActivity extends Activity {
 
 	public void changeCheckBoxState(boolean state) {
 		checkBoxlowbattery.setEnabled(state);
-		checkBoxbatteryfull.setEnabled(state);
-		checkBoxhome.setEnabled(state);
-		checkBoxoffice.setEnabled(state);	
-		checkBoxmeeting.setEnabled(state);	
+		checkBoxbatteryfull.setEnabled(state);		
 		checkBoxheadphoneconnected.setEnabled(state);		
 		checkBoxheadphonedisconnected.setEnabled(state);
 		checkBoxincomingcall.setEnabled(state);
@@ -266,10 +227,7 @@ public class NewTriggerRuleActivity extends Activity {
 
 	public void unCheckBox() {
 		checkBoxlowbattery.setChecked(false);
-		checkBoxbatteryfull.setChecked(false);
-		checkBoxhome.setChecked(false);
-		checkBoxoffice.setChecked(false);
-		checkBoxmeeting.setChecked(false);
+		checkBoxbatteryfull.setChecked(false);		
 		checkBoxheadphoneconnected.setChecked(false);		
 		checkBoxheadphonedisconnected.setChecked(false);
 		checkBoxincomingcall.setChecked(false);

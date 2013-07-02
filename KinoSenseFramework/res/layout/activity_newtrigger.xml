@@ -73,64 +73,6 @@
 		                 android:layout_below="@+id/checkBoxlowbattery"
 		                 android:textColor="#ffffff"
 		                 android:text="@string/select" />
-		      
-		       <!--Trigger for Phome at Home   -->
-		             <TextView
-		                 android:id="@+id/textviewhome"
-		                 android:layout_width="230dip"
-		                 android:layout_height="50dip"
-		                 android:layout_alignParentLeft="true"
-		                 android:layout_below="@+id/textviewbatteryfull"
-		                 android:text="@string/home"
-		                 android:textAppearance="?android:attr/textAppearanceSmall"
-		                 android:textColor="#fff8dc"
-		                 android:textSize="20sp" />
-		             <CheckBox
-		                 android:id="@+id/checkBoxhome"
-		                 android:layout_width="100dip"
-		                 android:layout_height="50dip"                 
-		                 android:layout_alignParentRight="true"
-		                 android:layout_below="@+id/checkBoxbatteryfull"
-		                 android:textColor="#ffffff"
-		                 android:text="@string/select" />
-		      <!--Trigger for Phone Office   -->
-		             <TextView
-		                 android:id="@+id/textviewoffice"
-		                 android:layout_width="230dip"
-		                 android:layout_height="50dip"
-		                 android:layout_alignParentLeft="true"
-		                 android:layout_below="@+id/textviewhome"
-		                 android:text="@string/office"
-		                 android:textAppearance="?android:attr/textAppearanceSmall"
-		                 android:textColor="#fff8dc"
-		                 android:textSize="20sp" />
-		             <CheckBox
-		                 android:id="@+id/checkBoxoffice"
-		                 android:layout_width="100dip"
-		                 android:layout_height="50dip"                 
-		                 android:layout_alignParentRight="true"
-		                 android:layout_below="@+id/checkBoxhome"
-		                 android:textColor="#ffffff"
-		                 android:text="@string/select" />
-		 <!--Trigger for Meeting  -->
-		             <TextView
-		                 android:id="@+id/textviewmeeting"
-		                 android:layout_width="230dip"
-		                 android:layout_height="50dip"
-		                 android:layout_alignParentLeft="true"
-		                 android:layout_below="@+id/textviewoffice"
-		                 android:text="@string/meeting"
-		                 android:textAppearance="?android:attr/textAppearanceSmall"
-		                 android:textColor="#fff8dc"
-		                 android:textSize="20sp" />
-		             <CheckBox
-		                 android:id="@+id/checkBoxmeeting"
-		                 android:layout_width="100dip"
-		                 android:layout_height="50dip"                 
-		                 android:layout_alignParentRight="true"
-		                 android:layout_below="@+id/checkBoxoffice"
-		                 android:textColor="#ffffff"
-		                 android:text="@string/select" />
 		             
 		 <!--Trigger for HeadPhone Connected  -->
 		             <TextView
@@ -138,7 +80,7 @@
 		                 android:layout_width="230dip"
 		                 android:layout_height="50dip"
 		                 android:layout_alignParentLeft="true"
-		                 android:layout_below="@+id/textviewmeeting"
+		                 android:layout_below="@+id/textviewbatteryfull"
 		                 android:text="@string/headphoneconnected"
 		                 android:textAppearance="?android:attr/textAppearanceSmall"
 		                 android:textColor="#fff8dc"
@@ -148,7 +90,7 @@
 		                 android:layout_width="100dip"
 		                 android:layout_height="50dip"                 
 		                 android:layout_alignParentRight="true"
-		                 android:layout_below="@+id/checkBoxmeeting"
+		                 android:layout_below="@+id/checkBoxbatteryfull"
 		                 android:textColor="#ffffff"
 		                 android:text="@string/select" />
 		 

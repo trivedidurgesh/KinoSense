@@ -57,8 +57,7 @@ public class NewActionRuleActivity extends Activity {
 			toggleButtonwifi.setFocusable(true);
 			toggleButtonwifi.requestFocus();
 			checkBoxsilent=(CheckBox)findViewById(R.id.checkBoxsilent);
-			checkBoxflight=(CheckBox)findViewById(R.id.checkBoxflight);
-			checkBoxbeep=(CheckBox)findViewById(R.id.checkBoxbeep);
+			checkBoxflight=(CheckBox)findViewById(R.id.checkBoxflight);			
 			checkBoxsms=(CheckBox)findViewById(R.id.checkBoxsms);
 			checkBoxalarm=(CheckBox)findViewById(R.id.checkBoxalarm);
 			checkBoxshownotification=(CheckBox)findViewById(R.id.checkBoxshownotification);
@@ -108,18 +107,7 @@ public class NewActionRuleActivity extends Activity {
 							toggleButtonwifi.setEnabled(false);
 						}						
 					}
-				});
-				checkBoxbeep.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						if(checkBoxbeep.isChecked()){							
-							actionString.replace(0, actionString.length(), "Put Phone on Beep");
-							checkenabled=false;
-							//buttonnext.setEnabled(true);
-							changeCheckBoxState(checkenabled);	
-							toggleButtonwifi.setEnabled(false);
-						}						
-					}
-				});
+				});				
 				checkBoxsms.setOnCheckedChangeListener(new OnCheckedChangeListener() {					
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						if(checkBoxsms.isChecked()){							
@@ -194,14 +182,15 @@ public class NewActionRuleActivity extends Activity {
 					}
 				});
 		
-	}
-	
+	}	
 	
 	public void changeCheckBoxState(boolean state) {
 			checkBoxsilent.setEnabled(state);
-			checkBoxflight.setEnabled(state);
-			checkBoxbeep.setEnabled(state);
-			checkBoxsms.setEnabled(state);		
+			checkBoxflight.setEnabled(state);			
+			checkBoxsms.setEnabled(state);
+			checkBoxalarm.setEnabled(state);
+			checkBoxshownotification.setEnabled(state);
+			checkBoxvibrate.setEnabled(state);
 	}
 
 }

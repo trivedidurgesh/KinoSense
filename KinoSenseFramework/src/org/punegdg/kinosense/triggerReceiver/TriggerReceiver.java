@@ -27,11 +27,12 @@ import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
 import org.punegdg.kinosense.eventsource.SensorService;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+
+// import android.annotation.SuppressLint;
 
 /**
  * Receives all the Kino Sense Triggers and runs the rules to invoke the corresponding actions
@@ -91,7 +92,6 @@ public class TriggerReceiver extends BroadcastReceiver
 	 * (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
-	@SuppressLint("NewApi")
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{

@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 
@@ -46,36 +47,41 @@ public class RuleReviewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Intent ruleReviewintent = getIntent();
 		final String str = ruleReviewintent.getStringExtra("param2");
-		//Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+		
+		//checkin for empty String
+		if(str != ""){
+		//Write the code for all the changes in Rule
+			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+		}
 		setContentView(R.layout.activity_reviewrule);
 
-		ruleList = (ListView) findViewById(R.id.rulelist);
-		ruleadapter_op = new RuleAdapter(getApplicationContext());
-		ruleadapter_op.open();
-		
-		//inserting A rule			
-		@SuppressWarnings("unused")
-		long id=ruleadapter_op.insertRule(str);	
-		cursor=ruleadapter_op.getAllRules();
-		int count=cursor.getCount();
-		int startrow=getFirstRowID();
-		Log.d("Cursor Count", ""+count); 
-		Log.d("FirstRowID", startrow+"");
+//		ruleList = (ListView) findViewById(R.id.rulelist);
+//		ruleadapter_op = new RuleAdapter(getApplicationContext());
+//		ruleadapter_op.open();
+//		
+//		//inserting A rule			
+//		@SuppressWarnings("unused")
+//		long id=ruleadapter_op.insertRule(str);	
+//		cursor=ruleadapter_op.getAllRules();
+//		int count=cursor.getCount();
+//		int startrow=getFirstRowID();
+//		Log.d("Cursor Count", ""+count); 
+//		Log.d("FirstRowID", startrow+"");
 //		for(int i=startrow;i<=count;i++){
 //			long iiid=i;
 //			ruleadapter_op.deleteRule(iiid);			
 //		}	
-		adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, myListItems);		
-               
-        if (cursor.moveToFirst()){
-        	myListItems.clear();
-        do {        	
-        	myListItems.add(cursor.getString(1));
-        	Log.d("RowID", cursor.getString(0));
-        	}while (cursor.moveToNext());
-        }
-		ruleList.setAdapter(adapter);
-		ruleadapter_op.close();
+//		adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, myListItems);		
+//               
+//        if (cursor.moveToFirst()){
+//        	myListItems.clear();
+//        do {        	
+//        	myListItems.add(cursor.getString(1));
+//        	Log.d("RowID", cursor.getString(0));
+//        	}while (cursor.moveToNext());
+//        }
+//		ruleList.setAdapter(adapter);
+//		ruleadapter_op.close();
 		
 		//Back Button to go back to the Main Menu
 		buttonreviewback=(Button)findViewById(R.id.buttonreviewback);
@@ -95,7 +101,7 @@ public class RuleReviewActivity extends Activity {
 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(RuleReviewActivity.this,NewActionRuleActivity.class);
+				Intent intent=new Intent(RuleReviewActivity.this,NewTriggerRuleActivity.class);
 				startActivity(intent);
 			}
 		});

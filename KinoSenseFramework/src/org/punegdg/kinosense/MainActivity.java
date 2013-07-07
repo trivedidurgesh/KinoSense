@@ -23,7 +23,6 @@ import org.punegdg.kinosense.triggers.UnlockTrigger;
 import org.punegdg.kinosense.triggers.WifiTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,11 +53,11 @@ public class MainActivity extends Activity
 	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
 	private BroadCastReceiverBasedTrigger signalTrigger = new SignalStrengthTrigger();
 
-
 	/*
 	 * Declaration of the widget items
 	 */
-	 Button buttonnewrule, buttonreviewrule;
+	Button buttonnewrule, buttonreviewrule;
+
 
 	/*
 	 * (non-Javadoc)
@@ -82,27 +81,29 @@ public class MainActivity extends Activity
 		Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
 		this.startService(startServiceIntent);
 
-		buttonnewrule=(Button)findViewById(R.id.buttonnewrule);
-		buttonreviewrule=(Button)findViewById(R.id.buttonreviewrule);
+		this.buttonnewrule = (Button)this.findViewById(R.id.buttonnewrule);
+		this.buttonreviewrule = (Button)this.findViewById(R.id.buttonreviewrule);
 		/*
 		 * Switching Activity to Creating new Rule
 		 */
-		buttonnewrule.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				Intent newruleintent=new Intent(MainActivity.this,NewActionRuleActivity.class);
-				startActivity(newruleintent);
+		this.buttonnewrule.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v)
+			{
+				Intent newruleintent = new Intent(MainActivity.this, NewTriggerRuleActivity.class);
+				MainActivity.this.startActivity(newruleintent);
 			}
 		});
 		/*
-		 * Switching Activity to Reviewing  Rule
+		 * Switching Activity to Reviewing Rule
 		 */
-		buttonreviewrule.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				Intent ruleReviewintent=new Intent(MainActivity.this,RuleReviewActivity.class);
-				ruleReviewintent.putExtra("param1","");
-				startActivity(ruleReviewintent);
+		this.buttonreviewrule.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v)
+			{
+				Intent ruleReviewintent = new Intent(MainActivity.this, RuleReviewActivity.class);
+				ruleReviewintent.putExtra("param1", "");
+				MainActivity.this.startActivity(ruleReviewintent);
 			}
 		});
 	}
@@ -137,5 +138,4 @@ public class MainActivity extends Activity
 		this.callTrigger.onDestroy();
 		this.signalTrigger.onDestroy();
 	}
-
 }

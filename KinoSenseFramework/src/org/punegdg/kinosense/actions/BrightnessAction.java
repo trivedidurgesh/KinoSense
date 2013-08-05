@@ -50,10 +50,8 @@ public class BrightnessAction implements AbstractAction
 
 	public void perform(Map<String, Object> brightnessData)
 	{
-
-		// Change the Brightness
-		String action = (String)brightnessData.get("action");
-		if ( "HIGH".equals(action) )
+		int action = (Integer)brightnessData.get(ActionIdConstants.ACTION_ID);
+		if ( ActionIdConstants.BRIGHTNESS_HIGH == action )
 		{
 			android.provider.Settings.System.putInt(this.context.getContentResolver(),
 					android.provider.Settings.System.SCREEN_BRIGHTNESS, 100);
@@ -61,7 +59,7 @@ public class BrightnessAction implements AbstractAction
 			 * Brightness Set to 100 as High
 			 */
 		}
-		else if ( "LOW".equals(action) )
+		else if ( ActionIdConstants.BRIGHTNESS_LOW == action )
 		{
 			android.provider.Settings.System.putInt(this.context.getContentResolver(),
 					android.provider.Settings.System.SCREEN_BRIGHTNESS, 10);

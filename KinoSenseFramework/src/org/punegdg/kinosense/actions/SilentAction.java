@@ -14,7 +14,6 @@ package org.punegdg.kinosense.actions;
 
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -34,32 +33,32 @@ public class SilentAction implements AbstractAction
 	 * Android Application Context
 	 */
 	private Context context = null;
+
+
 	/**
 	 * Audio Manager used to change the ringer volume
 	 */
-	
-	
 
 	public void onCreate(Context context)
 	{
-		this.context = context;		
+		this.context = context;
 	}
 
 
 	public void perform(Map<String, Object> data)
 	{
-		int lastVolume = 0; // Contains info of last volume		
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-		SharedPreferences.Editor editor = pref.edit();		
-		AudioManager audioManager =  (AudioManager)context.getSystemService(context.AUDIO_SERVICE);		
-		String action = (String)data.get("action");
-		if ( "Silence".equals(action) )
+		int lastVolume = 0; // Contains info of last volume
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this.context);
+		SharedPreferences.Editor editor = pref.edit();
+		AudioManager audioManager = (AudioManager)this.context.getSystemService(Context.AUDIO_SERVICE);
+		int action = (Integer)data.get(ActionIdConstants.ACTION_ID);
+		if ( ActionIdConstants.PHONE_SILENT == action )
 		{
 			lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 			editor.putInt("volume", lastVolume);
-                                                /* 
-		                  *Store device's volume level.
-		                  */
+			/*
+			 * Store device's volume level.
+			 */
 			audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI
 					+ AudioManager.FLAG_PLAY_SOUND);
 			/*
@@ -67,22 +66,21 @@ public class SilentAction implements AbstractAction
 			 */
 			editor.commit();
 		}
-		else if ( "Restore".equals(action) )
+		else if ( ActionIdConstants.PHONE_RINGING == action )
 		{
-			
 			int currentVolume = pref.getInt("volume", 7);
 			audioManager.setStreamVolume(AudioManager.STREAM_RING, currentVolume, AudioManager.FLAG_SHOW_UI
 					+ AudioManager.FLAG_PLAY_SOUND);
-                                                /*
+			/*
 			 * Device's volume restored.
 			 */
-		}	
+		}
 	}
 
 
 	public void onDestroy()
 	{
-		
+
 	}
 
 }

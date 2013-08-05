@@ -13,15 +13,6 @@
 package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.eventsource.SensorService;
-import org.punegdg.kinosense.triggers.BatteryTrigger;
-import org.punegdg.kinosense.triggers.HeadphoneTrigger;
-import org.punegdg.kinosense.triggers.IncomingCallTrigger;
-import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
-import org.punegdg.kinosense.triggers.SignalStrengthTrigger;
-import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
-import org.punegdg.kinosense.triggers.UnlockTrigger;
-import org.punegdg.kinosense.triggers.WifiTrigger;
-import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -40,23 +31,19 @@ import android.widget.Button;
  */
 public class MainActivity extends Activity
 {
-
-	/**
-	 * Power Connected Disconnected BroadCastReceiver
-	 */
-	private BroadCastReceiverBasedTrigger bbTrigger = new PowerConnectedTrigger();
-	private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
-	private final BroadCastReceiverBasedTrigger unTrigger = new UnlockTrigger();
-	private final BroadCastReceiverBasedTrigger batTrigger = new BatteryTrigger();
-	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
-	private BroadCastReceiverBasedTrigger hpTrigger = new HeadphoneTrigger();
-	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
-	private BroadCastReceiverBasedTrigger signalTrigger = new SignalStrengthTrigger();
+	// private final BroadCastReceiverBasedTrigger powerConnectedTrigger = new PowerConnectedTrigger();
+	// private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
+	// private final BroadCastReceiverBasedTrigger unlockTrigger = new UnlockTrigger();
+	// private final BroadCastReceiverBasedTrigger batteryTrigger = new BatteryTrigger();
+	// private final BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
+	// private final BroadCastReceiverBasedTrigger headphoneTrigger = new HeadphoneTrigger();
+	// private final BroadCastReceiverBasedTrigger incomingCallTrigger = new IncomingCallTrigger();
+	// private final BroadCastReceiverBasedTrigger signalStrengthTrigger = new SignalStrengthTrigger();
 
 	/*
 	 * Declaration of the widget items
 	 */
-	Button buttonnewrule, buttonreviewrule;
+	private Button buttonnewrule, buttonreviewrule;
 
 
 	/*
@@ -69,14 +56,14 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 
-		this.bbTrigger.onCreate(this.getApplicationContext());
-		this.simTrigger.onCreate(this.getApplicationContext());
-		this.unTrigger.onCreate(this.getApplicationContext());
-		this.batTrigger.onCreate(this.getApplicationContext());
-		this.wifiTrigger.onCreate(this.getApplicationContext());
-		this.hpTrigger.onCreate(this.getApplicationContext());
-		this.callTrigger.onCreate(this.getApplicationContext());
-		this.signalTrigger.onCreate(this.getApplicationContext());
+		// this.powerConnectedTrigger.onCreate(this.getApplicationContext());
+		// // this.simTrigger.onCreate(this.getApplicationContext());
+		// // this.unlockTrigger.onCreate(this.getApplicationContext());
+		// // this.batteryTrigger.onCreate(this.getApplicationContext());
+		// // this.wifiTrigger.onCreate(this.getApplicationContext());
+		// this.headphoneTrigger.onCreate(this.getApplicationContext());
+		// // this.incomingCallTrigger.onCreate(this.getApplicationContext());
+		// // this.cellularStrengthTrigger.onCreate(this.getApplicationContext());
 
 		Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
 		this.startService(startServiceIntent);
@@ -129,13 +116,13 @@ public class MainActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		this.bbTrigger.onDestroy();
-		this.wifiTrigger.onDestroy();
-		this.simTrigger.onDestroy();
-		this.unTrigger.onDestroy();
-		this.batTrigger.onDestroy();
-		this.hpTrigger.onDestroy();
-		this.callTrigger.onDestroy();
-		this.signalTrigger.onDestroy();
+		// this.powerConnectedTrigger.onDestroy();
+		// this.wifiTrigger.onDestroy();
+		// this.simTrigger.onDestroy();
+		// this.unlockTrigger.onDestroy();
+		// this.batteryTrigger.onDestroy();
+		// this.headphoneTrigger.onDestroy();
+		// this.incomingCallTrigger.onDestroy();
+		// this.signalStrengthTrigger.onDestroy();
 	}
 }

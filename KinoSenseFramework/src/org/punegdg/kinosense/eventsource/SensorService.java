@@ -12,13 +12,19 @@
  */
 package org.punegdg.kinosense.eventsource;
 
+import java.util.ArrayList;
+
+import org.punegdg.kinosense.rule.Rule;
+import org.punegdg.kinosense.rule.RuleManager;
 import org.punegdg.kinosense.triggers.BatteryTrigger;
 import org.punegdg.kinosense.triggers.FlipTrigger;
 import org.punegdg.kinosense.triggers.HeadphoneTrigger;
 import org.punegdg.kinosense.triggers.IncomingCallTrigger;
 import org.punegdg.kinosense.triggers.PowerConnectedTrigger;
 import org.punegdg.kinosense.triggers.ShakeTrigger;
+import org.punegdg.kinosense.triggers.SignalStrengthTrigger;
 import org.punegdg.kinosense.triggers.SimCardChangedTrigger;
+import org.punegdg.kinosense.triggers.TriggerIdConstants;
 import org.punegdg.kinosense.triggers.UnlockTrigger;
 import org.punegdg.kinosense.triggers.WifiTrigger;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
@@ -46,19 +52,24 @@ public class SensorService extends Service
 	private SensorManager sensorMgr = null;
 
 	/**
+	 * Rule list read from rule database
+	 */
+	private ArrayList<Rule> ruleList;
+
+	/**
 	 * The Trigger to handle the low level sensor events.
 	 */
+	private SensorBasedTrigger flipTrigger;
+	private SensorBasedTrigger shakeTrigger;
 
-	private SensorBasedTrigger flipTrigger = new FlipTrigger();
-	private SensorBasedTrigger shakeTrigger = new ShakeTrigger();
-
-	private BroadCastReceiverBasedTrigger batteryTrigger = new BatteryTrigger();
-	private BroadCastReceiverBasedTrigger headphoneTrigger = new HeadphoneTrigger();
-	private BroadCastReceiverBasedTrigger powerConnectedTrigger = new PowerConnectedTrigger();
-	private BroadCastReceiverBasedTrigger simcardChangedTrigger = new SimCardChangedTrigger();
-	private BroadCastReceiverBasedTrigger unlockTrigger = new UnlockTrigger();
-	private BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
-	private BroadCastReceiverBasedTrigger callTrigger = new IncomingCallTrigger();
+	private BroadCastReceiverBasedTrigger powerConnectedTrigger;
+	private BroadCastReceiverBasedTrigger simTrigger;
+	private BroadCastReceiverBasedTrigger unlockTrigger;
+	private BroadCastReceiverBasedTrigger batteryTrigger;
+	private BroadCastReceiverBasedTrigger wifiTrigger;
+	private BroadCastReceiverBasedTrigger headphoneTrigger;
+	private BroadCastReceiverBasedTrigger incomingCallTrigger;
+	private BroadCastReceiverBasedTrigger signalStrengthTrigger;
 
 
 	/*
@@ -69,18 +80,95 @@ public class SensorService extends Service
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.d("SensorService", "Service Started");
+		this.ruleList = RuleManager.getInstance().createRules();
+		Log.d("SensorService", "Service Started, initialising triggers");
 		this.sensorMgr = (SensorManager)this.getSystemService(SENSOR_SERVICE);
 
-		this.flipTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
-		this.shakeTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
-		this.batteryTrigger.onCreate(this.getApplicationContext());
-		this.headphoneTrigger.onCreate(this.getApplicationContext());
-		this.powerConnectedTrigger.onCreate(this.getApplicationContext());
-		this.simcardChangedTrigger.onCreate(this.getApplicationContext());
-		this.unlockTrigger.onCreate(this.getApplicationContext());
-		this.wifiTrigger.onCreate(this.getApplicationContext());
-		this.callTrigger.onCreate(this.getApplicationContext());
+		for ( Rule rule : this.ruleList )
+		{
+			switch ( rule.getTriggerId() )
+			{
+				case TriggerIdConstants.DEVICE_FLIPPED_DOWN:
+				case TriggerIdConstants.DEVICE_FLIPPED_UP:
+					if ( null == this.flipTrigger )
+					{
+						this.flipTrigger = new FlipTrigger();
+						this.flipTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
+					}
+					break;
+				case TriggerIdConstants.POWER_CONNECTED_TRIGGER:
+				case TriggerIdConstants.POWER_DISCONNECTED_TRIGGER:
+					if ( null == this.powerConnectedTrigger )
+					{
+						this.powerConnectedTrigger = new PowerConnectedTrigger();
+						this.powerConnectedTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.HEADPHONE_CONNECTED:
+				case TriggerIdConstants.HEADPHONE_DISCONNECTED:
+					if ( null == this.headphoneTrigger )
+					{
+						this.headphoneTrigger = new HeadphoneTrigger();
+						this.headphoneTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.DEVICE_SHAKING:
+					if ( null == this.shakeTrigger )
+					{
+						this.shakeTrigger = new ShakeTrigger();
+						this.shakeTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
+					}
+					break;
+				case TriggerIdConstants.INCOMING_CALL:
+					if ( null == this.incomingCallTrigger )
+					{
+						this.incomingCallTrigger = new IncomingCallTrigger();
+						this.incomingCallTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.PHONE_LOCKED:
+				case TriggerIdConstants.PHONE_UNLOCKED:
+					if ( null == this.unlockTrigger )
+					{
+						this.unlockTrigger = new UnlockTrigger();
+						this.unlockTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.SIGNAL_STRENGTH_GOOD:
+				case TriggerIdConstants.SIGNAL_STRENGTH_LOW:
+					if ( null == this.signalStrengthTrigger )
+					{
+						this.signalStrengthTrigger = new SignalStrengthTrigger();
+						this.signalStrengthTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.BATTERY_LOW:
+				case TriggerIdConstants.BATTERY_NORMAL:
+					if ( null == this.batteryTrigger )
+					{
+						this.batteryTrigger = new BatteryTrigger();
+						this.batteryTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.SIM_INSERTED:
+				case TriggerIdConstants.SIM_REMOVED:
+					if ( null == this.simTrigger )
+					{
+						this.simTrigger = new SimCardChangedTrigger();
+						this.simTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				case TriggerIdConstants.WIFI_CONNECTED:
+					if ( null == this.wifiTrigger )
+					{
+						this.wifiTrigger = new WifiTrigger();
+						this.wifiTrigger.onCreate(this.getApplicationContext());
+					}
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 
@@ -98,10 +186,11 @@ public class SensorService extends Service
 		this.batteryTrigger.onDestroy();
 		this.headphoneTrigger.onDestroy();
 		this.powerConnectedTrigger.onDestroy();
-		this.simcardChangedTrigger.onDestroy();
+		this.simTrigger.onDestroy();
 		this.unlockTrigger.onDestroy();
 		this.wifiTrigger.onDestroy();
-		this.callTrigger.onDestroy();
+		this.incomingCallTrigger.onDestroy();
+		this.signalStrengthTrigger.onDestroy();
 	}
 
 

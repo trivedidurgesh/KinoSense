@@ -12,25 +12,27 @@
  */
 package org.punegdg.kinosense.triggerReceiver;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.punegdg.kinosense.actions.AbstractAction;
-import org.punegdg.kinosense.actions.AlarmAction;
+import org.punegdg.kinosense.actions.ActionIdConstants;
 import org.punegdg.kinosense.actions.BrightnessAction;
 import org.punegdg.kinosense.actions.FlightModeAction;
-import org.punegdg.kinosense.actions.MusicAction;
 import org.punegdg.kinosense.actions.NotificationAction;
 import org.punegdg.kinosense.actions.SilentAction;
 import org.punegdg.kinosense.actions.SmsAction;
 import org.punegdg.kinosense.actions.VibrateAction;
 import org.punegdg.kinosense.actions.WifiAction;
 import org.punegdg.kinosense.eventsource.SensorService;
+import org.punegdg.kinosense.rule.Rule;
+import org.punegdg.kinosense.rule.RuleManager;
+import org.punegdg.kinosense.triggers.TriggerIdConstants;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 // import android.annotation.SuppressLint;
 
@@ -46,46 +48,134 @@ public class TriggerReceiver extends BroadcastReceiver
 
 	public static Boolean callReceived = false;
 	public static Boolean smsSent = false;
+
+	private Context context;
+
+	// /**
+	// * Vibrate Action
+	// */
+	// private AbstractAction vibrateAction = new VibrateAction();
+	//
+	// /**
+	// * Wifi Action
+	// */
+	//
+	// private AbstractAction wifiAction = new WifiAction();
+	//
+	// /**
+	// * Flight Mode Action
+	// */
+	// private AbstractAction flightaction = new FlightModeAction();
+	//
+	// /**
+	// * Alarm Action
+	// * */
+	// private AbstractAction alarmAction = new AlarmAction();
+	//
+	// /**
+	// * SMS Action
+	// */
+	// private AbstractAction smsAction = new SmsAction();
+	//
+	// /**
+	// * Notification Action
+	// */
+	// private AbstractAction notifAction = new NotificationAction();
+
 	/**
-	 * Silent Action
+	 * Rule list read from rule database
 	 */
-	private AbstractAction silentAction = new SilentAction();
+	private ArrayList<Rule> ruleList;
+
 
 	/**
-	 * Vibrate Action
+	 * 
 	 */
-	private AbstractAction vibrateAction = new VibrateAction();
+	public TriggerReceiver()
+	{
+		this.ruleList = RuleManager.getInstance().createRules();
+	}
+
+
+	private void findAndPerformAction(int triggerId)
+	{
+		for ( Rule rule : this.ruleList )
+		{
+			if ( triggerId == rule.getTriggerId() )
+			{
+				this.performAction(rule);
+			}
+		}
+	}
+
 
 	/**
-	 * Wifi Action
+	 * @param actionId
 	 */
-
-	private AbstractAction wifiAction = new WifiAction();
-
-	/**
-	 * Flight Mode Action
-	 */
-	private AbstractAction flightaction = new FlightModeAction();
-
-	/**
-	 * Alarm Action
-	 * */
-	private AbstractAction alarmAction = new AlarmAction();
-
-	/**
-	 * SMS Action
-	 */
-	private AbstractAction smsAction = new SmsAction();
-
-	/**
-	 * Brightness Action
-	 */
-	private AbstractAction brightnessAction = new BrightnessAction();
-
-	/**
-	 * Notification Action
-	 */
-	private AbstractAction notifAction = new NotificationAction();
+	private void performAction(Rule rule)
+	{
+		int actionId = rule.getActionId();
+		switch ( actionId )
+		{
+			case ActionIdConstants.PHONE_RINGING:
+			case ActionIdConstants.PHONE_SILENT:
+				AbstractAction silentAction = new SilentAction();
+				silentAction.onCreate(this.context);
+				Map<String, Object> silentData = new HashMap<String, Object>();
+				silentData.put(ActionIdConstants.ACTION_ID, actionId);
+				silentAction.perform(silentData);
+				break;
+			case ActionIdConstants.BRIGHTNESS_HIGH:
+			case ActionIdConstants.BRIGHTNESS_LOW:
+				AbstractAction brightnessAction = new BrightnessAction();
+				brightnessAction.onCreate(this.context);
+				Map<String, Object> brightnessData = new HashMap<String, Object>();
+				brightnessData.put(ActionIdConstants.ACTION_ID, actionId);
+				brightnessAction.perform(brightnessData);
+				break;
+			case ActionIdConstants.NOTIFICATION:
+				AbstractAction notifAction = new NotificationAction();
+				notifAction.onCreate(this.context);
+				Map<String, Object> notifyData = new HashMap<String, Object>();
+				notifyData.put("message", rule.getAdditionalInformation());
+				notifAction.perform(notifyData);
+				break;
+			case ActionIdConstants.ALARM_SET:
+				break;
+			case ActionIdConstants.FLIGHT_MODE_OFF:
+			case ActionIdConstants.FLIGHT_MODE_ON:
+				AbstractAction flightaction = new FlightModeAction();
+				flightaction.onCreate(this.context);
+				Map<String, Object> flightmodeData = new HashMap<String, Object>();
+				flightmodeData.put("action", actionId);
+				flightaction.perform(flightmodeData);
+				break;
+			case ActionIdConstants.SMS_SEND:
+				AbstractAction smsAction = new SmsAction();
+				smsAction.onCreate(this.context);
+				Map<String, Object> smsData = new HashMap<String, Object>();
+				smsData.put("action", actionId);
+				smsData.put("message", rule.getAdditionalInformation());
+				// FIXME Phone Number to be set through UI
+				smsAction.perform(smsData);
+				break;
+			case ActionIdConstants.VIBRATE_ACTION:
+				AbstractAction vibrateAction = new VibrateAction();
+				vibrateAction.onCreate(this.context);
+				vibrateAction.perform(null);
+				break;
+			case ActionIdConstants.WIFI_OFF:
+			case ActionIdConstants.WIFI_ON:
+				AbstractAction wifiAction = new WifiAction();
+				wifiAction.onCreate(this.context);
+				Map<String, Object> wifiData = new HashMap<String, Object>();
+				wifiData.put("action", actionId);
+				wifiAction.perform(wifiData);
+				break;
+			default:
+				break;
+		}
+	}
 
 
 	/*
@@ -95,155 +185,116 @@ public class TriggerReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
+		this.context = context;
+
 		if ( intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED) )
 		{
 			Intent bootIntent = new Intent(context, SensorService.class);
 			context.startService(bootIntent);
 		}
 
-		// -----------------------------
-		// FIXME Fix the following
-		// -----------------------------
-		this.silentAction.onCreate(context);
-		this.vibrateAction.onCreate(context);
-		this.wifiAction.onCreate(context);
-		this.flightaction.onCreate(context);
-		this.alarmAction.onCreate(context);
-		this.smsAction.onCreate(context);
-		this.brightnessAction.onCreate(context);
-		this.notifAction.onCreate(context);
-		// -----------------------------
+		int triggerId = intent.getIntExtra(TriggerIdConstants.TIGGER_ID, -1);
 
-		String trigger = intent.getStringExtra("trigger");
+		this.findAndPerformAction(triggerId);
 
-		if ( "FLIPPED_DOWN".equals(trigger) )// Silent ON
-		{
-			Map<String, Object> silentData = new HashMap<String, Object>();
-			silentData.put("action", "Silence");
-			this.silentAction.perform(silentData);
-			this.vibrateAction.perform(null);
-		}
-		if ( "FLIPPED_UP".equals(trigger) )// Silent OFF
-		{
-			Map<String, Object> silentData = new HashMap<String, Object>();
-			silentData.put("action", "Restore");
-			this.silentAction.perform(silentData);
-		}
-		if ( "POWER_CONNECTED".equals(trigger) )// Display Brightness Full
-		{
-			Map<String, Object> brightnessData = new HashMap<String, Object>();
-			brightnessData.put("action", "HIGH");
-			this.brightnessAction.perform(brightnessData);
-		}
-		if ( "POWER_DISCONNECTED".equals(trigger) )// Display Brightness Low
-		{
-			Map<String, Object> brightnessData = new HashMap<String, Object>();
-			brightnessData.put("action", "LOW");
-			this.brightnessAction.perform(brightnessData);
-		}
-		if ( "WIFI_FOUND".equals(trigger) )// Toast of SSID
-		{
-			String wifiInfo = intent.getStringExtra("wifiData");
-			String[] InfoParts = wifiInfo.split(",");
-			wifiInfo = InfoParts[0];
-			// Showing only SSID
-			Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
-		}
-		if ( "SIMCARD_CHANGED".equals(trigger) )// Send SMS
-		{
-			Map<String, Object> smsData = new HashMap<String, Object>();
-			if ( !smsSent )
-			{
-				smsData.put("action", "Sim Card Changed !");
-				smsData.put("number", "8179373415");
-				// FIXME Phone Number to be set through UI
-				// this.smsAction.perform(smsData);
-				smsSent = true;
-			}
-		}
-		if ( "PHONE_UNLOCKED".equals(trigger) )// Turn On WIFI
-		{
-			Map<String, Object> wifiData = new HashMap<String, Object>();
-			wifiData.put("action", "ON");
-			this.wifiAction.perform(wifiData);
-		}
-		if ( "PHONE_LOCKED".equals(trigger) )// Turn Off WIFI
-		{
-			Map<String, Object> wifiData = new HashMap<String, Object>();
-			wifiData.put("action", "OFF");
-			this.wifiAction.perform(wifiData);
-		}
-		if ( "BATTERY_LOW".equals(trigger) )// Notify with Brightness Low, Wifi Off
-		{
-			Map<String, Object> wifiData = new HashMap<String, Object>();
-			Map<String, Object> brightnessData = new HashMap<String, Object>();
-			Map<String, Object> notifyData = new HashMap<String, Object>();
-			notifyData.put("message", "Low Battery ! Wifi has been Turned Off");
-			this.notifAction.perform(notifyData);
-			brightnessData.put("action", "LOW");
-			this.brightnessAction.perform(brightnessData);
-			wifiData.put("action", "OFF");
-			this.wifiAction.perform(wifiData);
-		}
-		if ( "BATTERY_FULL".equals(trigger) )// Notify with Brightness High,Wifi On
-		{
-			Map<String, Object> wifiData = new HashMap<String, Object>();
-			Map<String, Object> brightnessData = new HashMap<String, Object>();
-			Map<String, Object> notifyData = new HashMap<String, Object>();
-			notifyData.put("message", "Battery Level Restored !");
-			this.notifAction.perform(notifyData);
-			brightnessData.put("action", "HIGH");
-			this.brightnessAction.perform(brightnessData);
-			wifiData.put("action", "ON");
-			this.wifiAction.perform(wifiData);
-		}
-		if ( "HEADSET_CONNECTED".equals(trigger) )// Start Music
-		{
-			context.startService(new Intent(context, MusicAction.class));
-		}
-		if ( "HEADSET_DISCONNECTED".equals(trigger) )// Stop Music
-		{
-			context.stopService(new Intent(context, MusicAction.class));
-		}
-		if ( "SHAKING".equals(trigger) )// Flight Mode Toggle
-		{
-			Map<String, Object> flightmodeData = new HashMap<String, Object>();
-			flightmodeData.put("action", "ON");
-			// this.flightaction.perform(flightmodeData);
-		}
-		if ( "INCOMING_CALL".equals(trigger) )// Music Pause, Notify
-		{
-			Map<String, Object> notifyData = new HashMap<String, Object>();
-			final String mNumber = intent.getStringExtra("number");
-
-			if ( !callReceived )
-			{
-				String mAction = intent.getStringExtra("action");
-				if ( mAction.equals("rejected") )
-				{
-					notifyData.put("message", "Rejected call from  " + mNumber);
-					this.notifAction.perform(notifyData);
-					callReceived = false;
-				}
-				else if ( mAction.equals("received") )
-				{
-					notifyData.put("message", "Received call from  " + mNumber);
-					this.notifAction.perform(notifyData);
-					callReceived = false;
-				}
-				else if ( mAction.equals("disconnected") )
-				{
-					notifyData.put("message", "Disconnected call from  " + mNumber);
-					this.notifAction.perform(notifyData);
-					callReceived = false;
-				}
-				else
-				{
-					callReceived = true;
-				}
-			}
-		}
+		// String trigger = intent.getStringExtra("trigger");
+		//
+		// if ( "WIFI_FOUND".equals(trigger) )// Toast of SSID
+		// {
+		// String wifiInfo = intent.getStringExtra("wifiData");
+		// String[] InfoParts = wifiInfo.split(",");
+		// wifiInfo = InfoParts[0];
+		// // Showing only SSID
+		// Toast.makeText(context, wifiInfo, Toast.LENGTH_LONG).show();
+		// }
+		// if ( "SIMCARD_CHANGED".equals(trigger) )// Send SMS
+		// {
+		// Map<String, Object> smsData = new HashMap<String, Object>();
+		// if ( !smsSent )
+		// {
+		// smsData.put("action", "Sim Card Changed !");
+		// smsData.put("number", "8179373415");
+		// // FIXME Phone Number to be set through UI
+		// // this.smsAction.perform(smsData);
+		// smsSent = true;
+		// }
+		// }
+		// if ( "PHONE_UNLOCKED".equals(trigger) )// Turn On WIFI
+		// {
+		// Map<String, Object> wifiData = new HashMap<String, Object>();
+		// wifiData.put("action", "ON");
+		// this.wifiAction.perform(wifiData);
+		// }
+		// if ( "PHONE_LOCKED".equals(trigger) )// Turn Off WIFI
+		// {
+		// Map<String, Object> wifiData = new HashMap<String, Object>();
+		// wifiData.put("action", "OFF");
+		// this.wifiAction.perform(wifiData);
+		// }
+		// if ( "BATTERY_LOW".equals(trigger) )// Notify with Brightness Low, Wifi Off
+		// {
+		// Map<String, Object> wifiData = new HashMap<String, Object>();
+		// Map<String, Object> brightnessData = new HashMap<String, Object>();
+		// Map<String, Object> notifyData = new HashMap<String, Object>();
+		// notifyData.put("message", "Low Battery ! Wifi has been Turned Off");
+		// this.notifAction.perform(notifyData);
+		// brightnessData.put("action", "LOW");
+		// // this.brightnessAction.perform(brightnessData);
+		// wifiData.put("action", "OFF");
+		// this.wifiAction.perform(wifiData);
+		// }
+		// if ( "BATTERY_FULL".equals(trigger) )// Notify with Brightness High,Wifi On
+		// {
+		// Map<String, Object> wifiData = new HashMap<String, Object>();
+		// Map<String, Object> brightnessData = new HashMap<String, Object>();
+		// Map<String, Object> notifyData = new HashMap<String, Object>();
+		// notifyData.put("message", "Battery Level Restored !");
+		// this.notifAction.perform(notifyData);
+		// brightnessData.put("action", "HIGH");
+		// // this.brightnessAction.perform(brightnessData);
+		// wifiData.put("action", "ON");
+		// this.wifiAction.perform(wifiData);
+		// }
+		// if ( "HEADSET_CONNECTED".equals(trigger) )// Start Music
+		// {
+		// context.startService(new Intent(context, MusicAction.class));
+		// }
+		// if ( "HEADSET_DISCONNECTED".equals(trigger) )// Stop Music
+		// {
+		// context.stopService(new Intent(context, MusicAction.class));
+		// }
+		// if ( "INCOMING_CALL".equals(trigger) )// Music Pause, Notify
+		// {
+		// Map<String, Object> notifyData = new HashMap<String, Object>();
+		// final String mNumber = intent.getStringExtra("number");
+		//
+		// if ( !callReceived )
+		// {
+		// String mAction = intent.getStringExtra("action");
+		// if ( mAction.equals("rejected") )
+		// {
+		// notifyData.put("message", "Rejected call from  " + mNumber);
+		// this.notifAction.perform(notifyData);
+		// callReceived = false;
+		// }
+		// else if ( mAction.equals("received") )
+		// {
+		// notifyData.put("message", "Received call from  " + mNumber);
+		// this.notifAction.perform(notifyData);
+		// callReceived = false;
+		// }
+		// else if ( mAction.equals("disconnected") )
+		// {
+		// notifyData.put("message", "Disconnected call from  " + mNumber);
+		// this.notifAction.perform(notifyData);
+		// callReceived = false;
+		// }
+		// else
+		// {
+		// callReceived = true;
+		// }
+		// }
+		// }
 
 	}
-
 }

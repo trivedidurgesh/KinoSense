@@ -77,8 +77,7 @@ public class FlipTrigger implements SensorBasedTrigger, SensorEventListener
 	 */
 	public void onDestroy()
 	{
-		sensorManager.unregisterListener(getSensorEventListener());
-
+		this.sensorManager.unregisterListener(this.getSensorEventListener());
 	}
 
 
@@ -102,11 +101,11 @@ public class FlipTrigger implements SensorBasedTrigger, SensorEventListener
 		float zAxis = event.values[2];
 		if ( zAxis >= 0 )
 		{
-			flippedUp();
+			this.flippedUp();
 		}
 		else
 		{
-			flippedDown();
+			this.flippedDown();
 		}
 
 	}
@@ -117,13 +116,15 @@ public class FlipTrigger implements SensorBasedTrigger, SensorEventListener
 	 */
 	private void flippedUp()
 	{
-		if ( isFlippedDown == true )
+		if ( this.isFlippedDown == true )
 		{
-			isFlippedDown = false;
-			Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+			this.isFlippedDown = false;
 
-			intent.putExtra("trigger", "FLIPPED_UP");
-			context.sendBroadcast(intent);
+			Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+			// intent.putExtra("trigger", "FLIPPED_UP");
+			intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_FLIPPED_UP);
+
+			this.context.sendBroadcast(intent);
 		}
 
 	}
@@ -134,13 +135,14 @@ public class FlipTrigger implements SensorBasedTrigger, SensorEventListener
 	 */
 	private void flippedDown()
 	{
-		if ( isFlippedDown == false )
+		if ( this.isFlippedDown == false )
 		{
-			isFlippedDown = true;
+			this.isFlippedDown = true;
 			Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+			// intent.putExtra("trigger", "FLIPPED_DOWN");
+			intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_FLIPPED_DOWN);
 
-			intent.putExtra("trigger", "FLIPPED_DOWN");
-			context.sendBroadcast(intent);
+			this.context.sendBroadcast(intent);
 		}
 	}
 

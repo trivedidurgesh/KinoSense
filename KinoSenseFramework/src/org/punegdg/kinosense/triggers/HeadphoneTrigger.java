@@ -17,6 +17,7 @@ import android.content.IntentFilter;
 
 public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
 {
+
 	/**
 	 * Android's Application Context
 	 */
@@ -28,7 +29,7 @@ public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastRece
 		this.context = context;
 		IntentFilter inf = new IntentFilter();
 		inf.addAction(Intent.ACTION_HEADSET_PLUG);
-		context.registerReceiver(getBroadCastReceiver(), inf);
+		context.registerReceiver(this.getBroadCastReceiver(), inf);
 	}
 
 
@@ -40,7 +41,7 @@ public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastRece
 
 	public void onDestroy()
 	{
-		context.unregisterReceiver(getBroadCastReceiver());
+		this.context.unregisterReceiver(this.getBroadCastReceiver());
 	}
 
 

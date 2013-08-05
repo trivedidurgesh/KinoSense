@@ -1,7 +1,6 @@
-
 /**
  * Copyright 2012 Pune-GDG (http://meetup.com/pune-gdg)
-
+ * 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,23 +12,18 @@
  * specific language governing permissions and limitations under the License.
  */
 
-
 package org.punegdg.kinosense.triggers;
 
 import org.punegdg.kinosense.triggerReceiver.TriggerReceiver;
-
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
-
 import android.widget.Toast;
-
 
 /**
  * This Trigger is for the action when Cellular Signal Strength is below predefined range
@@ -56,12 +50,11 @@ public class SignalStrengthTrigger extends BroadcastReceiver implements BroadCas
 		this.context = context;
 		this.telemgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 
-		IntentFilter filter = new IntentFilter();
-		
-		//filter.addAction(Intent.ACTION_NETWORK_LOW);
-		filter.addAction(Intent.ACTION_MANAGE_NETWORK_USAGE);
-		
-		context.registerReceiver(this.getBroadCastReceiver(), filter);
+		// IntentFilter filter = new IntentFilter();
+		// filter.addAction(Intent.ACTION_NETWORK_LOW);
+		// filter.addAction(Intent.ACTION_MANAGE_NETWORK_USAGE);
+		// context.registerReceiver(this.getBroadCastReceiver(), filter);
+
 		PhoneStateListener signalListener = new PhoneStateListener() {
 			@Override
 			public void onSignalStrengthsChanged(SignalStrength signalStrength)
@@ -69,7 +62,7 @@ public class SignalStrengthTrigger extends BroadcastReceiver implements BroadCas
 				super.onSignalStrengthsChanged(signalStrength);
 				int strength = signalStrength.getGsmSignalStrength();
 
-				if ( strength < 8  )
+				if ( strength < 8 )
 				{
 					Toast.makeText(SignalStrengthTrigger.this.context, "Poor Range ", Toast.LENGTH_SHORT).show();
 				}
@@ -99,17 +92,14 @@ public class SignalStrengthTrigger extends BroadcastReceiver implements BroadCas
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-
-	  
-	    if ( intent.getExtras().getInt("state") == 0 )
+		if ( intent.getExtras().getInt("state") == 0 )
 		{
 			Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
 			bcSIntent.putExtra("trigger", "GOOD_SIGNAL_STRENGHTH");
 			context.sendBroadcast(bcSIntent);
 
 		}
-		
-	    	 else
+		else
 		{
 			Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
 			bcSIntent.putExtra("trigger", "LOW_SIGNAL_STRENGTH");

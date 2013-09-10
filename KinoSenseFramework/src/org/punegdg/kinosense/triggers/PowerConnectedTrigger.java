@@ -77,7 +77,7 @@ public class PowerConnectedTrigger extends BroadcastReceiver implements BroadCas
 	 * (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
-
+	@Override
 	public void onReceive(Context context, Intent intent)
 	{
 		Log.d("BroadCastReceiver", intent.toString());
@@ -87,14 +87,16 @@ public class PowerConnectedTrigger extends BroadcastReceiver implements BroadCas
 		if ( action.equals(Intent.ACTION_POWER_CONNECTED) )
 		{
 			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcIntent.putExtra("trigger", "POWER_CONNECTED");
+			// bcIntent.putExtra("trigger", "POWER_CONNECTED");
+			bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.POWER_CONNECTED_TRIGGER);
 			context.sendBroadcast(bcIntent);
 
 		}
 		else if ( action.equals(Intent.ACTION_POWER_DISCONNECTED) )
 		{
 			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcIntent.putExtra("trigger", "POWER_DISCONNECTED");
+			// bcIntent.putExtra("trigger", "POWER_DISCONNECTED");
+			bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.POWER_DISCONNECTED_TRIGGER);
 			context.sendBroadcast(bcIntent);
 		}
 	}

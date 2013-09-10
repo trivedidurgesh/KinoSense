@@ -3,15 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="bottom"
-    android:background="@drawable/back"
-    android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" >
+    android:background="@drawable/back4"
+    android:orientation="vertical">
 
      <RelativeLayout
          android:id="@+id/listpanel"
          android:layout_width="fill_parent"
-         android:layout_height="420dp" >
+         android:layout_height="420dp"
+         android:layout_gravity="fill_horizontal" >
                
 			<TextView
                  android:id="@+id/textviewRule"
@@ -19,6 +18,8 @@
                  android:layout_height="50dip" 
                  android:text="@string/rulelist"
                  android:gravity="center_horizontal"
+			    android:layout_alignParentRight="true"
+			    android:background="@drawable/back5"
                  android:textAppearance="?android:attr/textAppearanceLarge"
                  android:textColor="#000000"
                  android:textSize="32sp" />
@@ -38,6 +39,7 @@
              <RelativeLayout
                  android:id="@+id/buttompanel"
                  android:layout_width="fill_parent"
+				 android:background="@drawable/back5"
                  android:layout_height="wrap_content" >
                
                  <Button

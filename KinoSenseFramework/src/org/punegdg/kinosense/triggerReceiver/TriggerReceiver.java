@@ -186,7 +186,7 @@ public class TriggerReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent)
 	{
 		this.context = context;
-
+		ruleList = RuleManager.getInstance().getRules(context);
 		if ( intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED) )
 		{
 			Intent bootIntent = new Intent(context, SensorService.class);

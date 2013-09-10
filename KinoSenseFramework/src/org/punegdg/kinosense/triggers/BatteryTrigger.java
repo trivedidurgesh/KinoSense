@@ -73,13 +73,15 @@ public class BatteryTrigger extends BroadcastReceiver implements BroadCastReceiv
 		if ( level > 20 )
 		{
 			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcIntent.putExtra("trigger", "BATTERY_OKAY");
+			// bcIntent.putExtra("trigger", "BATTERY_OKAY");
+			bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.BATTERY_NORMAL);
 			context.sendBroadcast(bcIntent);
 		}
 		else
 		{
 			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcIntent.putExtra("trigger", "BATTERY_LOW");
+			// bcIntent.putExtra("trigger", "BATTERY_LOW");
+			bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.BATTERY_LOW);
 			context.sendBroadcast(bcIntent);
 		}
 

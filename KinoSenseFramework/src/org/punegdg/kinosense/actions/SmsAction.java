@@ -19,9 +19,7 @@ import android.content.Context;
 import android.telephony.SmsManager;
 
 /**
- * Action to Send an SMS to a given Number automatically
- * 
- * <code>
+ * Action to Send an SMS to a given Number automatically <code>
  * 	<ul>	
  * 		    AbstractAction action = new SmsAction();
  * 		<br> Map smsdata = new HashMap();
@@ -32,58 +30,44 @@ import android.telephony.SmsManager;
  * </code>
  * 
  * @author "Ashish Kalbhor"<ashish.kalbhor@gmail.com>
- * 
  */
 
-public class SmsAction implements AbstractAction
-{
+public class SmsAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
+    /**
+     * SmsManager to Send an SMS from device
+     */
+    SmsManager smsmgr = null;
 
-	/**
-	 * SmsManager to Send an SMS from device
-	 */
-	SmsManager smsmgr = null;
+    public void onCreate(final Context context) {
+        this.context = context;
+        this.smsmgr = SmsManager.getDefault();
+    }
 
+    public void perform(final Map<String, Object> smsData) {
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		this.smsmgr = SmsManager.getDefault();
-	}
+        /**
+         * Type of Action will decide the Text message to be sent
+         */
+        String action = (String) smsData.get("action");
+        String mNumber = (String) smsData.get("number");
 
+        if ("IsBusy".equals(action)) {
+            this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm busy right now. Will call you back later", null, null);
+        } else if ("IsDriving".equals(action)) {
+            this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm driving right now. Will call you back later", null, null);
+        } else {
+            this.smsmgr.sendTextMessage(mNumber, null, action, null, null);
+        }
+        // More such Action Messages to be added.
+    }
 
-	public void perform(Map<String, Object> smsData)
-	{
-
-		/**
-		 * Type of Action will decide the Text message to be sent
-		 */
-		String action = (String)smsData.get("action");
-		String mNumber = (String)smsData.get("number");
-
-		if ( "IsBusy".equals(action) )
-		{
-			this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm busy right now. Will call you back later", null, null);
-		}
-		else if ( "IsDriving".equals(action) )
-		{
-			this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm driving right now. Will call you back later", null, null);
-		}
-		else
-		{
-			this.smsmgr.sendTextMessage(mNumber, null, action, null, null);
-		}
-		// More such Action Messages to be added.
-	}
-
-
-	public void onDestroy()
-	{
-		this.smsmgr = null;
-	}
+    public void onDestroy() {
+        this.smsmgr = null;
+    }
 
 }

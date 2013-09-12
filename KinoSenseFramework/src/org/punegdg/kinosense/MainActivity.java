@@ -30,14 +30,6 @@ import android.widget.Button;
  */
 
 public class MainActivity extends Activity {
-    // private final BroadCastReceiverBasedTrigger powerConnectedTrigger = new PowerConnectedTrigger();
-    // private final BroadCastReceiverBasedTrigger simTrigger = new SimCardChangedTrigger();
-    // private final BroadCastReceiverBasedTrigger unlockTrigger = new UnlockTrigger();
-    // private final BroadCastReceiverBasedTrigger batteryTrigger = new BatteryTrigger();
-    // private final BroadCastReceiverBasedTrigger wifiTrigger = new WifiTrigger();
-    // private final BroadCastReceiverBasedTrigger headphoneTrigger = new HeadphoneTrigger();
-    // private final BroadCastReceiverBasedTrigger incomingCallTrigger = new IncomingCallTrigger();
-    // private final BroadCastReceiverBasedTrigger signalStrengthTrigger = new SignalStrengthTrigger();
 
     /*
      * Declaration of the widget items
@@ -53,15 +45,6 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
-
-        // this.powerConnectedTrigger.onCreate(this.getApplicationContext());
-        // // this.simTrigger.onCreate(this.getApplicationContext());
-        // // this.unlockTrigger.onCreate(this.getApplicationContext());
-        // // this.batteryTrigger.onCreate(this.getApplicationContext());
-        // // this.wifiTrigger.onCreate(this.getApplicationContext());
-        // this.headphoneTrigger.onCreate(this.getApplicationContext());
-        // // this.incomingCallTrigger.onCreate(this.getApplicationContext());
-        // // this.cellularStrengthTrigger.onCreate(this.getApplicationContext());
 
         Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
         this.startService(startServiceIntent);
@@ -111,14 +94,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        // this.powerConnectedTrigger.onDestroy();
-        // this.wifiTrigger.onDestroy();
-        // this.simTrigger.onDestroy();
-        // this.unlockTrigger.onDestroy();
-        // this.batteryTrigger.onDestroy();
-        // this.headphoneTrigger.onDestroy();
-        // this.incomingCallTrigger.onDestroy();
-        // this.signalStrengthTrigger.onDestroy();
     }
 
     @Override

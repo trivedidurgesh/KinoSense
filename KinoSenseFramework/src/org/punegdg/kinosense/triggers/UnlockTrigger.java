@@ -16,42 +16,32 @@ import android.content.IntentFilter;
 public class UnlockTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
 
 {
-	private Context context = null;
+    private Context context = null;
 
+    public void onCreate(final Context context) {
 
-	public void onCreate(Context context)
-	{
+        this.context = context;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        context.registerReceiver(this.getBroadCastReceiver(), filter);
 
-		this.context = context;
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_USER_PRESENT);
-		context.registerReceiver(this.getBroadCastReceiver(), filter);
+    }
 
-	}
+    public BroadcastReceiver getBroadCastReceiver() {
+        // TODO Auto-generated method stub
+        return this;
+    }
 
+    public void onDestroy() {
+        this.context.unregisterReceiver(this.getBroadCastReceiver());
+    }
 
-	public BroadcastReceiver getBroadCastReceiver()
-	{
-		// TODO Auto-generated method stub
-		return this;
-	}
-
-
-	public void onDestroy()
-	{
-		this.context.unregisterReceiver(this.getBroadCastReceiver());
-
-	}
-
-
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-		Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-		// bcIntent.putExtra("trigger", "PHONE_UNLOCKED");
-		bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.PHONE_UNLOCKED);
-		context.sendBroadcast(bcIntent);
-
-	}
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+        // bcIntent.putExtra("trigger", "PHONE_UNLOCKED");
+        bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.PHONE_UNLOCKED);
+        context.sendBroadcast(bcIntent);
+    }
 
 }

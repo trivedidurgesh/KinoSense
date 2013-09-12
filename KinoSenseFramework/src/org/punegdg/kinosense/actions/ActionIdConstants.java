@@ -14,30 +14,27 @@ package org.punegdg.kinosense.actions;
 
 /**
  * @author saurabhg
- * 
  */
-public class ActionIdConstants
-{
+public class ActionIdConstants {
 
-	/**
-	 * Private constructor to restrict creating instance of this class
-	 */
-	private ActionIdConstants()
-	{
-	}
+    /**
+     * Private constructor to restrict creating instance of this class
+     */
+    private ActionIdConstants() {
+    }
 
-	public static final String ACTION_ID = "ACTION_ID";
+    public static final String ACTION_ID = "ACTION_ID";
 
-	public static final int BRIGHTNESS_LOW = 0;
-	public static final int BRIGHTNESS_HIGH = 1;
-	public static final int PHONE_SILENT = 2;
-	public static final int PHONE_RINGING = 3;
-	public static final int VIBRATE_ACTION = 4;
-	public static final int WIFI_ON = 5;
-	public static final int WIFI_OFF = 6;
-	public static final int FLIGHT_MODE_ON = 7;
-	public static final int FLIGHT_MODE_OFF = 8;
-	public static final int ALARM_SET = 9;
-	public static final int SMS_SEND = 10;
-	public static final int NOTIFICATION = 11;
+    public static final int BRIGHTNESS_LOW = 0;
+    public static final int BRIGHTNESS_HIGH = 1;
+    public static final int PHONE_SILENT = 2;
+    public static final int PHONE_RINGING = 3;
+    public static final int VIBRATE_ACTION = 4;
+    public static final int WIFI_ON = 5;
+    public static final int WIFI_OFF = 6;
+    public static final int FLIGHT_MODE_ON = 7;
+    public static final int FLIGHT_MODE_OFF = 8;
+    public static final int ALARM_SET = 9;
+    public static final int SMS_SEND = 10;
+    public static final int NOTIFICATION = 11;
 }

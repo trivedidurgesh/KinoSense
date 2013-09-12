@@ -26,124 +26,103 @@ import android.hardware.SensorManager;
  * This Trigger is for the action when User flips the phone either face down or face up
  * 
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
- * 
  */
-public class FlipTrigger implements SensorBasedTrigger, SensorEventListener
-{
+public class FlipTrigger implements SensorBasedTrigger, SensorEventListener {
 
-	/**
-	 * Android's Application Context
-	 */
-	private Context context = null;
+    /**
+     * Android's Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Android's Sensor Manager
-	 */
-	private SensorManager sensorManager = null;
+    /**
+     * Android's Sensor Manager
+     */
+    private SensorManager sensorManager = null;
 
-	/**
-	 * Internal State whether Phone is Flipped Up or Flipped Down
-	 */
-	private boolean isFlippedDown = false;
+    /**
+     * Internal State whether Phone is Flipped Up or Flipped Down
+     */
+    private boolean isFlippedDown = false;
 
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.triggers.SensorBasedTrigger#onCreate
+     */
+    public void onCreate(final Context context, final SensorManager sensorManager) {
+        this.context = context;
+        this.sensorManager = sensorManager;
+        sensorManager.registerListener(this.getSensorEventListener(), sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.triggers.SensorBasedTrigger#onCreate
-	 */
-	public void onCreate(Context context, SensorManager sensorManager)
-	{
-		this.context = context;
-		this.sensorManager = sensorManager;
-		sensorManager.registerListener(this.getSensorEventListener(),
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.triggers.SensorBasedTrigger#getSensorEventListener
+     */
+    public SensorEventListener getSensorEventListener() {
+        return this;
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.triggers.SensorBasedTrigger#onDestroy
+     */
+    public void onDestroy() {
+        this.sensorManager.unregisterListener(this.getSensorEventListener());
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.triggers.SensorBasedTrigger#getSensorEventListener
-	 */
-	public SensorEventListener getSensorEventListener()
-	{
-		return this;
-	}
+    /*
+     * (non-Javadoc)
+     * @see android.hardware.SensorEventListener#onAccuracyChanged
+     */
+    public void onAccuracyChanged(final Sensor sensor, final int accuracy) {
+        // TODO Auto-generated method stub
 
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.triggers.SensorBasedTrigger#onDestroy
-	 */
-	public void onDestroy()
-	{
-		this.sensorManager.unregisterListener(this.getSensorEventListener());
-	}
+    /*
+     * (non-Javadoc)
+     * @see android.hardware.SensorEventListener#onSensorChanged
+     */
+    public void onSensorChanged(final SensorEvent event) {
+        float zAxis = event.values[2];
+        if (zAxis >= 0) {
+            this.flippedUp();
+        } else {
+            this.flippedDown();
+        }
 
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.hardware.SensorEventListener#onAccuracyChanged
-	 */
-	public void onAccuracyChanged(Sensor sensor, int accuracy)
-	{
-		// TODO Auto-generated method stub
+    /**
+     * Called when phone is flipped up (face is up)
+     */
+    private void flippedUp() {
+        if (this.isFlippedDown == true) {
+            this.isFlippedDown = false;
 
-	}
+            Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // intent.putExtra("trigger", "FLIPPED_UP");
+            intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_FLIPPED_UP);
 
+            this.context.sendBroadcast(intent);
+        }
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.hardware.SensorEventListener#onSensorChanged
-	 */
-	public void onSensorChanged(SensorEvent event)
-	{
-		float zAxis = event.values[2];
-		if ( zAxis >= 0 )
-		{
-			this.flippedUp();
-		}
-		else
-		{
-			this.flippedDown();
-		}
+    }
 
-	}
+    /**
+     * Called when phone is flipped down (face id down)
+     */
+    private void flippedDown() {
+        if (this.isFlippedDown == false) {
+            this.isFlippedDown = true;
+            Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // intent.putExtra("trigger", "FLIPPED_DOWN");
+            intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_FLIPPED_DOWN);
 
-
-	/**
-	 * Called when phone is flipped up (face is up)
-	 */
-	private void flippedUp()
-	{
-		if ( this.isFlippedDown == true )
-		{
-			this.isFlippedDown = false;
-
-			Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			// intent.putExtra("trigger", "FLIPPED_UP");
-			intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_FLIPPED_UP);
-
-			this.context.sendBroadcast(intent);
-		}
-
-	}
-
-
-	/**
-	 * Called when phone is flipped down (face id down)
-	 */
-	private void flippedDown()
-	{
-		if ( this.isFlippedDown == false )
-		{
-			this.isFlippedDown = true;
-			Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			// intent.putExtra("trigger", "FLIPPED_DOWN");
-			intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_FLIPPED_DOWN);
-
-			this.context.sendBroadcast(intent);
-		}
-	}
+            this.context.sendBroadcast(intent);
+        }
+    }
 
 }

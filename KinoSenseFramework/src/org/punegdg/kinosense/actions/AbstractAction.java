@@ -22,35 +22,30 @@ import android.content.Context;
  * <li>onCreate - Called once when creating an instance of this action. Application Context is passed here</li>
  * <li>performAction - Called each time when an action needs to be performed</li>
  * <li>onDestroy - Called once when this action needs to be destroyed. Clean up needs to be done here</li>
- * 
- * 
  * </ul>
  * 
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
- * 
  */
-public interface AbstractAction
-{
-	/**
-	 * Called once when creating an instance of this action.
-	 * 
-	 * @param context Android Application Context
-	 */
-	public void onCreate(Context context);
+public interface AbstractAction {
+    /**
+     * Called once when creating an instance of this action.
+     * 
+     * @param context
+     *            Android Application Context
+     */
+    public void onCreate(Context context);
 
+    /**
+     * Called each time when an action needs to be performed
+     * 
+     * @param action
+     * @param extra
+     */
+    public void perform(Map<String, Object> data);
 
-	/**
-	 * Called each time when an action needs to be performed
-	 * 
-	 * @param action
-	 * @param extra
-	 */
-	public void perform(Map<String, Object> data);
-
-
-	/**
-	 * Called once when this action needs to be destroyed. Clean up needs to be done here
-	 */
-	public void onDestroy();
+    /**
+     * Called once when this action needs to be destroyed. Clean up needs to be done here
+     */
+    public void onDestroy();
 
 }

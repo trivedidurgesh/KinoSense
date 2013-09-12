@@ -22,119 +22,108 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
 /**
  * This Trigger is for the action when User Shakes the phone
  * 
  * @author "Amruta Deshpande"<deshpande.amruta22@gmail.com>
- * 
  */
-public class ShakeTrigger implements SensorEventListener,SensorBasedTrigger {
+public class ShakeTrigger implements SensorEventListener, SensorBasedTrigger {
 
-	
-	private float xAccel;
-	private float yAccel;
-	private float zAccel;
+    private float xAccel;
+    private float yAccel;
+    private float zAccel;
 
-	/* And here the previous ones */
-	private float xPreviousAccel;
-	private float yPreviousAccel;
-	private float zPreviousAccel;
+    /* And here the previous ones */
+    private float xPreviousAccel;
+    private float yPreviousAccel;
+    private float zPreviousAccel;
 
-	/* Used to suppress the first shaking */
-	private boolean firstUpdate = true;
+    /* Used to suppress the first shaking */
+    private boolean firstUpdate = true;
 
-	/*What acceleration difference would we assume as a rapid movement? */
-	private final float shakeThreshold = 1.5f;
-	
-	/* Has a shaking motion been started (one direction) */
-	private boolean shakeInitiated = false;
+    /* What acceleration difference would we assume as a rapid movement? */
+    private final float shakeThreshold = 1.5f;
 
-	
-	/**
-	 * Android's Application Context
-	 */
-	private Context context=null;
+    /* Has a shaking motion been started (one direction) */
+    private boolean shakeInitiated = false;
 
+    /**
+     * Android's Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Android's Sensor Manager
-	 */
-	private SensorManager sensorManager=null;
+    /**
+     * Android's Sensor Manager
+     */
+    private SensorManager sensorManager = null;
 
+    public void onCreate(final Context context, final SensorManager sensorManager) {
+        this.context = context;
+        this.sensorManager = sensorManager;
+        sensorManager.registerListener(this.getSensorEventListener(), sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
-  
-
-
-	public void onCreate(Context context, SensorManager sensorManager) {
-		
-		this.context = context;
-		this.sensorManager = sensorManager;
-		sensorManager.registerListener(this.getSensorEventListener(),
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-
-		
-	}
-
-	public SensorEventListener getSensorEventListener() {
-		
-		return this;
-	}
-
-	public void onDestroy() {
-		sensorManager.unregisterListener(getSensorEventListener());
-		
-	}
-
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		
-		
-	}
-
-	public void onSensorChanged(SensorEvent event) {
-		updateAccelParameters(event.values[0],event.values[1], event.values[2]);   
-        if ((!shakeInitiated) && isAccelerationChanged()) {                                      
-	    shakeInitiated = true; 
-	} else if ((shakeInitiated) && isAccelerationChanged()) {                              
-	    executeShakeAction();
-	} else if ((shakeInitiated) && (!isAccelerationChanged())) {                           
-	    shakeInitiated = false;
-	}
-		
-	}
-
-	private void executeShakeAction() {
-		Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-
-		//intent.putExtra("trigger", "SHAKING");
-		intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_SHAKING);
-		context.sendBroadcast(intent);
-	}
-
-	private boolean isAccelerationChanged() {
-		float deltaX = Math.abs(xPreviousAccel - xAccel);
-		float deltaY = Math.abs(yPreviousAccel - yAccel);
-		float deltaZ = Math.abs(zPreviousAccel - zAccel);
-		return (deltaX > shakeThreshold && deltaY > shakeThreshold)
-				|| (deltaX > shakeThreshold && deltaZ > shakeThreshold)
-				|| (deltaY > shakeThreshold && deltaZ > shakeThreshold);
-	}
-
-	private void updateAccelParameters(float xNewAccel, float  yNewAccel, float zNewAccel) {
-		
-		if (firstUpdate) {  
-		xPreviousAccel = xNewAccel;
-		yPreviousAccel = yNewAccel;
-		zPreviousAccel = zNewAccel;
-		firstUpdate = false;
-	} else {
-		xPreviousAccel = xAccel;
-		yPreviousAccel = yAccel;
-		zPreviousAccel = zAccel;
-	}
-	xAccel = xNewAccel;
-	yAccel = yNewAccel;
-	zAccel = zNewAccel;
     }
-		
-	}
-	
+
+    public SensorEventListener getSensorEventListener() {
+
+        return this;
+    }
+
+    public void onDestroy() {
+        this.sensorManager.unregisterListener(this.getSensorEventListener());
+
+    }
+
+    public void onAccuracyChanged(final Sensor sensor, final int accuracy) {
+
+    }
+
+    public void onSensorChanged(final SensorEvent event) {
+        this.updateAccelParameters(event.values[0], event.values[1], event.values[2]);
+        if ((!this.shakeInitiated) && this.isAccelerationChanged()) {
+            this.shakeInitiated = true;
+        } else if ((this.shakeInitiated) && this.isAccelerationChanged()) {
+            this.executeShakeAction();
+        } else if ((this.shakeInitiated) && (!this.isAccelerationChanged())) {
+            this.shakeInitiated = false;
+        }
+
+    }
+
+    private void executeShakeAction() {
+        Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+
+        // intent.putExtra("trigger", "SHAKING");
+        intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_SHAKING);
+        this.context.sendBroadcast(intent);
+    }
+
+    private boolean isAccelerationChanged() {
+        float deltaX = Math.abs(this.xPreviousAccel - this.xAccel);
+        float deltaY = Math.abs(this.yPreviousAccel - this.yAccel);
+        float deltaZ = Math.abs(this.zPreviousAccel - this.zAccel);
+        return ((deltaX > this.shakeThreshold) && (deltaY > this.shakeThreshold))
+                || ((deltaX > this.shakeThreshold) && (deltaZ > this.shakeThreshold))
+                || ((deltaY > this.shakeThreshold) && (deltaZ > this.shakeThreshold));
+    }
+
+    private void updateAccelParameters(final float xNewAccel, final float yNewAccel, final float zNewAccel) {
+
+        if (this.firstUpdate) {
+            this.xPreviousAccel = xNewAccel;
+            this.yPreviousAccel = yNewAccel;
+            this.zPreviousAccel = zNewAccel;
+            this.firstUpdate = false;
+        } else {
+            this.xPreviousAccel = this.xAccel;
+            this.yPreviousAccel = this.yAccel;
+            this.zPreviousAccel = this.zAccel;
+        }
+        this.xAccel = xNewAccel;
+        this.yAccel = yNewAccel;
+        this.zAccel = zNewAccel;
+    }
+
+}

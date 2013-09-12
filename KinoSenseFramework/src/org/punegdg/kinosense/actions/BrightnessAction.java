@@ -18,10 +18,7 @@ import java.util.Map;
 import android.content.Context;
 
 /**
- * 
- * Action which can change the Brightness of the device.
- * 
- * <code>
+ * Action which can change the Brightness of the device. <code>
  * 		AbstractAction action = new BrightnessAction();
  * 		Map data = new HashMap();
  * 		data.put("Brightness","HIGH");
@@ -29,48 +26,34 @@ import android.content.Context;
  * </code>
  * 
  * @author "Sandeep Mane"<sandeepsmane@ymail.com>
- * 
  */
 
-public class BrightnessAction implements AbstractAction
-{
+public class BrightnessAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
 
-	/**
-	 * Android Application Context
-	 */
+    private Context context = null;
 
-	private Context context = null;
+    public void onCreate(final Context context) {
+        this.context = context;
+    }
 
+    public void perform(final Map<String, Object> brightnessData) {
+        int action = (Integer) brightnessData.get(ActionIdConstants.ACTION_ID);
+        if (ActionIdConstants.BRIGHTNESS_HIGH == action) {
+            android.provider.Settings.System.putInt(this.context.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 100);
+            /**
+             * Brightness Set to 100 as High
+             */
+        } else if (ActionIdConstants.BRIGHTNESS_LOW == action) {
+            android.provider.Settings.System.putInt(this.context.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 10);
+            /**
+             * Brightness Set to 10 as low
+             */
+        }
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-	}
-
-
-	public void perform(Map<String, Object> brightnessData)
-	{
-		int action = (Integer)brightnessData.get(ActionIdConstants.ACTION_ID);
-		if ( ActionIdConstants.BRIGHTNESS_HIGH == action )
-		{
-			android.provider.Settings.System.putInt(this.context.getContentResolver(),
-					android.provider.Settings.System.SCREEN_BRIGHTNESS, 100);
-			/**
-			 * Brightness Set to 100 as High
-			 */
-		}
-		else if ( ActionIdConstants.BRIGHTNESS_LOW == action )
-		{
-			android.provider.Settings.System.putInt(this.context.getContentResolver(),
-					android.provider.Settings.System.SCREEN_BRIGHTNESS, 10);
-			/**
-			 * Brightness Set to 10 as low
-			 */
-		}
-	}
-
-
-	public void onDestroy()
-	{
-	}
+    public void onDestroy() {
+    }
 }

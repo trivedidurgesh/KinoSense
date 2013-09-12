@@ -14,6 +14,7 @@
 
 package org.punegdg.kinosense.triggers;
 
+import org.punegdg.kinosense.database.DatabaseHandler;
 import org.punegdg.kinosense.triggerReceiver.TriggerReceiver;
 import org.punegdg.kinosense.triggers.framework.BroadCastReceiverBasedTrigger;
 
@@ -29,79 +30,66 @@ import android.util.Log;
  * 
  * @author "Apurva Bhoite"<bhoiteapurva@gmail.com>
  */
-public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
+public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger {
+    /**
+     * Android's Application Context
+     */
+    private Context context = null;
 
-{
-	/**
-	 * Android's Application Context
-	 */
-	private Context context = null;
+    /**
+     * Database Handler Object
+     */
+    DatabaseHandler dbHandler;
 
-	/**
-	 * Database Handler Object
-	 */
-	DatabaseHandler dbHandler;
+    TelephonyManager telemamanger = null;
+    String getSimSerialNumber;
+    String getSimNumber;
+    String SimSerialNo = "89916611521121277211"; // Hard coded for time beign.
 
-	TelephonyManager telemamanger = null;
-	String getSimSerialNumber;
-	String getSimNumber;
-	String SimSerialNo = "89916611521121277211"; // Hard coded for time beign.
+    public void onCreate(final Context context) {
 
+        this.context = context;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED); // should execute on BOOT_COMPLETED ideally
+        context.registerReceiver(this.getBroadCastReceiver(), filter);
+        this.dbHandler = new DatabaseHandler(context);
 
-	public void onCreate(Context context)
-	{
+        TelephonyManager telemamanger = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        this.getSimSerialNumber = telemamanger.getSimSerialNumber();
+        this.getSimNumber = telemamanger.getLine1Number();
 
-		this.context = context;
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_POWER_DISCONNECTED); // should execute on BOOT_COMPLETED ideally
-		context.registerReceiver(this.getBroadCastReceiver(), filter);
-		this.dbHandler = new DatabaseHandler(context);
+        this.dbHandler.addSimSerial(this.getSimSerialNumber); // Insert in database
+    }
 
-		TelephonyManager telemamanger = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-		this.getSimSerialNumber = telemamanger.getSimSerialNumber();
-		this.getSimNumber = telemamanger.getLine1Number();
+    public BroadcastReceiver getBroadCastReceiver() {
+        return this;
+    }
 
-		this.dbHandler.addSimSerial(this.getSimSerialNumber); // Insert in database
-	}
+    public void onDestroy() {
+        this.context.unregisterReceiver(this.getBroadCastReceiver());
+    }
 
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        Log.d("BroadCastReceiver", intent.toString());
 
-	public BroadcastReceiver getBroadCastReceiver()
-	{
-		return this;
-	}
+        String action = intent.getAction();
 
+        if (action.equals(android.content.Intent.ACTION_POWER_DISCONNECTED)) {
+            if (!this.dbHandler.getSimSerial().equals(this.SimSerialNo)) // check for simserial nos.
+            {
+                Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+                // bcIntent1.putExtra("trigger", "SIMCARD_CHANGED");
+                bcIntent1.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIM_CARD_CHANGED);
+                context.sendBroadcast(bcIntent1);
+            } else {
+                Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+                // bcIntent1.putExtra("trigger", "SIMCARD_UNCHANGED");
+                bcIntent1.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIM_CARD_CHANGED);
+                context.sendBroadcast(bcIntent1);
+            }
+        }
 
-	public void onDestroy()
-	{
-		this.context.unregisterReceiver(this.getBroadCastReceiver());
-	}
-
-
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-		Log.d("BroadCastReceiver", intent.toString());
-
-		String action = intent.getAction();
-
-		if ( action.equals(android.content.Intent.ACTION_POWER_DISCONNECTED) )
-		{
-			if ( !this.dbHandler.getSimSerial().equals(this.SimSerialNo) ) // check for simserial nos.
-			{
-				Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-				// bcIntent1.putExtra("trigger", "SIMCARD_CHANGED");
-				bcIntent1.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIM_CARD_CHANGED);
-				context.sendBroadcast(bcIntent1);
-			}
-			else
-			{
-				Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-				// bcIntent1.putExtra("trigger", "SIMCARD_UNCHANGED");
-				bcIntent1.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIM_CARD_CHANGED);
-				context.sendBroadcast(bcIntent1);
-			}
-		}
-
-	}
+    }
 
 }

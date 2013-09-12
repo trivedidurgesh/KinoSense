@@ -16,9 +16,6 @@ package org.punegdg.kinosense.devicestate;
  * Will be used in future to store and retrieve Device State
  * 
  * @author rohit
- * 
  */
-public class DeviceState
-{
-
+public class DeviceState {
 }

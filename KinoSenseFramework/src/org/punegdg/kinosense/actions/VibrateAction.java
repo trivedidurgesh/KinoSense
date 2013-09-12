@@ -21,57 +21,46 @@ import android.os.Vibrator;
  * Vibrate Action vibrates the phone for a defined duration
  * 
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
- * 
- * 
  */
 // FIXME - We are not using all features of vibration
-public class VibrateAction implements AbstractAction
-{
+public class VibrateAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
+    /**
+     * Android Vibrator Service
+     */
+    private Vibrator vibrator;
 
-	/**
-	 * Android Vibrator Service
-	 */
-	private Vibrator vibrator;
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.actions.BaseAction#onCreate(android.content.Context )
+     */
+    public void onCreate(final Context context) {
+        this.context = context;
+        this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.actions.BaseAction#perform(java.lang.String, java.lang.String)
+     */
+    public void perform(final Map<String, Object> data) {
+        if (null != this.vibrator) {
+            this.vibrator.vibrate(2000);
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.actions.BaseAction#onCreate(android.content.Context )
-	 */
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		vibrator = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-	}
+        }
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.actions.BaseAction#onDestroy()
+     */
+    public void onDestroy() {
+        this.vibrator = null;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.actions.BaseAction#perform(java.lang.String, java.lang.String)
-	 */
-	public void perform(Map<String, Object> data)
-	{
-		if ( null != vibrator )
-		{
-			vibrator.vibrate(2000);
-
-		}
-	}
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.actions.BaseAction#onDestroy()
-	 */
-	public void onDestroy()
-	{
-		vibrator = null;
-
-	}
+    }
 
 }

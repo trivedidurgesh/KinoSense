@@ -19,10 +19,7 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 
 /**
- * 
- * Action which can change the Wifi state of the device to On or OFF.
- * 
- * <code>
+ * Action which can change the Wifi state of the device to On or OFF. <code>
  * 		AbstractAction action = new WifiAction();
  * 		Map data = new HashMap();
  * 		data.put("WifiAction","ON");
@@ -30,49 +27,38 @@ import android.net.wifi.WifiManager;
  * </code>
  * 
  * @author "Ashish Kalbhor"<ashish.kalbhor@gmail.com>
- * 
  */
 
-public class WifiAction implements AbstractAction
-{
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
+public class WifiAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * WifiManager to access the device Wifi actions
-	 */
+    /**
+     * WifiManager to access the device Wifi actions
+     */
 
-	private WifiManager wifimgr;
+    private WifiManager wifimgr;
 
+    public void onCreate(final Context context) {
+        this.context = context;
+        this.wifimgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		this.wifimgr = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-	}
+    public void perform(final Map<String, Object> wifiData) {
+        // Turn the Wifi State On or Off
 
+        int action = (Integer) wifiData.get(ActionIdConstants.ACTION_ID);
+        if (ActionIdConstants.WIFI_ON == action) {
+            this.wifimgr.setWifiEnabled(true);
+        } else if (ActionIdConstants.WIFI_OFF == action) {
+            this.wifimgr.setWifiEnabled(false);
+        }
+    }
 
-	public void perform(Map<String, Object> wifiData)
-	{
-		// Turn the Wifi State On or Off
-
-		String action = (String)wifiData.get("action");
-		if ( "ON".equals(action) )
-		{
-			this.wifimgr.setWifiEnabled(true);
-		}
-		else if ( "OFF".equals(action) )
-		{
-			this.wifimgr.setWifiEnabled(false);
-		}
-	}
-
-
-	public void onDestroy()
-	{
-		this.wifimgr = null;
-	}
+    public void onDestroy() {
+        this.wifimgr = null;
+    }
 
 }

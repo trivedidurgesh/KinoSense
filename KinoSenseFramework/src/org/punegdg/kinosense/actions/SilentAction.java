@@ -26,61 +26,48 @@ import android.preference.PreferenceManager;
  * @author "Apurva Bhoite"<bhoiteapurva@gmail.com>
  */
 
-public class SilentAction implements AbstractAction
-{
+public class SilentAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
+    /**
+     * Audio Manager used to change the ringer volume
+     */
 
+    public void onCreate(final Context context) {
+        this.context = context;
+    }
 
-	/**
-	 * Audio Manager used to change the ringer volume
-	 */
+    public void perform(final Map<String, Object> data) {
+        int lastVolume = 0; // Contains info of last volume
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this.context);
+        SharedPreferences.Editor editor = pref.edit();
+        AudioManager audioManager = (AudioManager) this.context.getSystemService(Context.AUDIO_SERVICE);
+        int action = (Integer) data.get(ActionIdConstants.ACTION_ID);
+        if (ActionIdConstants.PHONE_SILENT == action) {
+            lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+            editor.putInt("volume", lastVolume);
+            /*
+             * Store device's volume level.
+             */
+            audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
+            /*
+             * Device's volume set to zero.
+             */
+            editor.commit();
+        } else if (ActionIdConstants.PHONE_RINGING == action) {
+            int currentVolume = pref.getInt("volume", 7);
+            audioManager.setStreamVolume(AudioManager.STREAM_RING, currentVolume, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
+            /*
+             * Device's volume restored.
+             */
+        }
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-	}
+    public void onDestroy() {
 
-
-	public void perform(Map<String, Object> data)
-	{
-		int lastVolume = 0; // Contains info of last volume
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this.context);
-		SharedPreferences.Editor editor = pref.edit();
-		AudioManager audioManager = (AudioManager)this.context.getSystemService(Context.AUDIO_SERVICE);
-		int action = (Integer)data.get(ActionIdConstants.ACTION_ID);
-		if ( ActionIdConstants.PHONE_SILENT == action )
-		{
-			lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
-			editor.putInt("volume", lastVolume);
-			/*
-			 * Store device's volume level.
-			 */
-			audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI
-					+ AudioManager.FLAG_PLAY_SOUND);
-			/*
-			 * Device's volume set to zero.
-			 */
-			editor.commit();
-		}
-		else if ( ActionIdConstants.PHONE_RINGING == action )
-		{
-			int currentVolume = pref.getInt("volume", 7);
-			audioManager.setStreamVolume(AudioManager.STREAM_RING, currentVolume, AudioManager.FLAG_SHOW_UI
-					+ AudioManager.FLAG_PLAY_SOUND);
-			/*
-			 * Device's volume restored.
-			 */
-		}
-	}
-
-
-	public void onDestroy()
-	{
-
-	}
+    }
 
 }

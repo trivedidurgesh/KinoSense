@@ -18,19 +18,16 @@ import android.widget.Button;
 import android.widget.ListView;
 
 /**
- * 
  * Activity for Showing, Activating and Updating Rules.
  * 
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
- * 
  */
-public class RuleReviewActivity extends Activity
-{
+public class RuleReviewActivity extends Activity {
     Button buttonreviewback, buttonreviewnext;
     static List<String> myListItems = Collections.synchronizedList(new ArrayList<String>());
     static ArrayAdapter<String> adapter;
 
-    //Database for storing Rule
+    // Database for storing Rule
     SQLiteDatabase db_ob;
     ListView ruleList;
     private int actionID;
@@ -38,14 +35,11 @@ public class RuleReviewActivity extends Activity
     private String additionalInfo = "";
     private String TextLabel = "";
 
-
     @Override
-    protected void onCreate(final Bundle savedInstanceState)
-    {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent ruleReviewintent = this.getIntent();
-        if ( ruleReviewintent != null )
-        {
+        if (ruleReviewintent != null) {
             this.actionID = ruleReviewintent.getIntExtra("actionID", -1);
             this.triggerID = ruleReviewintent.getIntExtra("triggerID", -1);
             this.TextLabel = ruleReviewintent.getStringExtra("ruletext");
@@ -53,25 +47,23 @@ public class RuleReviewActivity extends Activity
         // Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         this.setContentView(R.layout.activity_reviewrule);
 
-        this.ruleList = (ListView)this.findViewById(R.id.rulelist);
+        this.ruleList = (ListView) this.findViewById(R.id.rulelist);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myListItems);
         myListItems.clear();
         RuleManager rulemanager = RuleManager.getInstance();
-        if((this.actionID!=-1)||(this.triggerID!=-1)) {
+        if ((this.actionID != -1) || (this.triggerID != -1)) {
             rulemanager.createRules(this.triggerID, this.actionID, this.TextLabel, this.additionalInfo, this.getApplicationContext());
         }
         ArrayList<Rule> ruleArray = rulemanager.getRules(this.getApplicationContext());
-        for ( int iterateCount = 0; iterateCount < ruleArray.size(); iterateCount++ )
-        {
+        for (int iterateCount = 0; iterateCount < ruleArray.size(); iterateCount++) {
             myListItems.add(ruleArray.get(iterateCount).getRuleText());
         }
         this.ruleList.setAdapter(adapter);
 
         // Back Button to go back to the Main Menu
-        this.buttonreviewback = (Button)this.findViewById(R.id.buttonreviewback);
+        this.buttonreviewback = (Button) this.findViewById(R.id.buttonreviewback);
         this.buttonreviewback.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v)
-            {
+            public void onClick(final View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(RuleReviewActivity.this, MainActivity.class);
                 RuleReviewActivity.this.startActivity(intent);
@@ -79,11 +71,10 @@ public class RuleReviewActivity extends Activity
         });
 
         // button to create another rule , going back to New Action Rule
-        this.buttonreviewnext = (Button)this.findViewById(R.id.buttonreviewnext);
+        this.buttonreviewnext = (Button) this.findViewById(R.id.buttonreviewnext);
         this.buttonreviewnext.setOnClickListener(new OnClickListener() {
 
-            public void onClick(final View v)
-            {
+            public void onClick(final View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(RuleReviewActivity.this, NewTriggerRuleActivity.class);
                 RuleReviewActivity.this.startActivity(intent);

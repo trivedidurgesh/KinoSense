@@ -23,7 +23,7 @@ public class NewActionRuleActivity extends Activity {
     Button buttonback, buttoncancel, buttoncreate;
     ToggleButton toggleButtonwifi;
     CheckBox checkBoxWifiON, checkBoxWifiOFF, checkBoxsilent, checkBoxflight, checkBoxbeep, checkBoxsms, checkBoxalarm, checkBoxshownotification,
-    checkBoxvibrate;
+            checkBoxvibrate;
     StringBuffer actionString = new StringBuffer("Set WiFi OFF");
     private static int actionID;
     private static int triggerID;

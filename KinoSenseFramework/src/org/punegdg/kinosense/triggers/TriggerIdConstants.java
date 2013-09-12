@@ -14,16 +14,13 @@ package org.punegdg.kinosense.triggers;
 
 /**
  * @author saurabhg
- * 
  */
-public class TriggerIdConstants
-{
+public class TriggerIdConstants {
 
     /**
      * Private constructor to restrict creating instance of this class
      */
-    private TriggerIdConstants()
-    {
+    private TriggerIdConstants() {
     }
 
     public static final String TIGGER_ID = "TRIGGER_ID";

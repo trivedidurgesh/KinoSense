@@ -13,69 +13,57 @@ import android.os.IBinder;
  * This Trigger is for the action when User plugin the headphones
  * 
  * @author "Amruta Deshpande"<deshpande.amruta22@gmail.com>
- * 
  */
 
-public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
-{
+public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger {
 
-	/**
-	 * Android's Application Context
-	 */
-	private Context context = null;
+    /**
+     * Android's Application Context
+     */
+    private Context context = null;
 
+    public void onCreate(final Context context) {
+        this.context = context;
+        IntentFilter inf = new IntentFilter();
+        inf.addAction(Intent.ACTION_HEADSET_PLUG);
+        context.registerReceiver(this.getBroadCastReceiver(), inf);
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		IntentFilter inf = new IntentFilter();
-		inf.addAction(Intent.ACTION_HEADSET_PLUG);
-		context.registerReceiver(this.getBroadCastReceiver(), inf);
-	}
+    public BroadcastReceiver getBroadCastReceiver() {
+        return this;
+    }
 
+    public void onDestroy() {
+        this.context.unregisterReceiver(this.getBroadCastReceiver());
+    }
 
-	public BroadcastReceiver getBroadCastReceiver()
-	{
-		return this;
-	}
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        if (intent.getExtras().getInt("state") == 0)
+        // Headset Disconnected
+        {
+            Intent bcHIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // bcHIntent.putExtra("trigger", "HEADSET_DISCONNECTED");
+            bcHIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.HEADPHONE_DISCONNECTED);
+            context.sendBroadcast(bcHIntent);
 
+        } else
+        // Headset Connected
+        {
+            Intent bcHIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // bcHIntent.putExtra("trigger", "HEADSET_CONNECTED");
+            bcHIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.HEADPHONE_CONNECTED);
+            context.sendBroadcast(bcHIntent);
+        }
+    }
 
-	public void onDestroy()
-	{
-		this.context.unregisterReceiver(this.getBroadCastReceiver());
-	}
-
-
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-
-		if ( intent.getExtras().getInt("state") == 0 )
-		// Headset Disconnected
-		{
-			Intent bcHIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			//bcHIntent.putExtra("trigger", "HEADSET_DISCONNECTED");
-			bcHIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.HEADPHONE_DISCONNECTED);
-			context.sendBroadcast(bcHIntent);
-
-		}
-		else
-		// Headset Connected
-		{
-			Intent bcHIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			//bcHIntent.putExtra("trigger", "HEADSET_CONNECTED");
-			bcHIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.HEADPHONE_CONNECTED);
-			context.sendBroadcast(bcHIntent);
-		}
-	}	
-	/*
-	 * (non-Javadoc)
-	 * @see android.content.BroadcastReceiver#peekService(android.content.Context, android.content.Intent)
-	 */
-	@Override
-	public IBinder peekService(Context myContext, Intent service)
-	{
-		// TODO Auto-generated method stub
-		return super.peekService(myContext, service);
-	}
+    /*
+     * (non-Javadoc)
+     * @see android.content.BroadcastReceiver#peekService(android.content.Context, android.content.Intent)
+     */
+    @Override
+    public IBinder peekService(final Context myContext, final Intent service) {
+        // TODO Auto-generated method stub
+        return super.peekService(myContext, service);
+    }
 }

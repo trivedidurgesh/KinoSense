@@ -29,93 +29,78 @@ import android.widget.RemoteViews;
  * Shows the last trigger which was fired
  * 
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
- * 
  */
-public class TriggerWidgetProvider extends AppWidgetProvider
-{
-	private static final String ACTION_CLICK = "ACTION_CLICK";
+public class TriggerWidgetProvider extends AppWidgetProvider {
+    private static final String ACTION_CLICK = "ACTION_CLICK";
 
+    /*
+     * (non-Javadoc)
+     * @see android.appwidget.AppWidgetProvider#onDeleted(android.content.Context, int[])
+     */
+    @Override
+    public void onDeleted(final Context context, final int[] appWidgetIds) {
+        // TODO Auto-generated method stub
+        super.onDeleted(context, appWidgetIds);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onDeleted(android.content.Context, int[])
-	 */
-	@Override
-	public void onDeleted(Context context, int[] appWidgetIds)
-	{
-		// TODO Auto-generated method stub
-		super.onDeleted(context, appWidgetIds);
-	}
+    /*
+     * (non-Javadoc)
+     * @see android.appwidget.AppWidgetProvider#onDisabled(android.content.Context)
+     */
+    @Override
+    public void onDisabled(final Context context) {
+        // TODO Auto-generated method stub
+        super.onDisabled(context);
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see android.appwidget.AppWidgetProvider#onEnabled(android.content.Context)
+     */
+    @Override
+    public void onEnabled(final Context context) {
+        // TODO Auto-generated method stub
+        super.onEnabled(context);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onDisabled(android.content.Context)
-	 */
-	@Override
-	public void onDisabled(Context context)
-	{
-		// TODO Auto-generated method stub
-		super.onDisabled(context);
-	}
+    /*
+     * (non-Javadoc)
+     * @see android.appwidget.AppWidgetProvider#onReceive(android.content.Context, android.content.Intent)
+     */
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        // TODO Auto-generated method stub
+        super.onReceive(context, intent);
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see android.appwidget.AppWidgetProvider#onUpdate(android.content.Context, android.appwidget.AppWidgetManager, int[])
+     */
+    @Override
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onEnabled(android.content.Context)
-	 */
-	@Override
-	public void onEnabled(Context context)
-	{
-		// TODO Auto-generated method stub
-		super.onEnabled(context);
-	}
+        // Get all ids
+        ComponentName thisWidget = new ComponentName(context, TriggerWidgetProvider.class);
+        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        for (int widgetId : allWidgetIds) {
+            // Create some random data
+            int number = (new Random().nextInt(100));
 
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.trigger_widget_layout);
+            Log.w("WidgetExample", String.valueOf(number));
+            // Set the text
+            remoteViews.setTextViewText(R.id.update, String.valueOf(number));
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onReceive(android.content.Context, android.content.Intent)
-	 */
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-		// TODO Auto-generated method stub
-		super.onReceive(context, intent);
-	}
+            // Register an onClickListener
+            Intent intent = new Intent(context, TriggerWidgetProvider.class);
 
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onUpdate(android.content.Context, android.appwidget.AppWidgetManager,
-	 * int[])
-	 */
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
-	{
-
-		// Get all ids
-		ComponentName thisWidget = new ComponentName(context, TriggerWidgetProvider.class);
-		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-		for ( int widgetId : allWidgetIds )
-		{
-			// Create some random data
-			int number = (new Random().nextInt(100));
-
-			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.trigger_widget_layout);
-			Log.w("WidgetExample", String.valueOf(number));
-			// Set the text
-			remoteViews.setTextViewText(R.id.update, String.valueOf(number));
-
-			// Register an onClickListener
-			Intent intent = new Intent(context, TriggerWidgetProvider.class);
-
-			intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-
-			PendingIntent pendingIntent = PendingIntent
-					.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-			remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
-			appWidgetManager.updateAppWidget(widgetId, remoteViews);
-		}
-	}
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
+            appWidgetManager.updateAppWidget(widgetId, remoteViews);
+        }
+    }
 }

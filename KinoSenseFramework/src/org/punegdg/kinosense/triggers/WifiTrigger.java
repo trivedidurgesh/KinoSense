@@ -30,71 +30,60 @@ import android.net.wifi.WifiManager;
  * @author "Ashish Kalbhor"<ashish.kalbhor@gmail.com>
  */
 
-public class WifiTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
-{
+public class WifiTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger {
 
-	/**
-	 * Android's Application Context
-	 */
-	private Context context = null;
+    /**
+     * Android's Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Device WifiManager
-	 */
-	WifiManager wifimgr = null;
+    /**
+     * Device WifiManager
+     */
+    WifiManager wifimgr = null;
 
-	/**
-	 * Storage of Wifi scan result
-	 */
-	StringBuilder wifidata = new StringBuilder();
+    /**
+     * Storage of Wifi scan result
+     */
+    StringBuilder wifidata = new StringBuilder();
 
-	List<ScanResult> wifiList;
+    List<ScanResult> wifiList;
 
+    public void onCreate(final Context context) {
+        this.context = context;
+        this.wifimgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        IntentFilter filter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        context.registerReceiver(this.getBroadCastReceiver(), filter);
+        this.wifimgr.startScan();
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		this.wifimgr = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-		IntentFilter filter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-		context.registerReceiver(this.getBroadCastReceiver(), filter);
-		this.wifimgr.startScan();
-	}
+    public BroadcastReceiver getBroadCastReceiver() {
+        return this;
+    }
 
+    public void onDestroy() {
+        this.context.unregisterReceiver(this.getBroadCastReceiver());
+    }
 
-	public BroadcastReceiver getBroadCastReceiver()
-	{
-		return this;
-	}
-
-
-	public void onDestroy()
-	{
-		this.context.unregisterReceiver(this.getBroadCastReceiver());
-	}
-
-
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-		int i;
-		this.wifidata = new StringBuilder();
-		this.wifiList = this.wifimgr.getScanResults();
-		for ( i = 0; i < this.wifiList.size(); i++ )
-		{
-			this.wifidata.append(new Integer(i + 1).toString() + ".");
-			this.wifidata.append(this.wifiList.get(i));
-			this.wifidata.append("\n\n");
-		}
-		if ( i < 1 )
-		{
-			this.wifidata.append('\0');
-		}
-		Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-		//bcIntent.putExtra("trigger", "WIFI_FOUND");
-		bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.WIFI_DETECTED);
-		// Broadcast the Wifi Details that are scanned each time
-		bcIntent.putExtra("wifiData", this.wifidata.toString());
-		context.sendBroadcast(bcIntent);
-	}
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        int i;
+        this.wifidata = new StringBuilder();
+        this.wifiList = this.wifimgr.getScanResults();
+        for (i = 0; i < this.wifiList.size(); i++) {
+            this.wifidata.append(Integer.valueOf(i + 1) + ".");
+            this.wifidata.append(this.wifiList.get(i));
+            this.wifidata.append("\n\n");
+        }
+        if (i < 1) {
+            this.wifidata.append('\0');
+        }
+        Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+        // bcIntent.putExtra("trigger", "WIFI_FOUND");
+        bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.WIFI_DETECTED);
+        // Broadcast the Wifi Details that are scanned each time
+        bcIntent.putExtra("wifiData", this.wifidata.toString());
+        context.sendBroadcast(bcIntent);
+    }
 
 }

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
-import android.os.Vibrator;
 import android.util.Log;
 
 /**
@@ -28,89 +27,75 @@ import android.util.Log;
  * 
  * @author "Rohit Ghatol"<rohitsghatol@gmail.com>
  */
-public class PowerConnectedTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
-{
+public class PowerConnectedTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger {
 
-	/**
-	 * Android's Application Context
-	 */
-	private Context context = null;
+    /**
+     * Android's Application Context
+     */
+    private Context context = null;
 
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.triggers.BroadCastReceiverTrigger#onCreate(android .content.Context)
+     */
+    public void onCreate(final Context context) {
+        this.context = context;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        context.registerReceiver(this.getBroadCastReceiver(), filter);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.triggers.BroadCastReceiverTrigger#onCreate(android .content.Context)
-	 */
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_POWER_CONNECTED);
-		filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-		context.registerReceiver(getBroadCastReceiver(), filter);
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.triggers.BroadCastReceiverTrigger#getBroadCastReceiver ()
+     */
+    public BroadcastReceiver getBroadCastReceiver() {
+        return this;
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see org.punegdg.kinosense.triggers.BroadCastBasedReceiverTrigger#onDestroy()
+     */
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.triggers.BroadCastReceiverTrigger#getBroadCastReceiver ()
-	 */
-	public BroadcastReceiver getBroadCastReceiver()
-	{
-		return this;
-	}
+    public void onDestroy() {
+        this.context.unregisterReceiver(this.getBroadCastReceiver());
 
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.punegdg.kinosense.triggers.BroadCastBasedReceiverTrigger#onDestroy()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+     */
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        Log.d("BroadCastReceiver", intent.toString());
 
-	public void onDestroy()
-	{
-		context.unregisterReceiver(getBroadCastReceiver());
+        String action = intent.getAction();
 
-	}
+        if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
+            Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // bcIntent.putExtra("trigger", "POWER_CONNECTED");
+            bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.POWER_CONNECTED_TRIGGER);
+            context.sendBroadcast(bcIntent);
 
+        } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
+            Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // bcIntent.putExtra("trigger", "POWER_DISCONNECTED");
+            bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.POWER_DISCONNECTED_TRIGGER);
+            context.sendBroadcast(bcIntent);
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
-	 */
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-		Log.d("BroadCastReceiver", intent.toString());
-
-		String action = intent.getAction();
-
-		if ( action.equals(Intent.ACTION_POWER_CONNECTED) )
-		{
-			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			// bcIntent.putExtra("trigger", "POWER_CONNECTED");
-			bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.POWER_CONNECTED_TRIGGER);
-			context.sendBroadcast(bcIntent);
-
-		}
-		else if ( action.equals(Intent.ACTION_POWER_DISCONNECTED) )
-		{
-			Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			// bcIntent.putExtra("trigger", "POWER_DISCONNECTED");
-			bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.POWER_DISCONNECTED_TRIGGER);
-			context.sendBroadcast(bcIntent);
-		}
-	}
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see android.content.BroadcastReceiver#peekService(android.content.Context, android.content.Intent)
-	 */
-	@Override
-	public IBinder peekService(Context myContext, Intent service)
-	{
-		// TODO Auto-generated method stub
-		return super.peekService(myContext, service);
-	}
+    /*
+     * (non-Javadoc)
+     * @see android.content.BroadcastReceiver#peekService(android.content.Context, android.content.Intent)
+     */
+    @Override
+    public IBinder peekService(final Context myContext, final Intent service) {
+        // TODO Auto-generated method stub
+        return super.peekService(myContext, service);
+    }
 
 }

@@ -16,38 +16,31 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 
 /**
- * Contract to write trigger points which source from broadcast events
- * 
- * The life cycle methods are explained as follows
+ * Contract to write trigger points which source from broadcast events The life cycle methods are explained as follows
  * <ul>
- * <li>onCreate - Called once when creating an instance of this action. Application Context is passed here. Responsible
- * for registering a proper intent filter</li>
+ * <li>onCreate - Called once when creating an instance of this action. Application Context is passed here. Responsible for registering a proper
+ * intent filter</li>
  * <li>getBroadCastReceiver - Called to get access to underlying BroadCastReceiver</li>
  * <li>onDestroy - Called once when this action needs to be destroyed. Clean up needs to be done here</li>
  * 
  * @author "Rohit Ghatol" <rohitsghatol@gmail.com>
- * 
  */
-public interface BroadCastReceiverBasedTrigger
-{
+public interface BroadCastReceiverBasedTrigger {
+    /**
+     * Called once when creating an instance of this action. Responsible for registering a proper intent filter
+     * 
+     * @param context
+     *            Application Context
+     */
+    public void onCreate(Context context);
 
-	/**
-	 * Called once when creating an instance of this action. Responsible for registering a proper intent filter
-	 * 
-	 * @param context Application Context
-	 */
-	public void onCreate(Context context);
+    /**
+     * @return underlying BroadCastReceiver
+     */
+    public BroadcastReceiver getBroadCastReceiver();
 
-
-	/**
-	 * 
-	 * @return underlying BroadCastReceiver
-	 */
-	public BroadcastReceiver getBroadCastReceiver();
-
-
-	/**
-	 * Called once when this action needs to be destroyed. Clean up needs to be done here
-	 */
-	public void onDestroy();
+    /**
+     * Called once when this action needs to be destroyed. Clean up needs to be done here
+     */
+    public void onDestroy();
 }

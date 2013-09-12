@@ -14,143 +14,124 @@ package org.punegdg.kinosense.rule;
 
 /**
  * @author saurabhg
- * 
  */
-public class Rule
-{
+public class Rule {
+    /**
+     * Unique rule id for every rule
+     */
+    private int ruleId;
 
-	/**
-	 * Unique rule id for every rule
-	 */
-	private int ruleId;
+    /**
+     * Trigger for this rule represented by corresponding trigger id
+     */
+    private int triggerId;
 
-	/**
-	 * Trigger for this rule represented by corresponding trigger id
-	 */
-	private int triggerId;
+    /**
+     * Action for this rule represented by corresponding action id
+     */
+    private int actionId;
 
-	/**
-	 * Action for this rule represented by corresponding action id
-	 */
-	private int actionId;
-	
-	/**
-	 * RuleReview Text is stored in ruleText
-	 */
-	private String ruleText;
-	
-	/**
-	 * Additional information for the rule, like phone number to send a msg, etc. This could be a JSON with name value
-	 * pair.
-	 */
-	private String additionalInformation;
+    /**
+     * RuleReview Text is stored in ruleText
+     */
+    private String ruleText;
 
+    /**
+     * Additional information for the rule, like phone number to send a msg, etc. This could be a JSON with name value pair.
+     */
+    private String additionalInformation;
 
-	/**
-	 * @param ruleId
-	 * @param triggerId
-	 * @param actionId
-	 * @param additionalInformation
-	 */
-	public Rule(int ruleId, String ruleText, int actionId, int triggerId, String additionalInformation)
-	{
-		super();
-		this.ruleId = ruleId;
-		this.triggerId = triggerId;
-		this.actionId = actionId;
-		this.ruleText = ruleText;
-		this.additionalInformation = additionalInformation;
-	}
+    /**
+     * @param ruleId
+     * @param triggerId
+     * @param actionId
+     * @param additionalInformation
+     */
+    public Rule(final int ruleId, final String ruleText, final int actionId, final int triggerId, final String additionalInformation) {
+        super();
+        this.ruleId = ruleId;
+        this.triggerId = triggerId;
+        this.actionId = actionId;
+        this.ruleText = ruleText;
+        this.additionalInformation = additionalInformation;
+    }
 
+    /**
+     * @return the ruleId
+     */
+    public int getRuleId() {
+        return this.ruleId;
+    }
 
-	/**
-	 * @return the ruleId
-	 */
-	public int getRuleId()
-	{
-		return this.ruleId;
-	}
+    /**
+     * @param ruleId
+     *            the ruleId to set
+     */
+    public void setRuleId(final int ruleId) {
+        this.ruleId = ruleId;
+    }
 
+    /**
+     * @return the triggerId
+     */
+    public int getTriggerId() {
+        return this.triggerId;
+    }
 
-	/**
-	 * @param ruleId the ruleId to set
-	 */
-	public void setRuleId(int ruleId)
-	{
-		this.ruleId = ruleId;
-	}
+    /**
+     * @param triggerId
+     *            the triggerId to set
+     */
+    public void setTriggerId(final int triggerId) {
+        this.triggerId = triggerId;
+    }
 
+    /**
+     * @return the actionId
+     */
+    public int getActionId() {
+        return this.actionId;
+    }
 
-	/**
-	 * @return the triggerId
-	 */
-	public int getTriggerId()
-	{
-		return this.triggerId;
-	}
+    /**
+     * @param actionId
+     *            the actionId to set
+     */
+    public void setActionId(final int actionId) {
+        this.actionId = actionId;
+    }
 
+    /**
+     * @param RuleText
+     *            the Rule review Text to set
+     */
 
-	/**
-	 * @param triggerId the triggerId to set
-	 */
-	public void setTriggerId(int triggerId)
-	{
-		this.triggerId = triggerId;
-	}
+    public String getRuleText() {
+        return this.ruleText;
+    }
 
+    /**
+     * @return the ruleText
+     */
+    public void setRuleText(final String ruleText) {
+        this.ruleText = ruleText;
+    }
 
-	/**
-	 * @return the actionId
-	 */
-	public int getActionId()
-	{
-		return this.actionId;
-	}
+    /**
+     * /**
+     * 
+     * @return the additionalInformation
+     */
+    public String getAdditionalInformation() {
+        return this.additionalInformation;
+    }
 
-
-	/**
-	 * @param actionId the actionId to set
-	 */
-	public void setActionId(int actionId)
-	{
-		this.actionId = actionId;
-	}
-
-		/**
-	 * @param RuleText the Rule review Text to set
-	 */
-
-	public String getRuleText()
-	{
-		return ruleText;
-	}
-
-
-	/**
-	 * @return the ruleText
-	 */
-	public void setRuleText(String ruleText)
-	{
-		this.ruleText = ruleText;
-	}
-
-
-	/**
-	/**
-	 * @return the additionalInformation
-	 */
-	public String getAdditionalInformation()
-	{
-		return this.additionalInformation;
-	}
-
-
-	/**
-	 * @param additionalInformation the additionalInformation to set
-	 */
-	public void setAdditionalInformation(String additionalInformation)
-	{
-		this.additionalInformation = additionalInformation;
-	}
+    /**
+     * @param additionalInformation
+     *            the additionalInformation to set
+     */
+    public void setAdditionalInformation(final String additionalInformation) {
+        this.additionalInformation = additionalInformation;
+    }
 
 }

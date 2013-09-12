@@ -20,7 +20,6 @@ import android.provider.AlarmClock;
 import android.widget.Toast;
 
 /**
- * 
  * Action to set an Alarm at a particular time on the Device. <code>
  * 		Map<String, Object> alarmData = new HashMap<String, Object>();
  * 			alarmData.put("alarmTime", "Time in 24hr format");
@@ -28,42 +27,33 @@ import android.widget.Toast;
  * </code>
  * 
  * @author "Ashish Kalbhor"<ashish.kalbhor@gmail.com>
- * 
  */
 
-public class AlarmAction implements AbstractAction
-{
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
+public class AlarmAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
 
+    public void onCreate(final Context context) {
+        this.context = context;
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-	}
+    public void perform(final Map<String, Object> alarmData) {
+        String AlarmTime = (String) alarmData.get("alarmTime");
+        String AlarmHours = AlarmTime.substring(0, 2); // Get Hours from data
+        String AlarmMins = AlarmTime.substring(2, 4); // Get Minutes from data
 
+        Toast.makeText(this.context, "Alarm has been Set for " + AlarmHours + ":" + AlarmMins, Toast.LENGTH_SHORT).show();
+        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(AlarmHours));
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(AlarmMins));
 
-	public void perform(Map<String, Object> alarmData)
-	{
-		String AlarmTime = (String)alarmData.get("alarmTime");
-		String AlarmHours = AlarmTime.substring(0, 2); // Get Hours from data
-		String AlarmMins = AlarmTime.substring(2, 4); // Get Minutes from data
+        this.context.startActivity(alarmIntent);
+    }
 
-		Toast.makeText(this.context, "Alarm has been Set for " + AlarmHours + ":" + AlarmMins, Toast.LENGTH_SHORT).show();
-		Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-		alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(AlarmHours));
-		alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(AlarmMins));
-
-		this.context.startActivity(alarmIntent);
-	}
-
-
-	public void onDestroy()
-	{
-
-	}
+    public void onDestroy() {
+    }
 
 }

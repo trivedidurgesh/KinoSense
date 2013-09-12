@@ -23,80 +23,65 @@ import android.widget.Toast;
  * Flight Mode action turns ON the Flight mode of device by switching off the device radios.
  * 
  * @author "Ashish Kalbhor"<ashish.kalbhor@gmail.com>
- * 
- * 
  */
-public class FlightModeAction implements AbstractAction
-{
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
-	/**
-	 * Flag to check current state of Flight Mode
-	 */
-	private boolean isEnabled = false;
+public class FlightModeAction implements AbstractAction {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
+    /**
+     * Flag to check current state of Flight Mode
+     */
+    private boolean isEnabled = false;
 
+    public void onCreate(final Context context) {
+        this.context = context;
+        // get existing state of Flight Mode
+        this.isEnabled = Settings.System.getInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1;
+    }
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		// get existing state of Flight Mode
-		this.isEnabled = Settings.System.getInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1;
-	}
+    public void perform(final Map<String, Object> flightmodedata) {
+        int action = (Integer) flightmodedata.get(ActionIdConstants.ACTION_ID);
 
+        /**
+         * Turn Airplane Mode On
+         */
+        if (ActionIdConstants.FLIGHT_MODE_ON == action) {
+            if (this.isEnabled == false)// Enable Flight mode only if already disabled
+            {
+                Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 1);
 
-	public void perform(Map<String, Object> flightmodedata)
-	{
-		String action = (String)flightmodedata.get("action");
+                Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+                intent.putExtra("state", true);
+                this.context.sendBroadcast(intent);
 
-		/**
-		 * Turn Airplane Mode On
-		 */
-		if ( "ON".equals(action) )
-		{
-			if ( this.isEnabled == false )// Enable Flight mode only if already disabled
-			{
-				Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 1);
+                Toast.makeText(this.context, "Flight Mode On !", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this.context, "Flight Mode Already On !", Toast.LENGTH_SHORT).show();
+            }
+        }
 
-				Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-				intent.putExtra("state", true);
-				this.context.sendBroadcast(intent);
+        /**
+         * Turn Airplane Mode Off
+         */
+        if (ActionIdConstants.FLIGHT_MODE_OFF == action) {
+            if (this.isEnabled == true) // Disable only if already enabled
+            {
+                Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0);
 
-				Toast.makeText(this.context, "Flight Mode On !", Toast.LENGTH_SHORT).show();
-			}
-			else
-			{
-				Toast.makeText(this.context, "Flight Mode Already On !", Toast.LENGTH_SHORT).show();
-			}
-		}
+                Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+                intent.putExtra("state", false);
+                this.context.sendBroadcast(intent);
 
-		/**
-		 * Turn Airplane Mode Off
-		 */
-		if ( "OFF".equals(action) )
-		{
-			if ( this.isEnabled == true ) // Disable only if already enabled
-			{
-				Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0);
+                Toast.makeText(this.context, "Flight Mode Off !", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this.context, "Flight Mode Already Off !", Toast.LENGTH_SHORT).show();
+            }
+        }
 
-				Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-				intent.putExtra("state", false);
-				this.context.sendBroadcast(intent);
+    }
 
-				Toast.makeText(this.context, "Flight Mode Off !", Toast.LENGTH_SHORT).show();
-			}
-			else
-			{
-				Toast.makeText(this.context, "Flight Mode Already Off !", Toast.LENGTH_SHORT).show();
-			}
-		}
-
-	}
-
-
-	public void onDestroy()
-	{
-	}
+    public void onDestroy() {
+    }
 
 }

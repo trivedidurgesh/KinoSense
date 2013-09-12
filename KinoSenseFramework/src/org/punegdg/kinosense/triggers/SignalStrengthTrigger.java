@@ -29,84 +29,67 @@ import android.widget.Toast;
  * This Trigger is for the action when Cellular Signal Strength is below predefined range
  * 
  * @author "Amruta Deshpande"<deshpande.amruta22@gmail.com>
- * 
  */
 
-public class SignalStrengthTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger
-{
-	/**
-	 * Android Application Context
-	 */
-	private Context context = null;
+public class SignalStrengthTrigger extends BroadcastReceiver implements BroadCastReceiverBasedTrigger {
+    /**
+     * Android Application Context
+     */
+    private Context context = null;
 
-	/**
-	 * Telephony Manager to listen Signal
-	 */
-	TelephonyManager telemgr = null;
+    /**
+     * Telephony Manager to listen Signal
+     */
+    TelephonyManager telemgr = null;
 
+    public void onCreate(final Context context) {
+        this.context = context;
+        this.telemgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
-	public void onCreate(Context context)
-	{
-		this.context = context;
-		this.telemgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        // IntentFilter filter = new IntentFilter();
+        // filter.addAction(Intent.ACTION_NETWORK_LOW);
+        // filter.addAction(Intent.ACTION_MANAGE_NETWORK_USAGE);
+        // context.registerReceiver(this.getBroadCastReceiver(), filter);
 
-		// IntentFilter filter = new IntentFilter();
-		// filter.addAction(Intent.ACTION_NETWORK_LOW);
-		// filter.addAction(Intent.ACTION_MANAGE_NETWORK_USAGE);
-		// context.registerReceiver(this.getBroadCastReceiver(), filter);
+        PhoneStateListener signalListener = new PhoneStateListener() {
+            @Override
+            public void onSignalStrengthsChanged(final SignalStrength signalStrength) {
+                super.onSignalStrengthsChanged(signalStrength);
+                int strength = signalStrength.getGsmSignalStrength();
 
-		PhoneStateListener signalListener = new PhoneStateListener() {
-			@Override
-			public void onSignalStrengthsChanged(SignalStrength signalStrength)
-			{
-				super.onSignalStrengthsChanged(signalStrength);
-				int strength = signalStrength.getGsmSignalStrength();
+                if (strength < 8) {
+                    Toast.makeText(SignalStrengthTrigger.this.context, "Poor Range ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignalStrengthTrigger.this.context, "Good Range ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        this.telemgr.listen(signalListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+    }
 
-				if ( strength < 8 )
-				{
-					Toast.makeText(SignalStrengthTrigger.this.context, "Poor Range ", Toast.LENGTH_SHORT).show();
-				}
-				else
-				{
-					Toast.makeText(SignalStrengthTrigger.this.context, "Good Range ", Toast.LENGTH_SHORT).show();
-				}
-			}
-		};
-		this.telemgr.listen(signalListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-	}
+    public BroadcastReceiver getBroadCastReceiver() {
+        return this;
+    }
 
+    public void onDestroy() {
+        this.context.unregisterReceiver(this.getBroadCastReceiver());
+        this.telemgr = null;
+    }
 
-	public BroadcastReceiver getBroadCastReceiver()
-	{
-		return this;
-	}
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        if (intent.getExtras().getInt("state") == 0) {
+            Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // bcSIntent.putExtra("trigger", "GOOD_SIGNAL_STRENGHTH");
+            bcSIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIGNAL_STRENGTH_GOOD);
+            context.sendBroadcast(bcSIntent);
 
-
-	public void onDestroy()
-	{
-		this.context.unregisterReceiver(this.getBroadCastReceiver());
-		this.telemgr = null;
-	}
-
-
-	@Override
-	public void onReceive(Context context, Intent intent)
-	{
-		if ( intent.getExtras().getInt("state") == 0 )
-		{
-			Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			//bcSIntent.putExtra("trigger", "GOOD_SIGNAL_STRENGHTH");
-			bcSIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIGNAL_STRENGTH_GOOD);			
-			context.sendBroadcast(bcSIntent);
-
-		}
-		else
-		{
-			Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			//bcSIntent.putExtra("trigger", "LOW_SIGNAL_STRENGTH");
-			bcSIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIGNAL_STRENGTH_LOW);
-			context.sendBroadcast(bcSIntent);
-		}
-	}
+        } else {
+            Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
+            // bcSIntent.putExtra("trigger", "LOW_SIGNAL_STRENGTH");
+            bcSIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIGNAL_STRENGTH_LOW);
+            context.sendBroadcast(bcSIntent);
+        }
+    }
 
 }

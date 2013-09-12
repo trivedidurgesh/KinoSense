@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
  * 
  * Database Adapter class for Doing the CRUD operation on Rule entity  
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
+ * @author "Sagar Pawar" <sagar.pawar@synerzip.com>
  * 
  */
 public class RuleAdapter {	
@@ -39,10 +40,13 @@ public class RuleAdapter {
 	}
 
 	//---insert a rule into the database---
-	public long insertRule(String rule)
+	public long insertRule(String rule, int actionID, int triggerID, String additionalInfo)
 	{
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(RuleDataBase.KEY_RULE, rule);		
+		initialValues.put(RuleDataBase.KEY_RULE, rule);
+		initialValues.put(RuleDataBase.ACTION_ID, actionID);
+		initialValues.put(RuleDataBase.TRIGGER_ID, triggerID);
+		initialValues.put(RuleDataBase.ADDITION_INFO, additionalInfo);		
 		return db.insert(RuleDataBase.getDatabaseTable(), null, initialValues);
 	}
 	//---deletes a particular rule---
@@ -53,16 +57,19 @@ public class RuleAdapter {
 	//---retrieves all the rules---
 	public Cursor getAllRules()
 	{
-		return db.query(RuleDataBase.getDatabaseTable(), new String[] {RuleDataBase.KEY_ROWID, RuleDataBase.KEY_RULE}, null, null, null, null, null);
+		return db
+				.query(RuleDataBase.getDatabaseTable(), new String[] { RuleDataBase.KEY_ROWID, RuleDataBase.KEY_RULE,
+						RuleDataBase.ACTION_ID, RuleDataBase.TRIGGER_ID, RuleDataBase.ADDITION_INFO }, null, null, null,
+						null, null);
 	}
 
 	//---retrieves a particular rule---
 	public Cursor getRule(long rowId) throws SQLException
 	{
-		Cursor mCursor =
-				db.query(true, RuleDataBase.getDatabaseTable(), new String[] {RuleDataBase.KEY_ROWID, RuleDataBase.KEY_RULE}, RuleDataBase.KEY_ROWID + "=" + rowId, null,
-						null, null, null, null);
-		if (mCursor != null) {
+		Cursor mCursor = db.query(true, RuleDataBase.getDatabaseTable(), new String[] { RuleDataBase.KEY_ROWID,
+				RuleDataBase.KEY_RULE }, RuleDataBase.KEY_ROWID + "=" + rowId, null, null, null, null, null);
+		if ( mCursor != null )
+		{
 			mCursor.moveToFirst();
 		}
 		return mCursor;
@@ -76,5 +83,8 @@ public class RuleAdapter {
 		
 	}
 	
-	
+	public void delete()
+	{
+		ruleDataBaseHelper.onUpgrade(db, 1, 2);
+	}	
 } 

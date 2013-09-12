@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.IBinder;
 
 /**
  * This Trigger is for the action when User plugin the headphones
@@ -53,7 +54,8 @@ public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastRece
 		// Headset Disconnected
 		{
 			Intent bcHIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcHIntent.putExtra("trigger", "HEADSET_DISCONNECTED");
+			//bcHIntent.putExtra("trigger", "HEADSET_DISCONNECTED");
+			bcHIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.HEADPHONE_DISCONNECTED);
 			context.sendBroadcast(bcHIntent);
 
 		}
@@ -61,9 +63,19 @@ public class HeadphoneTrigger extends BroadcastReceiver implements BroadCastRece
 		// Headset Connected
 		{
 			Intent bcHIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcHIntent.putExtra("trigger", "HEADSET_CONNECTED");
+			//bcHIntent.putExtra("trigger", "HEADSET_CONNECTED");
+			bcHIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.HEADPHONE_CONNECTED);
 			context.sendBroadcast(bcHIntent);
 		}
+	}	
+	/*
+	 * (non-Javadoc)
+	 * @see android.content.BroadcastReceiver#peekService(android.content.Context, android.content.Intent)
+	 */
+	@Override
+	public IBinder peekService(Context myContext, Intent service)
+	{
+		// TODO Auto-generated method stub
+		return super.peekService(myContext, service);
 	}
-
 }

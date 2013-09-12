@@ -89,13 +89,15 @@ public class SimCardChangedTrigger extends BroadcastReceiver implements BroadCas
 			if ( !this.dbHandler.getSimSerial().equals(this.SimSerialNo) ) // check for simserial nos.
 			{
 				Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-				bcIntent1.putExtra("trigger", "SIMCARD_CHANGED");
+				// bcIntent1.putExtra("trigger", "SIMCARD_CHANGED");
+				bcIntent1.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIM_CARD_CHANGED);
 				context.sendBroadcast(bcIntent1);
 			}
 			else
 			{
 				Intent bcIntent1 = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-				bcIntent1.putExtra("trigger", "SIMCARD_UNCHANGED");
+				// bcIntent1.putExtra("trigger", "SIMCARD_UNCHANGED");
+				bcIntent1.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIM_CARD_CHANGED);
 				context.sendBroadcast(bcIntent1);
 			}
 		}

@@ -33,7 +33,12 @@ public class Rule
 	 * Action for this rule represented by corresponding action id
 	 */
 	private int actionId;
-
+	
+	/**
+	 * RuleReview Text is stored in ruleText
+	 */
+	private String ruleText;
+	
 	/**
 	 * Additional information for the rule, like phone number to send a msg, etc. This could be a JSON with name value
 	 * pair.
@@ -47,12 +52,13 @@ public class Rule
 	 * @param actionId
 	 * @param additionalInformation
 	 */
-	public Rule(int ruleId, int triggerId, int actionId, String additionalInformation)
+	public Rule(int ruleId, String ruleText, int actionId, int triggerId, String additionalInformation)
 	{
 		super();
 		this.ruleId = ruleId;
 		this.triggerId = triggerId;
 		this.actionId = actionId;
+		this.ruleText = ruleText;
 		this.additionalInformation = additionalInformation;
 	}
 
@@ -110,7 +116,26 @@ public class Rule
 		this.actionId = actionId;
 	}
 
+		/**
+	 * @param RuleText the Rule review Text to set
+	 */
 
+	public String getRuleText()
+	{
+		return ruleText;
+	}
+
+
+	/**
+	 * @return the ruleText
+	 */
+	public void setRuleText(String ruleText)
+	{
+		this.ruleText = ruleText;
+	}
+
+
+	/**
 	/**
 	 * @return the additionalInformation
 	 */

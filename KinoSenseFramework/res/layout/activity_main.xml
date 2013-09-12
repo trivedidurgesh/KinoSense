@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/back4"
     android:layout_height="match_parent" >
 
     <TextView
@@ -16,31 +16,31 @@
         android:textColor="#fff8dc"
         android:textSize="38sp" />
 
-    <Button
-        android:id="@+id/buttonnewrule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/texttitle"
-        android:layout_below="@+id/texttitle"
-        android:layout_marginTop="60dp"
-        android:textColor="#ffffff"
-        android:paddingLeft="5dp" 
-        android:paddingRight="5dp"  
-        android:background="@drawable/button"
-        android:text="@string/rule"
-        android:width="190dp" />
-
-    <Button
+   <Button
         android:id="@+id/buttonreviewrule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/buttonnewrule"
-        android:layout_below="@+id/buttonnewrule"
-        android:layout_marginTop="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="@string/reviewrule"
+        android:textColor="#ffffff"
+        android:width="190dp" />
+
+    <Button
+        android:id="@+id/buttonnewrule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonreviewrule"
+        android:layout_alignLeft="@+id/texttitle"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/button"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/rule"
         android:textColor="#ffffff"
         android:width="190dp" />
 

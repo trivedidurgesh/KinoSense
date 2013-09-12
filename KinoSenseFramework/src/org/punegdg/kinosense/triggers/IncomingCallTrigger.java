@@ -96,7 +96,8 @@ public class IncomingCallTrigger extends BroadcastReceiver implements BroadCastR
 		this.telephony.listen(this.phonelistener, PhoneStateListener.LISTEN_CALL_STATE);
 
 		Bundle bundle = intent.getExtras();
-
+		String incomingNumber = bundle.getString("incoming_number"); // Read Caller's Number
+		
 		if ( bundle.getString("incoming_number") != null )
 		{
 			String incomingMNumber = bundle.getString("incoming_number"); // Read Caller's Number
@@ -104,7 +105,9 @@ public class IncomingCallTrigger extends BroadcastReceiver implements BroadCastR
 		}
 
 		Intent callIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-		callIntent.putExtra("trigger", "INCOMING_CALL");
+		// Broadcast TriggerName and PhoneNumber
+		//callIntent.putExtra("trigger", "INCOMING_CALL");
+		intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.INCOMING_CALL);
 		callIntent.putExtra("number", incomingNumber);
 
 		/**

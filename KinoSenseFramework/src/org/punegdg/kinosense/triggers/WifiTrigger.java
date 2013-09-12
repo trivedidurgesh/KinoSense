@@ -90,7 +90,8 @@ public class WifiTrigger extends BroadcastReceiver implements BroadCastReceiverB
 			this.wifidata.append('\0');
 		}
 		Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-		bcIntent.putExtra("trigger", "WIFI_FOUND");
+		//bcIntent.putExtra("trigger", "WIFI_FOUND");
+		bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.WIFI_DETECTED);
 		// Broadcast the Wifi Details that are scanned each time
 		bcIntent.putExtra("wifiData", this.wifidata.toString());
 		context.sendBroadcast(bcIntent);

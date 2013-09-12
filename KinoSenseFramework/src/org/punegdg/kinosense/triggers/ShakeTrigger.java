@@ -105,7 +105,8 @@ public class ShakeTrigger implements SensorEventListener,SensorBasedTrigger {
 	private void executeShakeAction() {
 		Intent intent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
 
-		intent.putExtra("trigger", "SHAKING");
+		//intent.putExtra("trigger", "SHAKING");
+		intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.DEVICE_SHAKING);
 		context.sendBroadcast(intent);
 	}
 

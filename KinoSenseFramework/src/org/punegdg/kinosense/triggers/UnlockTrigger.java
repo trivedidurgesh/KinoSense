@@ -48,7 +48,8 @@ public class UnlockTrigger extends BroadcastReceiver implements BroadCastReceive
 	public void onReceive(Context context, Intent intent)
 	{
 		Intent bcIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-		bcIntent.putExtra("trigger", "PHONE_UNLOCKED");
+		// bcIntent.putExtra("trigger", "PHONE_UNLOCKED");
+		bcIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.PHONE_UNLOCKED);
 		context.sendBroadcast(bcIntent);
 
 	}

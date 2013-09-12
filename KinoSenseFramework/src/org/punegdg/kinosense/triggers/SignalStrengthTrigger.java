@@ -95,14 +95,16 @@ public class SignalStrengthTrigger extends BroadcastReceiver implements BroadCas
 		if ( intent.getExtras().getInt("state") == 0 )
 		{
 			Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcSIntent.putExtra("trigger", "GOOD_SIGNAL_STRENGHTH");
+			//bcSIntent.putExtra("trigger", "GOOD_SIGNAL_STRENGHTH");
+			bcSIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIGNAL_STRENGTH_GOOD);			
 			context.sendBroadcast(bcSIntent);
 
 		}
 		else
 		{
 			Intent bcSIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
-			bcSIntent.putExtra("trigger", "LOW_SIGNAL_STRENGTH");
+			//bcSIntent.putExtra("trigger", "LOW_SIGNAL_STRENGTH");
+			bcSIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.SIGNAL_STRENGTH_LOW);
 			context.sendBroadcast(bcSIntent);
 		}
 	}

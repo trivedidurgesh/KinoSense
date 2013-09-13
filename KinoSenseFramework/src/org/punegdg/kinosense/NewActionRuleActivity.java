@@ -1,6 +1,7 @@
 package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.actions.ActionIdConstants;
+import org.punegdg.kinosense.eventsource.SensorService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -232,6 +233,9 @@ public class NewActionRuleActivity extends Activity {
                 Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
                 ruleReviewintent.putExtra("ruletext", rule);
                 NewActionRuleActivity.this.startActivity(ruleReviewintent);
+                Intent restartService = new Intent(NewActionRuleActivity.this, SensorService.class);
+                restartService.putExtra("triggerID", triggerID);
+                NewActionRuleActivity.this.startService(restartService);
             }
         });
 

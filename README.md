@@ -80,4 +80,6 @@ Project Members
 * Saurabh Gangarde
 * Kumar Gaurav
 * Sagar J Pawar
+* Durgesh Trivedi
+* Yuvraj Patel
 * More coming

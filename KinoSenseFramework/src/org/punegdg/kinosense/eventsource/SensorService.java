@@ -77,79 +77,90 @@ public class SensorService extends Service {
         this.ruleList = RuleManager.getInstance().getRules(this.getApplicationContext());
         Log.d("SensorService", "Service Started, initialising triggers");
         this.sensorMgr = (SensorManager) this.getSystemService(SENSOR_SERVICE);
-
         for (Rule rule : this.ruleList) {
-            switch (rule.getTriggerId()) {
-            case TriggerIdConstants.DEVICE_FLIPPED_DOWN:
-            case TriggerIdConstants.DEVICE_FLIPPED_UP:
-                if (null == this.flipTrigger) {
-                    this.flipTrigger = new FlipTrigger();
-                    this.flipTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
-                }
-                break;
-            case TriggerIdConstants.POWER_CONNECTED_TRIGGER:
-            case TriggerIdConstants.POWER_DISCONNECTED_TRIGGER:
-                if (null == this.powerConnectedTrigger) {
-                    this.powerConnectedTrigger = new PowerConnectedTrigger();
-                    this.powerConnectedTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.HEADPHONE_CONNECTED:
-            case TriggerIdConstants.HEADPHONE_DISCONNECTED:
-                if (null == this.headphoneTrigger) {
-                    this.headphoneTrigger = new HeadphoneTrigger();
-                    this.headphoneTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.DEVICE_SHAKING:
-                if (null == this.shakeTrigger) {
-                    this.shakeTrigger = new ShakeTrigger();
-                    this.shakeTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
-                }
-                break;
-            case TriggerIdConstants.INCOMING_CALL:
-                if (null == this.incomingCallTrigger) {
-                    this.incomingCallTrigger = new IncomingCallTrigger();
-                    this.incomingCallTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.PHONE_LOCKED:
-            case TriggerIdConstants.PHONE_UNLOCKED:
-                if (null == this.unlockTrigger) {
-                    this.unlockTrigger = new UnlockTrigger();
-                    this.unlockTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.SIGNAL_STRENGTH_GOOD:
-            case TriggerIdConstants.SIGNAL_STRENGTH_LOW:
-                if (null == this.signalStrengthTrigger) {
-                    this.signalStrengthTrigger = new SignalStrengthTrigger();
-                    this.signalStrengthTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.BATTERY_LOW:
-            case TriggerIdConstants.BATTERY_NORMAL:
-                if (null == this.batteryTrigger) {
-                    this.batteryTrigger = new BatteryTrigger();
-                    this.batteryTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.SIM_INSERTED:
-            case TriggerIdConstants.SIM_REMOVED:
-                if (null == this.simTrigger) {
-                    this.simTrigger = new SimCardChangedTrigger();
-                    this.simTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            case TriggerIdConstants.WIFI_DETECTED:
-                if (null == this.wifiTrigger) {
-                    this.wifiTrigger = new WifiTrigger();
-                    this.wifiTrigger.onCreate(this.getApplicationContext());
-                }
-                break;
-            default:
-                break;
+            this.triggerEvent(rule.getTriggerId());
+        }
+    }
+
+    @Override
+    public int onStartCommand(final Intent intent, final int flags, final int startId) {
+
+        super.onStartCommand(intent, flags, startId);
+        this.triggerEvent(intent.getIntExtra("triggerID", 0));
+        return START_REDELIVER_INTENT;
+    }
+
+    private void triggerEvent(final int trigger) {
+        switch (trigger) {
+        case TriggerIdConstants.DEVICE_FLIPPED_DOWN:
+        case TriggerIdConstants.DEVICE_FLIPPED_UP:
+            if (null == this.flipTrigger) {
+                this.flipTrigger = new FlipTrigger();
+                this.flipTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
             }
+            break;
+        case TriggerIdConstants.POWER_CONNECTED_TRIGGER:
+        case TriggerIdConstants.POWER_DISCONNECTED_TRIGGER:
+            if (null == this.powerConnectedTrigger) {
+                this.powerConnectedTrigger = new PowerConnectedTrigger();
+                this.powerConnectedTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.HEADPHONE_CONNECTED:
+        case TriggerIdConstants.HEADPHONE_DISCONNECTED:
+            if (null == this.headphoneTrigger) {
+                this.headphoneTrigger = new HeadphoneTrigger();
+                this.headphoneTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.DEVICE_SHAKING:
+            if (null == this.shakeTrigger) {
+                this.shakeTrigger = new ShakeTrigger();
+                this.shakeTrigger.onCreate(this.getApplicationContext(), this.sensorMgr);
+            }
+            break;
+        case TriggerIdConstants.INCOMING_CALL:
+            if (null == this.incomingCallTrigger) {
+                this.incomingCallTrigger = new IncomingCallTrigger();
+                this.incomingCallTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.PHONE_LOCKED:
+        case TriggerIdConstants.PHONE_UNLOCKED:
+            if (null == this.unlockTrigger) {
+                this.unlockTrigger = new UnlockTrigger();
+                this.unlockTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.SIGNAL_STRENGTH_GOOD:
+        case TriggerIdConstants.SIGNAL_STRENGTH_LOW:
+            if (null == this.signalStrengthTrigger) {
+                this.signalStrengthTrigger = new SignalStrengthTrigger();
+                this.signalStrengthTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.BATTERY_LOW:
+        case TriggerIdConstants.BATTERY_NORMAL:
+            if (null == this.batteryTrigger) {
+                this.batteryTrigger = new BatteryTrigger();
+                this.batteryTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.SIM_INSERTED:
+        case TriggerIdConstants.SIM_REMOVED:
+            if (null == this.simTrigger) {
+                this.simTrigger = new SimCardChangedTrigger();
+                this.simTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        case TriggerIdConstants.WIFI_DETECTED:
+            if (null == this.wifiTrigger) {
+                this.wifiTrigger = new WifiTrigger();
+                this.wifiTrigger.onCreate(this.getApplicationContext());
+            }
+            break;
+        default:
+            break;
         }
     }
 

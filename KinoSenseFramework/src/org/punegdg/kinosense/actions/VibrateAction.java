@@ -48,7 +48,8 @@ public class VibrateAction implements AbstractAction {
      * @see org.punegdg.kinosense.actions.BaseAction#perform(java.lang.String, java.lang.String)
      */
     public void perform(final Map<String, Object> data) {
-        if (null != this.vibrator) {
+        boolean state = (Boolean) data.get(ActionIdConstants.DISABLEACTION);
+        if ((null != this.vibrator) && state) {
             this.vibrator.vibrate(2000);
 
         }

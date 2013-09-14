@@ -42,21 +42,25 @@ public class NotificationAction implements AbstractAction {
      * @see org.punegdg.kinosense.actions.AbstractAction#perform(java.util.Map)
      */
     public void perform(final Map<String, Object> NotifyData) {
-        String message = (String) NotifyData.get("message");
 
-        Intent resultIntent = new Intent(this.context, MainActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this.context, 0, resultIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
+        boolean state = (Boolean) NotifyData.get(ActionIdConstants.DISABLEACTION);
+        if (state) {
+            String message = (String) NotifyData.get("message");
 
-        int smallIcon = R.drawable.ic_action_search;
+            Intent resultIntent = new Intent(this.context, MainActivity.class);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this.context, 0, resultIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        Notification.Builder mBuilder = new Notification.Builder(this.context);
-        mBuilder.setContentTitle("KinoSense").setContentText(message).setSmallIcon(smallIcon).setLights(0xFFFF0000, 500, 500);
+            int smallIcon = R.drawable.ic_action_search;
 
-        mBuilder.setContentIntent(resultPendingIntent);
+            Notification.Builder mBuilder = new Notification.Builder(this.context);
+            mBuilder.setContentTitle("KinoSense").setContentText(message).setSmallIcon(smallIcon).setLights(0xFFFF0000, 500, 500);
 
-        mBuilder.setAutoCancel(true); // for clearing notification automatically
+            mBuilder.setContentIntent(resultPendingIntent);
 
-        this.notifymgr.notify((int) Calendar.getInstance().getTimeInMillis(), mBuilder.build());
+            mBuilder.setAutoCancel(true); // for clearing notification automatically
+
+            this.notifymgr.notify((int) Calendar.getInstance().getTimeInMillis(), mBuilder.build());
+        }
 
     }
 

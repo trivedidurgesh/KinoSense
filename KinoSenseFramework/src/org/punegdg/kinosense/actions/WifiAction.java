@@ -50,9 +50,10 @@ public class WifiAction implements AbstractAction {
         // Turn the Wifi State On or Off
 
         int action = (Integer) wifiData.get(ActionIdConstants.ACTION_ID);
-        if (ActionIdConstants.WIFI_ON == action) {
+        boolean state = (Boolean) wifiData.get(ActionIdConstants.DISABLEACTION);
+        if ((ActionIdConstants.WIFI_ON == action) && state) {
             this.wifimgr.setWifiEnabled(true);
-        } else if (ActionIdConstants.WIFI_OFF == action) {
+        } else if ((ActionIdConstants.WIFI_OFF == action) && state) {
             this.wifimgr.setWifiEnabled(false);
         }
     }

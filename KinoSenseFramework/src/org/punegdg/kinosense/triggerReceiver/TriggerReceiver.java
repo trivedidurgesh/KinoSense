@@ -80,6 +80,7 @@ public class TriggerReceiver extends BroadcastReceiver {
             silentAction.onCreate(this.context);
             Map<String, Object> silentData = new HashMap<String, Object>();
             silentData.put(ActionIdConstants.ACTION_ID, actionId);
+            silentData.put(ActionIdConstants.DISABLEACTION, rule.getState());
             silentAction.perform(silentData);
             break;
         case ActionIdConstants.BRIGHTNESS_HIGH:
@@ -88,6 +89,7 @@ public class TriggerReceiver extends BroadcastReceiver {
             brightnessAction.onCreate(this.context);
             Map<String, Object> brightnessData = new HashMap<String, Object>();
             brightnessData.put(ActionIdConstants.ACTION_ID, actionId);
+            brightnessData.put(ActionIdConstants.DISABLEACTION, rule.getState());
             brightnessAction.perform(brightnessData);
             break;
         case ActionIdConstants.NOTIFICATION:
@@ -95,6 +97,7 @@ public class TriggerReceiver extends BroadcastReceiver {
             notifAction.onCreate(this.context);
             Map<String, Object> notifyData = new HashMap<String, Object>();
             notifyData.put("message", rule.getAdditionalInformation());
+            notifyData.put(ActionIdConstants.DISABLEACTION, rule.getState());
             notifAction.perform(notifyData);
             break;
         case ActionIdConstants.ALARM_SET:
@@ -105,6 +108,7 @@ public class TriggerReceiver extends BroadcastReceiver {
             flightaction.onCreate(this.context);
             Map<String, Object> flightmodeData = new HashMap<String, Object>();
             flightmodeData.put(ActionIdConstants.ACTION_ID, actionId);
+            flightmodeData.put(ActionIdConstants.DISABLEACTION, rule.getState());
             flightaction.perform(flightmodeData);
             break;
         case ActionIdConstants.SMS_SEND:
@@ -113,13 +117,16 @@ public class TriggerReceiver extends BroadcastReceiver {
             Map<String, Object> smsData = new HashMap<String, Object>();
             smsData.put(ActionIdConstants.ACTION_ID, actionId);
             smsData.put("message", rule.getAdditionalInformation());
+            smsData.put(ActionIdConstants.DISABLEACTION, rule.getState());
             // FIXME Phone Number to be set through UI
             smsAction.perform(smsData);
             break;
         case ActionIdConstants.VIBRATE_ACTION:
             AbstractAction vibrateAction = new VibrateAction();
             vibrateAction.onCreate(this.context);
-            vibrateAction.perform(null);
+            Map<String, Object> vibrateData = new HashMap<String, Object>();
+            vibrateData.put(ActionIdConstants.DISABLEACTION, rule.getState());
+            vibrateAction.perform(vibrateData);
             break;
         case ActionIdConstants.WIFI_OFF:
         case ActionIdConstants.WIFI_ON:
@@ -127,6 +134,7 @@ public class TriggerReceiver extends BroadcastReceiver {
             wifiAction.onCreate(this.context);
             Map<String, Object> wifiData = new HashMap<String, Object>();
             wifiData.put(ActionIdConstants.ACTION_ID, actionId);
+            wifiData.put(ActionIdConstants.DISABLEACTION, rule.getState());
             wifiAction.perform(wifiData);
             break;
         default:

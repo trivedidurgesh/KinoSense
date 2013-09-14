@@ -13,8 +13,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 /**
@@ -23,7 +25,7 @@ import android.widget.ListView;
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
  */
 public class RuleReviewActivity extends Activity {
-    Button buttonreviewback, buttonreviewnext;
+    Button buttonreviewsave, buttonreviewnext;
     static List<String> myListItems = Collections.synchronizedList(new ArrayList<String>());
     static ArrayAdapter<String> adapter;
 
@@ -34,40 +36,36 @@ public class RuleReviewActivity extends Activity {
     private int triggerID;
     private String additionalInfo = "";
     private String TextLabel = "";
+    private String enabled = "true";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent ruleReviewintent = this.getIntent();
-        if (ruleReviewintent != null) {
-            this.actionID = ruleReviewintent.getIntExtra("actionID", -1);
-            this.triggerID = ruleReviewintent.getIntExtra("triggerID", -1);
-            this.TextLabel = ruleReviewintent.getStringExtra("ruletext");
-        }
-        // Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         this.setContentView(R.layout.activity_reviewrule);
-
         this.ruleList = (ListView) this.findViewById(R.id.rulelist);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myListItems);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, myListItems);
         myListItems.clear();
-        RuleManager rulemanager = RuleManager.getInstance();
-        if ((this.actionID != -1) || (this.triggerID != -1)) {
-            rulemanager.createRules(this.triggerID, this.actionID, this.TextLabel, this.additionalInfo, this.getApplicationContext());
-        }
-        ArrayList<Rule> ruleArray = rulemanager.getRules(this.getApplicationContext());
+        this.ruleList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        final RuleManager rulemanager = RuleManager.getInstance();
+        final ArrayList<Rule> ruleArray = rulemanager.getRules(this.getApplicationContext());
+        this.ruleList.setAdapter(adapter);
         for (int iterateCount = 0; iterateCount < ruleArray.size(); iterateCount++) {
             myListItems.add(ruleArray.get(iterateCount).getRuleText());
+            this.ruleList.setItemChecked(iterateCount, ruleArray.get(iterateCount).getState());
         }
-        this.ruleList.setAdapter(adapter);
-
-        // Back Button to go back to the Main Menu
-        this.buttonreviewback = (Button) this.findViewById(R.id.buttonreviewback);
-        this.buttonreviewback.setOnClickListener(new OnClickListener() {
+        this.buttonreviewsave = (Button) this.findViewById(R.id.buttonreviewsave);
+        this.buttonreviewsave.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
-                // TODO Auto-generated method stub
+                for (int index = 0; index < RuleReviewActivity.this.ruleList.getCount(); index++) {
+                    boolean state = ((CheckedTextView) RuleReviewActivity.this.ruleList.getChildAt(index)).isChecked();
+                    if (state != ruleArray.get(index).getState()) {
+                        rulemanager.updateRule(ruleArray.get(index).getRuleId(), String.valueOf(state), RuleReviewActivity.this);
+                    }
+                }
                 Intent intent = new Intent(RuleReviewActivity.this, MainActivity.class);
                 RuleReviewActivity.this.startActivity(intent);
             }
+
         });
 
         // button to create another rule , going back to New Action Rule

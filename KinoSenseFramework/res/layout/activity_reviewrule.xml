@@ -23,6 +23,7 @@
                  android:textAppearance="?android:attr/textAppearanceLarge"
                  android:textColor="#000000"
                  android:textSize="32sp" />
+			
 		
 		    <ListView
 		        android:id="@+id/rulelist"
@@ -42,8 +43,8 @@
 				 android:background="@drawable/back5"
                  android:layout_height="wrap_content" >
                
-                 <Button
-                     android:id="@+id/buttonreviewback"
+                  <Button
+                     android:id="@+id/buttonreviewsave"
                      android:layout_width="wrap_content"
                      android:layout_height="50dip"
                      android:layout_alignParentBottom="true"
@@ -51,7 +52,7 @@
                      android:background="@drawable/button"
                       android:paddingLeft="5dp" 
                      android:paddingRight="5dp" 
-                     android:text="@string/back"
+                     android:text="@string/save"
                      android:textColor="#ffffff" />
 
                  <Button

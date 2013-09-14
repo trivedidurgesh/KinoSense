@@ -39,7 +39,8 @@
     <string name="wifidetected">WiFi Detected</string>      
     <string name="alarm">Alarm</string>   
     <string name="shownotification">Notification</string>   
-    <string name="vibrate">Vibrate</string>    
+    <string name="vibrate">Vibrate</string>  
+     <string name="save">Save</string>    
    <!-- <string name=""></string> -->
 
 </resources>

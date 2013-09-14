@@ -64,12 +64,21 @@ public class RuleManager {
         return ruleList;
     }
 
-    public void createRules(final int triggerId, final int actionId, final String ruleText, final String additionalInformation, final Context context) {
+    public void createRules(final int triggerId, final int actionId, final String ruleText, final String additionalInformation, final String enable,
+            final Context context) {
         this.ruleadapter_op = new RuleAdapter(context);
         this.ruleadapter_op.open();
         // inserting A rule
         @SuppressWarnings("unused")
-        long id = this.ruleadapter_op.insertRule(ruleText, actionId, triggerId, additionalInformation);
+        long id = this.ruleadapter_op.insertRule(ruleText, actionId, triggerId, additionalInformation, enable);
+
+    }
+
+    public void updateRule(final int ruleID, final String enable, final Context context) {
+        this.ruleadapter_op = new RuleAdapter(context);
+        this.ruleadapter_op.open();
+        // inserting A rule
+        this.ruleadapter_op.updateRule(ruleID, enable);
 
     }
 
@@ -92,8 +101,9 @@ public class RuleManager {
                 Log.d("rule id", cursor.getString(2));
                 Log.d("rule id", cursor.getString(3));
                 Log.d("rule id", cursor.getString(4));
+                Log.d("rule id", cursor.getString(5));
                 Rule tempRule = new Rule(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)),
-                        Integer.parseInt(cursor.getString(3)), cursor.getString(4));
+                        Integer.parseInt(cursor.getString(3)), cursor.getString(4), cursor.getString(5));
                 this.ruleList.add(tempRule);
             } while (cursor.moveToNext());
         }

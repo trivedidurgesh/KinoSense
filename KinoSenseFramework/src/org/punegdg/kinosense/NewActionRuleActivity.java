@@ -2,6 +2,7 @@ package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.actions.ActionIdConstants;
 import org.punegdg.kinosense.eventsource.SensorService;
+import org.punegdg.kinosense.rule.RuleManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,6 +30,8 @@ public class NewActionRuleActivity extends Activity {
     private static int actionID;
     private static int triggerID;
     private StringBuffer ruleText = new StringBuffer();
+    private String additionInfo = "";
+    private String enabled = "true";
     String actionrule;
     boolean checkenabled = true;
     boolean ischecked = false;
@@ -45,7 +48,7 @@ public class NewActionRuleActivity extends Activity {
          * NewActionRuleActivity.this.startActivity(mainActivityIntent); =======
          */
         Intent newActionRuleIntent = this.getIntent();
-        final String triggerText = newActionRuleIntent.getStringExtra("triggerrule");
+        this.ruleText.append(newActionRuleIntent.getStringExtra("triggerrule"));
         triggerID = newActionRuleIntent.getIntExtra("triggerID", 0);
         this.setContentView(R.layout.activity_newrule);
 
@@ -222,20 +225,17 @@ public class NewActionRuleActivity extends Activity {
         // Code for creating the new rule and navigate to the Rule Review View
         this.buttoncreate.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
-                // code for changing State
-                Intent ruleReviewintent = new Intent(NewActionRuleActivity.this, RuleReviewActivity.class);
-                NewActionRuleActivity.this.ruleText.append(triggerText);
-                NewActionRuleActivity.this.actionrule = NewActionRuleActivity.this.actionString.toString();
-                NewActionRuleActivity.this.ruleText.append(" " + NewActionRuleActivity.this.actionrule);
+                NewActionRuleActivity.this.ruleText.append("," + NewActionRuleActivity.this.actionString.toString());
                 String rule = NewActionRuleActivity.this.ruleText.toString();
-                ruleReviewintent.putExtra("triggerID", triggerID);
-                ruleReviewintent.putExtra("actionID", actionID);
                 Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
-                ruleReviewintent.putExtra("ruletext", rule);
-                NewActionRuleActivity.this.startActivity(ruleReviewintent);
+                NewActionRuleActivity.this.createRule();
                 Intent restartService = new Intent(NewActionRuleActivity.this, SensorService.class);
-                restartService.putExtra("triggerID", triggerID);
+                restartService.putExtra(ActionIdConstants.TRIGGERID, triggerID);
+                restartService.putExtra(ActionIdConstants.ACTION_STATE, NewActionRuleActivity.this.enabled);
                 NewActionRuleActivity.this.startService(restartService);
+                Intent ruleReviewintent = new Intent(NewActionRuleActivity.this, RuleReviewActivity.class);
+                NewActionRuleActivity.this.startActivity(ruleReviewintent);
+
             }
         });
 
@@ -250,5 +250,13 @@ public class NewActionRuleActivity extends Activity {
         this.checkBoxalarm.setEnabled(state);
         this.checkBoxshownotification.setEnabled(state);
         this.checkBoxvibrate.setEnabled(state);
+    }
+
+    private void createRule() {
+        RuleManager rulemanager = RuleManager.getInstance();
+        if ((actionID != -1) || (triggerID != -1)) {
+            rulemanager.createRules(NewActionRuleActivity.triggerID, NewActionRuleActivity.actionID, this.ruleText.toString(), this.additionInfo,
+                    this.enabled, this.getApplicationContext());
+        }
     }
 }

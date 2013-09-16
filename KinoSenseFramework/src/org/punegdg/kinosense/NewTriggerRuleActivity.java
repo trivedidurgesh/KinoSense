@@ -21,11 +21,11 @@ import android.widget.Toast;
  */
 public class NewTriggerRuleActivity extends Activity {
     // Declaring The Button for the BACK , NEXT and CANCEL Actions
-    private Button buttontriggerback, buttontriggernext, triggerbuttoncancel;
+    private Button buttontriggerback, buttontriggernext;
 
     // Declaring The check boxes
     CheckBox checkBoxlowbattery, checkBoxbatteryfull, checkBoxheadphoneconnected, checkBoxheadphonedisconnected, checkBoxincomingcall, checkBoxshake,
-            checkBoxsimcardchange, checkBoxunlockdevice, checkBoxwifidetected;
+    checkBoxsimcardchange, checkBoxunlockdevice, checkBoxwifidetected;
     private StringBuffer triggerText = new StringBuffer();
     String triggerrule;
     private static int triggerID;
@@ -62,11 +62,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.BATTERY_LOW;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxlowbattery.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -78,11 +77,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.BATTERY_FULL;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxbatteryfull.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -94,11 +92,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.HEADPHONE_CONNECTED;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxheadphoneconnected.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -110,11 +107,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.HEADPHONE_DISCONNECTED;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxheadphonedisconnected.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -126,11 +122,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.INCOMING_CALL;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxincomingcall.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -142,11 +137,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.DEVICE_SHAKING;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxshake.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -158,11 +152,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.SIM_CARD_CHANGED;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxsimcardchange.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -174,11 +167,11 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.PHONE_UNLOCKED;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxunlockdevice.setEnabled(true);
+
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -190,11 +183,10 @@ public class NewTriggerRuleActivity extends Activity {
                     triggerID = TriggerIdConstants.WIFI_DETECTED;
                     NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
                     NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
+                    NewTriggerRuleActivity.this.checkBoxwifidetected.setEnabled(true);
                 } else {
-                    triggerID = -1;
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+                    NewTriggerRuleActivity.this.cancelSelection();
                 }
             }
         });
@@ -225,26 +217,10 @@ public class NewTriggerRuleActivity extends Activity {
                 actionRuleIntent.putExtra("triggerrule", NewTriggerRuleActivity.this.triggerrule);
                 actionRuleIntent.putExtra("triggerID", triggerID);
                 Toast.makeText(NewTriggerRuleActivity.this.getApplicationContext(), NewTriggerRuleActivity.this.triggerrule, Toast.LENGTH_SHORT)
-                        .show();
+                .show();
                 NewTriggerRuleActivity.this.startActivity(actionRuleIntent);
             }
         });
-
-        /*
-         * Cancel Button to cancel the current selection of Trigger
-         */
-        this.triggerbuttoncancel = (Button) this.findViewById(R.id.triggerbuttoncancel);
-        this.triggerbuttoncancel.setOnClickListener(new OnClickListener() {
-
-            public void onClick(final View v) {
-                // code for changing State
-                NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-                NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-                NewTriggerRuleActivity.this.unCheckBox();
-                NewTriggerRuleActivity.this.changeCheckBoxState(true);
-            }
-        });
-
     }
 
     public void changeCheckBoxState(final boolean state) {
@@ -257,6 +233,15 @@ public class NewTriggerRuleActivity extends Activity {
         this.checkBoxsimcardchange.setEnabled(state);
         this.checkBoxunlockdevice.setEnabled(state);
         this.checkBoxwifidetected.setEnabled(state);
+    }
+
+    public void cancelSelection() {
+        triggerID = -1;
+        NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
+        NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
+        NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+        NewTriggerRuleActivity.this.changeCheckBoxState(true);
+        NewTriggerRuleActivity.this.unCheckBox();
     }
 
     public void unCheckBox() {

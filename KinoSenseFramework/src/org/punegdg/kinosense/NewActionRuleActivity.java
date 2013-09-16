@@ -22,7 +22,7 @@ import android.widget.ToggleButton;
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
  */
 public class NewActionRuleActivity extends Activity {
-    Button buttonback, buttoncancel, buttoncreate;
+    Button buttoncancel, buttoncreate;
     ToggleButton toggleButtonwifi;
     CheckBox checkBoxWifiON, checkBoxWifiOFF, checkBoxsilent, checkBoxflight, checkBoxbeep, checkBoxsms, checkBoxalarm, checkBoxshownotification,
             checkBoxvibrate;
@@ -56,7 +56,6 @@ public class NewActionRuleActivity extends Activity {
         this.buttoncreate = (Button) this.findViewById(R.id.buttoncreate);
         this.buttoncreate.setEnabled(false);
         this.buttoncreate.setVisibility(View.INVISIBLE);
-        this.buttonback = (Button) this.findViewById(R.id.buttonback);
         this.buttoncancel = (Button) this.findViewById(R.id.buttoncancel);
 
         /**
@@ -211,14 +210,6 @@ public class NewActionRuleActivity extends Activity {
                     NewActionRuleActivity.this.buttoncreate.setEnabled(false);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
                 }
-            }
-        });
-
-        this.buttonback.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                // TODO Auto-generated method stub
-                Intent triggerIntent = new Intent(NewActionRuleActivity.this, NewTriggerRuleActivity.class);
-                NewActionRuleActivity.this.startActivity(triggerIntent);
             }
         });
 

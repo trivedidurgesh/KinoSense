@@ -227,18 +227,6 @@
                  android:background="@drawable/back5">
 				 
                  <Button
-                     android:id="@+id/buttonback"
-                     android:layout_width="wrap_content"
-                     android:layout_height="50dip"
-                     android:layout_alignParentBottom="true"
-                     android:layout_alignParentLeft="true"
-                     android:background="@drawable/button"
-                     android:paddingLeft="5dp"
-                     android:paddingRight="5dp"
-                     android:text="@string/back"
-                     android:textColor="#ffffff" />
-
-                 <Button
                      android:id="@+id/buttoncreate"
                      android:layout_width="wrap_content"
                      android:layout_height="50dip"

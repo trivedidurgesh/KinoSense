@@ -42,18 +42,26 @@ public class Rule {
     private String additionalInformation;
 
     /**
+     * Rule is enabled or disabled
+     */
+    private String enabled;
+
+    /**
      * @param ruleId
      * @param triggerId
      * @param actionId
      * @param additionalInformation
+     * @param enabled
      */
-    public Rule(final int ruleId, final String ruleText, final int actionId, final int triggerId, final String additionalInformation) {
+    public Rule(final int ruleId, final String ruleText, final int actionId, final int triggerId, final String additionalInformation,
+            final String enable) {
         super();
         this.ruleId = ruleId;
         this.triggerId = triggerId;
         this.actionId = actionId;
         this.ruleText = ruleText;
         this.additionalInformation = additionalInformation;
+        this.enabled = enable;
     }
 
     /**
@@ -132,6 +140,19 @@ public class Rule {
      */
     public void setAdditionalInformation(final String additionalInformation) {
         this.additionalInformation = additionalInformation;
+    }
+
+    public void setState(final String set) {
+        this.enabled = set;
+    }
+
+    /**
+     * Get the current state of the rule eg. enable or disabled
+     * 
+     * @return
+     */
+    public boolean getState() {
+        return Boolean.parseBoolean(this.enabled);
     }
 
 }

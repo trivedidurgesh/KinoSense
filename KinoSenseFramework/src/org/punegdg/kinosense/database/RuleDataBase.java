@@ -19,13 +19,14 @@ public class RuleDataBase extends SQLiteOpenHelper {
     public static final String ACTION_ID = "actionID";
     public static final String TRIGGER_ID = "triggerID";
     public static final String ADDITION_INFO = "additionInfo";
+    public static final String ENABLED = "enabled";
 
     private static final String DATABASE_NAME = "ruledb";
     private static final String DATABASE_TABLE = "ruletable";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS \"ruletable\" (_id integer primary key autoincrement,"
-            + "rule text not null,actionID text not null,triggerID text not null,additionInfo text);";
+            + "rule text not null,actionID text not null,triggerID text not null,additionInfo text,enabled text);";
 
     public RuleDataBase(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

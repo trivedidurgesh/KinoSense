@@ -42,11 +42,11 @@ public class FlightModeAction implements AbstractAction {
 
     public void perform(final Map<String, Object> flightmodedata) {
         int action = (Integer) flightmodedata.get(ActionIdConstants.ACTION_ID);
-
+        boolean state = (Boolean) flightmodedata.get(ActionIdConstants.DISABLEACTION);
         /**
          * Turn Airplane Mode On
          */
-        if (ActionIdConstants.FLIGHT_MODE_ON == action) {
+        if ((ActionIdConstants.FLIGHT_MODE_ON == action) && state) {
             if (this.isEnabled == false)// Enable Flight mode only if already disabled
             {
                 Settings.System.putInt(this.context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 1);
@@ -56,7 +56,7 @@ public class FlightModeAction implements AbstractAction {
                 this.context.sendBroadcast(intent);
 
                 Toast.makeText(this.context, "Flight Mode On !", Toast.LENGTH_SHORT).show();
-            } else {
+            } else if ((ActionIdConstants.FLIGHT_MODE_OFF == action) && state) {
                 Toast.makeText(this.context, "Flight Mode Already On !", Toast.LENGTH_SHORT).show();
             }
         }

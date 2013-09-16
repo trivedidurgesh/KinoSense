@@ -37,4 +37,8 @@ public class ActionIdConstants {
     public static final int ALARM_SET = 9;
     public static final int SMS_SEND = 10;
     public static final int NOTIFICATION = 11;
+    public static final String DISABLEACTION = "disableaction";
+    public static final String TRIGGERID = "triggerID";
+    public static final String ACTIONID = "actionID";
+    public static final String ACTION_STATE = "state";
 }

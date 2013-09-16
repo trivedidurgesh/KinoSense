@@ -46,7 +46,8 @@ public class SilentAction implements AbstractAction {
         SharedPreferences.Editor editor = pref.edit();
         AudioManager audioManager = (AudioManager) this.context.getSystemService(Context.AUDIO_SERVICE);
         int action = (Integer) data.get(ActionIdConstants.ACTION_ID);
-        if (ActionIdConstants.PHONE_SILENT == action) {
+        boolean state = (Boolean) data.get(ActionIdConstants.DISABLEACTION);
+        if ((ActionIdConstants.PHONE_SILENT == action) && state) {
             lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
             editor.putInt("volume", lastVolume);
             /*
@@ -57,7 +58,7 @@ public class SilentAction implements AbstractAction {
              * Device's volume set to zero.
              */
             editor.commit();
-        } else if (ActionIdConstants.PHONE_RINGING == action) {
+        } else if ((ActionIdConstants.PHONE_RINGING == action) && state) {
             int currentVolume = pref.getInt("volume", 7);
             audioManager.setStreamVolume(AudioManager.STREAM_RING, currentVolume, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
             /*

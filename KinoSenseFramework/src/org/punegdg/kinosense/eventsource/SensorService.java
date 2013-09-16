@@ -14,6 +14,7 @@ package org.punegdg.kinosense.eventsource;
 
 import java.util.ArrayList;
 
+import org.punegdg.kinosense.actions.ActionIdConstants;
 import org.punegdg.kinosense.rule.Rule;
 import org.punegdg.kinosense.rule.RuleManager;
 import org.punegdg.kinosense.triggers.BatteryTrigger;
@@ -86,7 +87,7 @@ public class SensorService extends Service {
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
         super.onStartCommand(intent, flags, startId);
-        this.triggerEvent(intent.getIntExtra("triggerID", 0));
+        this.triggerEvent(intent.getIntExtra(ActionIdConstants.TRIGGERID, 0));
         return START_REDELIVER_INTENT;
     }
 

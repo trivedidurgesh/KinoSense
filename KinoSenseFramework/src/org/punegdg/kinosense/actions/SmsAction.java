@@ -55,10 +55,11 @@ public class SmsAction implements AbstractAction {
          */
         String action = (String) smsData.get("action");
         String mNumber = (String) smsData.get("number");
+        boolean state = (Boolean) smsData.get(ActionIdConstants.DISABLEACTION);
 
-        if ("IsBusy".equals(action)) {
+        if ("IsBusy".equals(action) && state) {
             this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm busy right now. Will call you back later", null, null);
-        } else if ("IsDriving".equals(action)) {
+        } else if ("IsDriving".equals(action) && state) {
             this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm driving right now. Will call you back later", null, null);
         } else {
             this.smsmgr.sendTextMessage(mNumber, null, action, null, null);

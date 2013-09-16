@@ -41,12 +41,13 @@ public class BrightnessAction implements AbstractAction {
 
     public void perform(final Map<String, Object> brightnessData) {
         int action = (Integer) brightnessData.get(ActionIdConstants.ACTION_ID);
-        if (ActionIdConstants.BRIGHTNESS_HIGH == action) {
+        boolean state = (Boolean) brightnessData.get(ActionIdConstants.DISABLEACTION);
+        if ((ActionIdConstants.BRIGHTNESS_HIGH == action) && state) {
             android.provider.Settings.System.putInt(this.context.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 100);
             /**
              * Brightness Set to 100 as High
              */
-        } else if (ActionIdConstants.BRIGHTNESS_LOW == action) {
+        } else if ((ActionIdConstants.BRIGHTNESS_LOW == action) && state) {
             android.provider.Settings.System.putInt(this.context.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 10);
             /**
              * Brightness Set to 10 as low

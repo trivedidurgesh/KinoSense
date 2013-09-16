@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/back4" >
+
+    <!-- Heading Label -->
+
+    <TextView
+        android:id="@+id/textviewtrigger"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:background="@drawable/back4">        
-       <!--Heading Label   -->
-	   
-        <TextView
-	          android:id="@+id/textviewtrigger"
-	          android:layout_width="fill_parent"
-	          android:layout_height="35dip"                
-	          android:layout_alignParentTop="true"
-	          android:text="@string/triggerlist"
-	          android:layout_centerInParent="true"
-	          android:gravity="center_horizontal"
-			  android:background="@drawable/back5"
-	          android:textAppearance="?android:attr/textAppearanceSmall"
-	          android:textColor="#000000"
-	          android:textSize="25sp" />
-        
-        <!--Adding Scroll View for the Trigger List  -->
+        android:layout_height="35dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/back5"
+        android:gravity="center_horizontal"
+        android:text="@string/triggerlist"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000000"
+        android:textSize="25sp" />
 
-		<ScrollView
-		    android:id="@+id/triggerScrollview"
-		    android:layout_width="fill_parent"
-		    android:layout_height="match_parent"
-		    android:layout_above="@+id/triggerBottonPanel"
-		    android:layout_alignParentRight="true"
-		    android:layout_below="@+id/textviewtrigger"
-		    android:fillViewport="true" >
+    <!-- Adding Scroll View for the Trigger List -->
 
-		<!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->    	
-        <RelativeLayout
+    <ScrollView
+        android:id="@+id/triggerScrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/triggerBottonPanel"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textviewtrigger"
+        android:fillViewport="true" >
+
+        <!-- IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
+
+        <RelativeLayout
             android:id="@+id/triggerpanel"
             android:layout_width="match_parent"
             android:layout_height="362dp" >
+<<<<<<< HEAD
 		        
 		        <!--Trigger for Low Battery   -->
 		             <TextView
@@ -263,3 +266,250 @@
                      android:textColor="#ffffff" />
              </RelativeLayout>
     </RelativeLayout>
+=======
+
+            <!-- Trigger for Low Battery -->
+
+            <TextView
+                android:id="@+id/textviewlowbattery"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxlowbattery"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/checkBoxlowbattery"
+                android:text="@string/lowbattery"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxlowbattery"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/textviewtrigger"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+
+            <!-- Trigger for Battery Full -->
+
+            <TextView
+                android:id="@+id/textviewbatteryfull"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxbatteryfull"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewlowbattery"
+                android:text="@string/batterycharged"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxbatteryfull"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxlowbattery"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+
+            <!-- Trigger for HeadPhone Connected -->
+
+            <TextView
+                android:id="@+id/textviewheadphoneconnected"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxheadphoneconnected"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewbatteryfull"
+                android:text="@string/headphoneconnected"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxheadphoneconnected"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxbatteryfull"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+
+            <!-- Trigger for HeadPhone DisConnected -->
+
+            <TextView
+                android:id="@+id/textviewheadphonedisconnected"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxheadphonedisconnected"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/textviewheadphoneconnected"
+                android:layout_below="@+id/textviewheadphoneconnected"
+                android:text="@string/headphonedisconnected"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxheadphonedisconnected"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxheadphoneconnected"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+            <!-- Trigger for Incoming Call -->
+
+            <TextView
+                android:id="@+id/textviewincomingcall"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxincomingcall"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewheadphonedisconnected"
+                android:text="@string/incomingcall"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxincomingcall"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxheadphonedisconnected"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+
+            <!-- Trigger for Shake -->
+
+            <TextView
+                android:id="@+id/textviewshake"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxshake"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewincomingcall"
+                android:text="@string/shake"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxshake"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxincomingcall"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+
+            <!-- Trigger for Sim Card Change -->
+
+            <TextView
+                android:id="@+id/textviewsimcardchange"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxsimcardchange"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewshake"
+                android:text="@string/simcardchange"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxsimcardchange"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxshake"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+
+            <!-- Trigger for Device Unlocked -->
+
+            <TextView
+                android:id="@+id/textviewunlockdevice"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxunlockdevice"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewsimcardchange"
+                android:text="@string/unlockdevice"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxunlockdevice"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxsimcardchange"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+            <!-- Trigger for WiFi Detected -->
+
+            <TextView
+                android:id="@+id/textviewwifidetected"
+                android:layout_width="230dip"
+                android:layout_height="50dip"
+                android:layout_alignBaseline="@+id/checkBoxwifidetected"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textviewunlockdevice"
+                android:text="@string/wifidetected"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff8dc"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxwifidetected"
+                android:layout_width="100dip"
+                android:layout_height="50dip"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkBoxunlockdevice"
+                android:text="@string/select"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <!-- RelativeLayout for Buttons -->
+
+    <RelativeLayout
+        android:id="@+id/triggerBottonPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/back5" >
+
+        <Button
+            android:id="@+id/buttontriggerback"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/button"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/back"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/buttonnext"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/next"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+</RelativeLayout>
+>>>>>>> f7df6587e869d8825c68c3da607f062addd144e5

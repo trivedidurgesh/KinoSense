@@ -22,10 +22,14 @@ import android.widget.ToggleButton;
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
  */
 public class NewActionRuleActivity extends Activity {
+<<<<<<< HEAD
     Button buttoncancel, buttoncreate;
+=======
+    Button buttonback, buttoncreate;
+>>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
     ToggleButton toggleButtonwifi;
     CheckBox checkBoxWifiON, checkBoxWifiOFF, checkBoxsilent, checkBoxflight, checkBoxbeep, checkBoxsms, checkBoxalarm, checkBoxshownotification,
-            checkBoxvibrate;
+    checkBoxvibrate;
     StringBuffer actionString = new StringBuffer("Set WiFi OFF");
     private static int actionID;
     private static int triggerID;
@@ -56,7 +60,11 @@ public class NewActionRuleActivity extends Activity {
         this.buttoncreate = (Button) this.findViewById(R.id.buttoncreate);
         this.buttoncreate.setEnabled(false);
         this.buttoncreate.setVisibility(View.INVISIBLE);
+<<<<<<< HEAD
         this.buttoncancel = (Button) this.findViewById(R.id.buttoncancel);
+=======
+        this.buttonback = (Button) this.findViewById(R.id.buttonback);
+>>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
 
         /**
          * Declaring UI items for Actions
@@ -81,13 +89,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.WIFI_ON;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxWifiON.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -99,13 +105,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.WIFI_OFF;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxWifiOFF.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -117,13 +121,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.PHONE_SILENT;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxsilent.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -134,13 +136,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.FLIGHT_MODE_ON;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxflight.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -151,13 +151,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.SMS_SEND;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxsms.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -168,13 +166,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.FLIGHT_MODE_ON;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxalarm.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -185,13 +181,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.NOTIFICATION;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxshownotification.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -202,13 +196,11 @@ public class NewActionRuleActivity extends Activity {
                     actionID = ActionIdConstants.VIBRATE_ACTION;
                     NewActionRuleActivity.this.checkenabled = false;
                     NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+                    NewActionRuleActivity.this.checkBoxvibrate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setEnabled(true);
                     NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
                 } else {
-                    NewActionRuleActivity.this.actionString = null;
-                    actionID = -1;
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+                    NewActionRuleActivity.this.CancelSelection();
                 }
             }
         });
@@ -232,6 +224,15 @@ public class NewActionRuleActivity extends Activity {
 
     }
 
+    public void CancelSelection() {
+        NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "");
+        actionID = -1;
+        NewActionRuleActivity.this.changeCheckBoxState(true);
+        NewActionRuleActivity.this.unCheckBox();
+        NewActionRuleActivity.this.buttoncreate.setEnabled(false);
+        NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+    }
+
     public void changeCheckBoxState(final boolean state) {
         this.checkBoxWifiON.setEnabled(state);
         this.checkBoxWifiOFF.setEnabled(state);
@@ -241,6 +242,17 @@ public class NewActionRuleActivity extends Activity {
         this.checkBoxalarm.setEnabled(state);
         this.checkBoxshownotification.setEnabled(state);
         this.checkBoxvibrate.setEnabled(state);
+    }
+
+    public void unCheckBox() {
+        this.checkBoxWifiON.setChecked(false);
+        this.checkBoxWifiOFF.setChecked(false);
+        this.checkBoxsilent.setChecked(false);
+        this.checkBoxflight.setChecked(false);
+        this.checkBoxsms.setChecked(false);
+        this.checkBoxalarm.setChecked(false);
+        this.checkBoxshownotification.setChecked(false);
+        this.checkBoxvibrate.setChecked(false);
     }
 
     private void createRule() {

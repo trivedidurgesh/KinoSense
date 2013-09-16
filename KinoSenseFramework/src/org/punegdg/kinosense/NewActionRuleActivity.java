@@ -22,14 +22,10 @@ import android.widget.ToggleButton;
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
  */
 public class NewActionRuleActivity extends Activity {
-<<<<<<< HEAD
     Button buttoncancel, buttoncreate;
-=======
-    Button buttonback, buttoncreate;
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
     ToggleButton toggleButtonwifi;
     CheckBox checkBoxWifiON, checkBoxWifiOFF, checkBoxsilent, checkBoxflight, checkBoxbeep, checkBoxsms, checkBoxalarm, checkBoxshownotification,
-    checkBoxvibrate;
+            checkBoxvibrate;
     StringBuffer actionString = new StringBuffer("Set WiFi OFF");
     private static int actionID;
     private static int triggerID;
@@ -60,11 +56,7 @@ public class NewActionRuleActivity extends Activity {
         this.buttoncreate = (Button) this.findViewById(R.id.buttoncreate);
         this.buttoncreate.setEnabled(false);
         this.buttoncreate.setVisibility(View.INVISIBLE);
-<<<<<<< HEAD
         this.buttoncancel = (Button) this.findViewById(R.id.buttoncancel);
-=======
-        this.buttonback = (Button) this.findViewById(R.id.buttonback);
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
 
         /**
          * Declaring UI items for Actions

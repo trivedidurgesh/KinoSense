@@ -3,257 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/back4" >
-<<<<<<< HEAD
-   
- 			<TextView
- 			    android:id="@+id/textviewAction"
- 			    android:layout_width="fill_parent"
- 			    android:layout_height="35dip"
- 			    android:layout_alignParentTop="true"
- 			    android:layout_centerHorizontal="true"
-				android:background="@drawable/back5"
- 			    android:gravity="center_horizontal"
- 			    android:text="@string/actionlist"
- 			    android:textAppearance="?android:attr/textAppearanceMedium"
- 			    android:textColor="#000000"
- 			    android:textSize="25sp" />
-   			
-	<!--Adding Scroll View for the Rule List  -->
-
-	<ScrollView
-	    android:id="@+id/actionScrollview"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/textviewAction"
-	    android:layout_above="@+id/actionButtonPanel"
-	    android:fillViewport="true" >
- <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
-    	
-    	<!--Adding RelativeLayout View for the Rule List  -->
-	   <RelativeLayout
-	       android:id="@+id/actionpanel"
-	       android:layout_width="fill_parent"
-	       android:layout_height="450dp">
-
-   <!--Rule for Wifi On-->
-             <TextView
-                 android:id="@+id/textviewwifiOn"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_alignBottom="@+id/checkBoxWifiOn"
-                 android:layout_alignParentLeft="true"
-                 android:text="@string/WiFiON"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-				 <CheckBox
-                 android:id="@+id/checkBoxWifiOn"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignLeft="@+id/checkBoxWifiOff"
-                 android:layout_alignParentRight="true"
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />
-				 
- 	<!--Rule for Wifi Off -->
-             <TextView
-                 android:id="@+id/textviewwifiOff"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_below="@+id/textviewwifiOn"
-                 android:layout_alignBaseline="@+id/checkBoxWifiOff"
-                 android:layout_alignParentLeft="true"
-                 android:text="@string/WiFiOFF"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-              <CheckBox
-                 android:id="@+id/checkBoxWifiOff"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxWifiOn"
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />
-				 
-	<!--Rule for Keeping Phone on Silent  -->
-			<TextView
-                 android:id="@+id/textviewsilent"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"                 
-                 android:layout_alignParentLeft="true" 
-                 android:layout_alignBaseline="@+id/checkBoxsilent"                
-                 android:text="@string/Silent"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-			
-             <CheckBox
-                 android:id="@+id/checkBoxsilent"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignLeft="@+id/checkBoxflight"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/textviewwifiOff"
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />
-				 
-<!--Rule for Keeping Phone on Flight mode  -->
-             <TextView
-                 android:id="@+id/textviewflight"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-				 android:layout_alignBaseline="@+id/checkBoxflight"
-                 android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewsilent"
-                 android:text="@string/flight"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-             <CheckBox
-                 android:id="@+id/checkBoxflight"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxsilent"                
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />
-             
-   <!--Rule for Sending SMS  -->
-
-             <TextView
-                 android:id="@+id/textviewsms"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_alignBaseline="@+id/checkBoxsms"
-                 android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewflight"
-                 android:text="@string/sms"
-                 android:textAppearance="?android:attr/textAppearanceLarge"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-             <CheckBox
-                 android:id="@+id/checkBoxsms"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxflight"                 
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />
-             
-   <!--Rule for Alarm  -->
-
-             <TextView
-                 android:id="@+id/textviewalarm"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_alignBaseline="@+id/checkBoxalarm"
-                 android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewsms"
-                 android:text="@string/alarm"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-             <CheckBox
-                 android:id="@+id/checkBoxalarm"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxsms"                 
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />  
-               
-   <!--Rule for Showing Notification  -->
-
-             <TextView
-                 android:id="@+id/textviewshownotification"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_alignBaseline="@+id/checkBoxshownotification"
-                 android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewalarm"
-                 android:text="@string/shownotification"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-             <CheckBox
-                 android:id="@+id/checkBoxshownotification"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxalarm"                 
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />              
-  
-    <!--Rule for vibrate  -->
-
-             <TextView
-                 android:id="@+id/textviewvibrate"
-                 android:layout_width="200dip"
-                 android:layout_height="50dip"
-                 android:layout_alignBaseline="@+id/checkBoxvibrate"
-                 android:layout_alignParentLeft="true"
-                 android:layout_below="@+id/textviewshownotification"
-                 android:text="@string/vibrate"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:textColor="#fff8dc"
-                 android:textSize="20sp" />
-
-             <CheckBox
-                 android:id="@+id/checkBoxvibrate"
-                 android:layout_width="100dip"
-                 android:layout_height="50dip"
-                 android:layout_alignParentRight="true"
-                 android:layout_below="@+id/checkBoxshownotification"                 
-                 android:text="@string/activate"
-                 android:textColor="#ffffff" />              
-             <!-- Bottom view for Previous and Next Screen -->
- </RelativeLayout> 
-
-	</ScrollView>
-	<!--Adding Relative Layout for the Button Panel  -->
-	
-             <RelativeLayout
-                 android:id="@+id/actionButtonPanel"
-                 android:layout_width="fill_parent"
-                 android:layout_height="50dip"
-                 android:layout_alignParentBottom="true"
-                 android:layout_alignParentLeft="true" 
-                 android:background="@drawable/back5">
-				 
-                 <Button
-                     android:id="@+id/buttoncreate"
-                     android:layout_width="wrap_content"
-                     android:layout_height="50dip"
-                     android:paddingLeft="5dp" 
-                     android:paddingRight="5dp"  
-                     android:layout_alignParentBottom="true"
-                     android:layout_alignParentRight="true"
-                     android:background="@drawable/button"
-                     android:text="@string/create"
-                     android:textColor="#ffffff" />
-
-				<Button
-                     android:id="@+id/buttoncancel"
-                     android:layout_width="wrap_content"
-                      android:paddingLeft="5dp" 
-                     android:paddingRight="5dp"                      
-                     android:layout_height="50dip"
-                     android:layout_alignParentBottom="true"
-                     android:layout_centerHorizontal="true"
-                     android:background="@drawable/button"
-                     android:text="@string/cancel"
-                     android:textColor="#ffffff" />
-
-             </RelativeLayout>
-    
-=======
 
     <TextView
         android:id="@+id/textviewAction"
@@ -485,18 +234,6 @@
         android:background="@drawable/back5" >
 
         <Button
-            android:id="@+id/buttonback"
-            android:layout_width="wrap_content"
-            android:layout_height="50dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/button"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/back"
-            android:textColor="#ffffff" />
-
-        <Button
             android:id="@+id/buttoncreate"
             android:layout_width="wrap_content"
             android:layout_height="50dip"
@@ -507,7 +244,17 @@
             android:paddingRight="5dp"
             android:text="@string/create"
             android:textColor="#ffffff" />
-    </RelativeLayout>
 
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+        <Button
+            android:id="@+id/buttoncancel"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/cancel"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
 </RelativeLayout>

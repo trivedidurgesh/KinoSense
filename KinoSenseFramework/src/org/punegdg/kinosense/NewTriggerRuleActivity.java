@@ -21,15 +21,11 @@ import android.widget.Toast;
  */
 public class NewTriggerRuleActivity extends Activity {
     // Declaring The Button for the BACK , NEXT and CANCEL Actions
-<<<<<<< HEAD
     private Button buttontriggernext, triggerbuttoncancel;
-=======
-    private Button buttontriggerback, buttontriggernext;
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
 
     // Declaring The check boxes
     CheckBox checkBoxlowbattery, checkBoxbatteryfull, checkBoxheadphoneconnected, checkBoxheadphonedisconnected, checkBoxincomingcall, checkBoxshake,
-    checkBoxsimcardchange, checkBoxunlockdevice, checkBoxwifidetected;
+            checkBoxsimcardchange, checkBoxunlockdevice, checkBoxwifidetected;
     private StringBuffer triggerText = new StringBuffer();
     String triggerrule;
     private static int triggerID;
@@ -61,186 +57,64 @@ public class NewTriggerRuleActivity extends Activity {
         // Logic for selecting a widget and creating Rule
         this.checkBoxlowbattery.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-                	setTrigger(TriggerIdConstants.BATTERY_LOW, " When Battery Low",NewTriggerRuleActivity.this.checkBoxlowbattery.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxlowbattery.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " When Battery Low");
-                    triggerID = TriggerIdConstants.BATTERY_LOW;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxlowbattery.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.BATTERY_LOW, " When Battery Low",
+                        NewTriggerRuleActivity.this.checkBoxlowbattery.isChecked());
             }
         });
-        
+
         this.checkBoxbatteryfull.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-                setTrigger(TriggerIdConstants.BATTERY_FULL, " When Battery Full", NewTriggerRuleActivity.this.checkBoxbatteryfull.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxbatteryfull.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " When Battery Full");
-                    triggerID = TriggerIdConstants.BATTERY_FULL;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxbatteryfull.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.BATTERY_FULL, " When Battery Full",
+                        NewTriggerRuleActivity.this.checkBoxbatteryfull.isChecked());
             }
         });
 
         this.checkBoxheadphoneconnected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-            	setTrigger(TriggerIdConstants.HEADPHONE_CONNECTED, " Headphone Connected", NewTriggerRuleActivity.this.checkBoxheadphoneconnected.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxheadphoneconnected.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Headphone Connected");
-                    triggerID = TriggerIdConstants.HEADPHONE_CONNECTED;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxheadphoneconnected.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.HEADPHONE_CONNECTED, " Headphone Connected",
+                        NewTriggerRuleActivity.this.checkBoxheadphoneconnected.isChecked());
             }
         });
 
         this.checkBoxheadphonedisconnected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-            	setTrigger(TriggerIdConstants.HEADPHONE_DISCONNECTED, " Headphone Disconnected", NewTriggerRuleActivity.this.checkBoxheadphonedisconnected.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxheadphonedisconnected.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Headphone Disconnected");
-                    triggerID = TriggerIdConstants.HEADPHONE_DISCONNECTED;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxheadphonedisconnected.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.HEADPHONE_DISCONNECTED, " Headphone Disconnected",
+                        NewTriggerRuleActivity.this.checkBoxheadphonedisconnected.isChecked());
             }
         });
 
         this.checkBoxincomingcall.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-            	setTrigger(TriggerIdConstants.INCOMING_CALL, " Call is Coming", NewTriggerRuleActivity.this.checkBoxincomingcall.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxincomingcall.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Call is Coming");
-                    triggerID = TriggerIdConstants.INCOMING_CALL;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxincomingcall.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.INCOMING_CALL, " Call is Coming",
+                        NewTriggerRuleActivity.this.checkBoxincomingcall.isChecked());
             }
         });
 
         this.checkBoxshake.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-            	setTrigger(TriggerIdConstants.DEVICE_SHAKING, " Phone is Shaked", NewTriggerRuleActivity.this.checkBoxshake.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxshake.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Phone is Shaked");
-                    triggerID = TriggerIdConstants.DEVICE_SHAKING;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxshake.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.DEVICE_SHAKING, " Phone is Shaked",
+                        NewTriggerRuleActivity.this.checkBoxshake.isChecked());
             }
         });
 
         this.checkBoxsimcardchange.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-                setTrigger(TriggerIdConstants.SIM_CARD_CHANGED, " Sim Card is Changed", NewTriggerRuleActivity.this.checkBoxsimcardchange.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxsimcardchange.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Sim Card is Changed");
-                    triggerID = TriggerIdConstants.SIM_CARD_CHANGED;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxsimcardchange.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.SIM_CARD_CHANGED, " Sim Card is Changed",
+                        NewTriggerRuleActivity.this.checkBoxsimcardchange.isChecked());
             }
         });
 
         this.checkBoxunlockdevice.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-            	setTrigger(TriggerIdConstants.PHONE_UNLOCKED, " Phone is Unlocked", NewTriggerRuleActivity.this.checkBoxunlockdevice.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxunlockdevice.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Phone is Unlocked");
-                    triggerID = TriggerIdConstants.PHONE_UNLOCKED;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxunlockdevice.setEnabled(true);
-
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.PHONE_UNLOCKED, " Phone is Unlocked",
+                        NewTriggerRuleActivity.this.checkBoxunlockdevice.isChecked());
             }
         });
 
         this.checkBoxwifidetected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-<<<<<<< HEAD
-            	setTrigger(TriggerIdConstants.WIFI_DETECTED, " Wifi Detected", NewTriggerRuleActivity.this.checkBoxwifidetected.isChecked());
-=======
-                if (NewTriggerRuleActivity.this.checkBoxwifidetected.isChecked()) {
-                    NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), " Wifi Detected");
-                    triggerID = TriggerIdConstants.WIFI_DETECTED;
-                    NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-                    NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-                    NewTriggerRuleActivity.this.changeCheckBoxState(false);
-                    NewTriggerRuleActivity.this.checkBoxwifidetected.setEnabled(true);
-                } else {
-                    NewTriggerRuleActivity.this.cancelSelection();
-                }
-            }
-        });
-
-        /*
-         * Back Button to go back to the Action Selection Screen
-         */
-        this.buttontriggerback = (Button) this.findViewById(R.id.buttontriggerback);
-        this.buttontriggerback.setOnClickListener(new OnClickListener() {
-
-            public void onClick(final View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(NewTriggerRuleActivity.this, MainActivity.class);
-                NewTriggerRuleActivity.this.startActivity(intent);
->>>>>>> f7df6587e869d8825c68c3da607f062addd144e5
+                NewTriggerRuleActivity.this.setTrigger(TriggerIdConstants.WIFI_DETECTED, " Wifi Detected",
+                        NewTriggerRuleActivity.this.checkBoxwifidetected.isChecked());
             }
         });
 
@@ -257,7 +131,7 @@ public class NewTriggerRuleActivity extends Activity {
                 actionRuleIntent.putExtra("triggerrule", NewTriggerRuleActivity.this.triggerrule);
                 actionRuleIntent.putExtra("triggerID", triggerID);
                 Toast.makeText(NewTriggerRuleActivity.this.getApplicationContext(), NewTriggerRuleActivity.this.triggerrule, Toast.LENGTH_SHORT)
-                .show();
+                        .show();
                 NewTriggerRuleActivity.this.startActivity(actionRuleIntent);
             }
         });
@@ -295,31 +169,34 @@ public class NewTriggerRuleActivity extends Activity {
         this.checkBoxunlockdevice.setChecked(false);
         this.checkBoxwifidetected.setChecked(false);
     }
-    
-    protected void onStart(){
-    	super.onStart();
-    	unCheckBox();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.unCheckBox();
     }
 
-    
     /**
-	 * Set the Trigger values in NewTriggerRuleActivity's as per User Inputs.
-	 * 
-	 * @param actionId  -- int value from TriggerIdConstants.
-	 * @param triggerText -- String Trigger Text.
-	 * @param checked --  boolean Value of Trigger (Selected or Unselected).
-	 */
-    private void setTrigger(int actionId, String triggerText, boolean checked) {
-		if(checked) {
-			NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), triggerText);
+     * Set the Trigger values in NewTriggerRuleActivity's as per User Inputs.
+     * 
+     * @param actionId
+     *            -- int value from TriggerIdConstants.
+     * @param triggerText
+     *            -- String Trigger Text.
+     * @param checked
+     *            -- boolean Value of Trigger (Selected or Unselected).
+     */
+    private void setTrigger(final int actionId, final String triggerText, final boolean checked) {
+        if (checked) {
+            NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), triggerText);
             triggerID = actionId;
             NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
             NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
-		} else {
-			triggerID = -1;
+        } else {
+            triggerID = -1;
             NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
             NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
             NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
-		}
-	}
+        }
+    }
 }

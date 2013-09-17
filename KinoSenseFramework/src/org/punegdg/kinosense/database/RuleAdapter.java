@@ -73,8 +73,27 @@ public class RuleAdapter {
         return this.db.update(RuleDataBase.getDatabaseTable(), args, RuleDataBase.KEY_ROWID + "=" + rowId, null) > 0;
 
     }
+    
+    /**
+     * Check whether Rule already Exist or not.
+     * 
+     * @param actionID -- int
+     * @param triggerID -- int
+     * @return  true or false
+     * @throws SQLException
+     */
+    public boolean isRulePresent(final int actionID, final int triggerID) throws SQLException {
+    	String[] args = {String.valueOf(actionID),String.valueOf(triggerID)};
+        Cursor mCursor = this.db.query(true, RuleDataBase.getDatabaseTable(), new String[] { RuleDataBase.KEY_ROWID },
+                RuleDataBase.ACTION_ID + "=?" + " AND " + RuleDataBase.TRIGGER_ID + "=?", args, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor.getCount() > 0 ? true:false;
+    }
 
     public void delete() {
         ruleDataBaseHelper.onUpgrade(this.db, 1, 2);
     }
+
 }

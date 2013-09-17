@@ -74,11 +74,37 @@ public class RuleManager {
 
     }
 
+    /**
+     * Update the rule state to enable or disable
+     * 
+     * @param ruleID
+     *            ID of the rule
+     * @param enable
+     *            Rule state String value "true" or "false"
+     * @param context
+     *            Application context
+     */
     public void updateRule(final int ruleID, final String enable, final Context context) {
         this.ruleadapter_op = new RuleAdapter(context);
         this.ruleadapter_op.open();
         // inserting A rule
         this.ruleadapter_op.updateRule(ruleID, enable);
+
+    }
+
+    /**
+     * Delete a rule
+     * 
+     * @param ruleID
+     *            ID of the rule to delete
+     * @param context
+     *            Application context
+     */
+    public void deleteRule(final int ruleID, final Context context) {
+        this.ruleadapter_op = new RuleAdapter(context);
+        this.ruleadapter_op.open();
+        // inserting A rule
+        this.ruleadapter_op.deleteRule(ruleID);
 
     }
 

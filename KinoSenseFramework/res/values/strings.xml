@@ -40,7 +40,11 @@
     <string name="alarm">Alarm</string>   
     <string name="shownotification">Notification</string>   
     <string name="vibrate">Vibrate</string>  
-     <string name="save">Save</string>    
+    <string name="save">Save</string>  
+    <string name="Edit">Edit</string>   
+    <string name="delete">Delete</string>   
+    <string name="dialog_title_delete">Delete the Rule</string>    
+    <string name="dialog_message_delete">Do you really want to Delete the rules</string>   
    <!-- <string name=""></string> -->
 
 </resources>

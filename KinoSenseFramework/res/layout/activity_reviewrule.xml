@@ -4,68 +4,70 @@
     android:layout_height="fill_parent"
     android:layout_gravity="bottom"
     android:background="@drawable/back4"
-    android:orientation="vertical">
+    android:gravity="fill_vertical"
+    android:orientation="vertical" >
 
-     <RelativeLayout
-         android:id="@+id/listpanel"
-         android:layout_width="fill_parent"
-         android:layout_height="420dp"
-         android:layout_gravity="fill_horizontal" >
-               
-			<TextView
-                 android:id="@+id/textviewRule"
-                 android:layout_width="fill_parent"
-                 android:layout_height="50dip" 
-                 android:text="@string/rulelist"
-                 android:gravity="center_horizontal"
-			    android:layout_alignParentRight="true"
-			    android:background="@drawable/back5"
-                 android:textAppearance="?android:attr/textAppearanceLarge"
-                 android:textColor="#000000"
-                 android:textSize="32sp" />
-			
-		
-		    <ListView
-		        android:id="@+id/rulelist"
-		        android:layout_width="fill_parent"
-		        android:layout_below="@+id/textviewRule"
-		        android:layout_height="match_parent"
-		        android:drawSelectorOnTop="false"
-		        android:fastScrollEnabled="true"
-		        android:textColor="#ffffff" >
-		    </ListView>
-	   </RelativeLayout>
-     <!-- Bottom view for Previous and Next Screen -->
 
-             <RelativeLayout
-                 android:id="@+id/buttompanel"
-                 android:layout_width="fill_parent"
-				 android:background="@drawable/back5"
-                 android:layout_height="wrap_content" >
-               
-                  <Button
-                     android:id="@+id/buttonreviewsave"
-                     android:layout_width="wrap_content"
-                     android:layout_height="50dip"
-                     android:layout_alignParentBottom="true"
-                     android:layout_alignParentLeft="true"
-                     android:background="@drawable/button"
-                      android:paddingLeft="5dp" 
-                     android:paddingRight="5dp" 
-                     android:text="@string/save"
-                     android:textColor="#ffffff" />
 
-                 <Button
-                     android:id="@+id/buttonreviewnext"
-                     android:layout_width="wrap_content"
-                     android:layout_height="50dip"
-                     android:layout_alignParentBottom="true"
-                     android:layout_alignParentRight="true"
-                     android:paddingLeft="5dp" 
-                     android:paddingRight="5dp" 
-                     android:background="@drawable/button"
-                     android:text="@string/next"
-                     android:textColor="#ffffff" />
-             </RelativeLayout>
+    <TextView
+        android:id="@+id/textviewRule"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/back5"
+        android:gravity="center_horizontal"
+        android:text="@string/rulelist"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:textSize="32sp" />
+
+    <ListView
+        android:id="@+id/rulelist"
+        android:layout_width="fill_parent"
+        android:layout_height="420dp"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="true"
+        android:textColor="#ffffff" >
+    </ListView>
+  
+    <!-- Bottom view for Previous and Next Screen -->
+
+    <FrameLayout
+        android:id="@+id/buttompanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back5"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/checkboxedit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:text="Edit" 
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/buttonreviewdelete"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_gravity="center"
+            android:background="@drawable/button"
+            android:text="@string/delete"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkboxdelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="right"
+            android:text="@string/delete"
+            android:visibility="gone" />
+
+ 
+
+    </FrameLayout>
 
 </LinearLayout>

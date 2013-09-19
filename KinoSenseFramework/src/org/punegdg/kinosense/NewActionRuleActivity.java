@@ -202,14 +202,18 @@ public class NewActionRuleActivity extends Activity {
             public void onClick(final View v) {
                 NewActionRuleActivity.this.ruleText.append("," + NewActionRuleActivity.this.actionString.toString());
                 String rule = NewActionRuleActivity.this.ruleText.toString();
-                Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
-                NewActionRuleActivity.this.createRule();
-                Intent restartService = new Intent(NewActionRuleActivity.this, SensorService.class);
-                restartService.putExtra(ActionIdConstants.TRIGGERID, triggerID);
-                restartService.putExtra(ActionIdConstants.ACTION_STATE, NewActionRuleActivity.this.enabled);
-                NewActionRuleActivity.this.startService(restartService);
-                Intent ruleReviewintent = new Intent(NewActionRuleActivity.this, RuleReviewActivity.class);
-                NewActionRuleActivity.this.startActivity(ruleReviewintent);
+                boolean isCreated = NewActionRuleActivity.this.createRule();
+                if(isCreated) {
+                	Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
+	                Intent restartService = new Intent(NewActionRuleActivity.this, SensorService.class);
+	                restartService.putExtra(ActionIdConstants.TRIGGERID, triggerID);
+	                restartService.putExtra(ActionIdConstants.ACTION_STATE, NewActionRuleActivity.this.enabled);
+	                NewActionRuleActivity.this.startService(restartService);
+	                Intent ruleReviewintent = new Intent(NewActionRuleActivity.this, RuleReviewActivity.class);
+	                NewActionRuleActivity.this.startActivity(ruleReviewintent);
+                } else {
+                	Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), R.string.message_rule_already_exist, Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -247,11 +251,13 @@ public class NewActionRuleActivity extends Activity {
         this.checkBoxvibrate.setChecked(false);
     }
 
-    private void createRule() {
+    private boolean createRule() {
         RuleManager rulemanager = RuleManager.getInstance();
-        if ((actionID != -1) || (triggerID != -1)) {
-            rulemanager.createRules(NewActionRuleActivity.triggerID, NewActionRuleActivity.actionID, this.ruleText.toString(), this.additionInfo,
-                    this.enabled, this.getApplicationContext());
-        }
+        boolean result = false;
+	        if ((actionID != -1) || (triggerID != -1)) {
+	        	result = rulemanager.createRule(NewActionRuleActivity.triggerID, NewActionRuleActivity.actionID, this.ruleText.toString(), this.additionInfo,
+	                    this.enabled, this.getApplicationContext());
+	        }
+        return result;
     }
 }

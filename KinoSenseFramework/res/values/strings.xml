@@ -45,6 +45,7 @@
     <string name="delete">Delete</string>   
     <string name="dialog_title_delete">Delete the Rule</string>    
     <string name="dialog_message_delete">Do you really want to Delete the rules</string>   
+    <string name="message_rule_already_exist">Rule Already Exist!</string>
    <!-- <string name=""></string> -->
 
 </resources>

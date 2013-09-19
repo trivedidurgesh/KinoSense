@@ -64,14 +64,19 @@ public class RuleManager {
         return ruleList;
     }
 
-    public void createRules(final int triggerId, final int actionId, final String ruleText, final String additionalInformation, final String enable,
+    public boolean createRule(final int triggerId, final int actionId, final String ruleText, final String additionalInformation, final String enable,
             final Context context) {
-        this.ruleadapter_op = new RuleAdapter(context);
+        boolean result = false;
+    	this.ruleadapter_op = new RuleAdapter(context);
         this.ruleadapter_op.open();
-        // inserting A rule
-        @SuppressWarnings("unused")
-        long id = this.ruleadapter_op.insertRule(ruleText, actionId, triggerId, additionalInformation, enable);
-
+    	if(! (this.ruleadapter_op.isRulePresent(actionId,triggerId)))
+    	{
+    		// inserting A rule
+            @SuppressWarnings("unused")
+    		long id = this.ruleadapter_op.insertRule(ruleText, actionId, triggerId, additionalInformation, enable);
+    		result = true;
+    	}
+        return result;
     }
 
     /**
@@ -136,4 +141,5 @@ public class RuleManager {
         this.ruleadapter_op.close();
         return this.ruleList;
     }
+    
 }

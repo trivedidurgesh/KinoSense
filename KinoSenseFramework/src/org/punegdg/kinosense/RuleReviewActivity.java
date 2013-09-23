@@ -10,6 +10,7 @@ import org.punegdg.kinosense.rule.RuleManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -183,5 +184,11 @@ public class RuleReviewActivity extends Activity {
             }
         });
 
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	Intent ruleReviewintent = new Intent(this, MainActivity.class);
+    	startActivity(ruleReviewintent);
     }
 }

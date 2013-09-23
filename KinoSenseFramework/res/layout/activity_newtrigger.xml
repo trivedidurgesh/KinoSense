@@ -256,18 +256,6 @@
         android:background="@drawable/back5" >
 
         <Button
-            android:id="@+id/triggerbuttoncancel"
-            android:layout_width="wrap_content"
-            android:layout_height="50dip"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/button"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/cancel"
-            android:textColor="#ffffff" />
-
-        <Button
             android:id="@+id/buttonnext"
             android:layout_width="wrap_content"
             android:layout_height="50dip"

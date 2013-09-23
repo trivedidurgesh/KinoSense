@@ -21,7 +21,7 @@ import android.widget.Toast;
  */
 public class NewTriggerRuleActivity extends Activity {
     // Declaring The Button for the BACK , NEXT and CANCEL Actions
-    private Button buttontriggernext, triggerbuttoncancel;
+    private Button buttontriggernext;
 
     // Declaring The check boxes
     CheckBox checkBoxlowbattery, checkBoxbatteryfull, checkBoxheadphoneconnected, checkBoxheadphonedisconnected, checkBoxincomingcall, checkBoxshake,

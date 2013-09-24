@@ -5,9 +5,9 @@ import org.punegdg.kinosense.triggers.TriggerIdConstants;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -20,9 +20,6 @@ import android.widget.Toast;
  * @author "Ashish Kalbhor" <ashish.kalbhor@gmail.com>
  */
 public class NewTriggerRuleActivity extends Activity {
-    // Declaring The Button for the BACK , NEXT and CANCEL Actions
-    private Button buttontriggernext;
-
     // Declaring The check boxes
     CheckBox checkBoxlowbattery, checkBoxbatteryfull, checkBoxheadphoneconnected, checkBoxheadphonedisconnected, checkBoxincomingcall, checkBoxshake,
             checkBoxsimcardchange, checkBoxunlockdevice, checkBoxwifidetected;
@@ -30,6 +27,7 @@ public class NewTriggerRuleActivity extends Activity {
     String triggerrule;
     private static int triggerID;
     boolean triggerEnabled = true;
+    boolean triggerSelected;
 
     /*
      * (non-Javadoc)
@@ -40,6 +38,9 @@ public class NewTriggerRuleActivity extends Activity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_newtrigger);
+
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getActionBar().setTitle(R.string.triggerlist);
 
         // UI widget for Creating Trigger
         this.checkBoxlowbattery = (CheckBox) this.findViewById(R.id.checkBoxlowbattery);
@@ -118,23 +119,15 @@ public class NewTriggerRuleActivity extends Activity {
             }
         });
 
-        /*
-         * Create Button to create the Rule and Switch the activity to ReviewRule
-         */
-        this.buttontriggernext = (Button) this.findViewById(R.id.buttonnext);
-        this.buttontriggernext.setEnabled(false);
-        this.buttontriggernext.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                // TODO Auto-generated method stub
-                Intent actionRuleIntent = new Intent(NewTriggerRuleActivity.this, NewActionRuleActivity.class);
-                NewTriggerRuleActivity.this.triggerrule = NewTriggerRuleActivity.this.triggerText.toString();
-                actionRuleIntent.putExtra("triggerrule", NewTriggerRuleActivity.this.triggerrule);
-                actionRuleIntent.putExtra("triggerID", triggerID);
-                Toast.makeText(NewTriggerRuleActivity.this.getApplicationContext(), NewTriggerRuleActivity.this.triggerrule, Toast.LENGTH_SHORT)
-                        .show();
-                NewTriggerRuleActivity.this.startActivity(actionRuleIntent);
-            }
-        });
+    }
+
+    private void startActionRuleActivity() {
+        Intent actionRuleIntent = new Intent(NewTriggerRuleActivity.this, NewActionRuleActivity.class);
+        NewTriggerRuleActivity.this.triggerrule = NewTriggerRuleActivity.this.triggerText.toString();
+        actionRuleIntent.putExtra("triggerrule", NewTriggerRuleActivity.this.triggerrule);
+        actionRuleIntent.putExtra("triggerID", triggerID);
+        Toast.makeText(NewTriggerRuleActivity.this.getApplicationContext(), NewTriggerRuleActivity.this.triggerrule, Toast.LENGTH_SHORT).show();
+        NewTriggerRuleActivity.this.startActivity(actionRuleIntent);
     }
 
     public void changeCheckBoxState(final boolean state) {
@@ -152,8 +145,6 @@ public class NewTriggerRuleActivity extends Activity {
     public void cancelSelection() {
         triggerID = -1;
         NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-        NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-        NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
         NewTriggerRuleActivity.this.changeCheckBoxState(true);
         NewTriggerRuleActivity.this.unCheckBox();
     }
@@ -176,6 +167,35 @@ public class NewTriggerRuleActivity extends Activity {
         this.unCheckBox();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        MenuInflater inflater = this.getMenuInflater();
+        inflater.inflate(R.menu.trigger_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+     */
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+        case R.id.action_next:
+            if (this.triggerSelected) {
+                this.startActionRuleActivity();
+            }
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Set the Trigger values in NewTriggerRuleActivity's as per User Inputs.
      * 
@@ -190,13 +210,11 @@ public class NewTriggerRuleActivity extends Activity {
         if (checked) {
             NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), triggerText);
             triggerID = actionId;
-            NewTriggerRuleActivity.this.buttontriggernext.setEnabled(true);
-            NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.VISIBLE);
+            this.triggerSelected = true;
         } else {
             triggerID = -1;
             NewTriggerRuleActivity.this.triggerText.replace(0, NewTriggerRuleActivity.this.triggerText.length(), "");
-            NewTriggerRuleActivity.this.buttontriggernext.setEnabled(false);
-            NewTriggerRuleActivity.this.buttontriggernext.setVisibility(View.INVISIBLE);
+            this.triggerSelected = false;
         }
     }
 }

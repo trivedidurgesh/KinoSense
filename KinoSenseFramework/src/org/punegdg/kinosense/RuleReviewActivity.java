@@ -45,6 +45,10 @@ public class RuleReviewActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_reviewrule);
+
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getActionBar().setTitle(R.string.reviewrule);
+
         final Button buttonreviewdelte = (Button) this.findViewById(R.id.buttonreviewdelete);
         final CheckBox deleteBox = (CheckBox) this.findViewById(R.id.checkboxdelete);
         final CheckBox editBox = (CheckBox) this.findViewById(R.id.checkboxedit);

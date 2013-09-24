@@ -7,9 +7,9 @@ import org.punegdg.kinosense.rule.RuleManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -22,7 +22,6 @@ import android.widget.ToggleButton;
  * @author "Kumar Gaurav"<gauravsitu@gmail.com>
  */
 public class NewActionRuleActivity extends Activity {
-    Button buttoncreate;
     ToggleButton toggleButtonwifi;
     CheckBox checkBoxWifiON, checkBoxWifiOFF, checkBoxsilent, checkBoxflight, checkBoxbeep, checkBoxsms, checkBoxalarm, checkBoxshownotification,
             checkBoxvibrate;
@@ -35,27 +34,20 @@ public class NewActionRuleActivity extends Activity {
     String actionrule;
     boolean checkenabled = true;
     boolean ischecked = false;
+    private boolean actionSelected;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        /*
-         * <<<<<<< HEAD this.setContentView(R.layout.activity_newrule); this.buttonnext = (Button)this.findViewById(R.id.buttonnext);
-         * this.buttonnext.setEnabled(false); this.buttonnext.setVisibility(View.INVISIBLE); this.buttonback =
-         * (Button)this.findViewById(R.id.buttonback); this.buttonback.setOnClickListener(new OnClickListener() { public void onClick(View v) { //
-         * TODO Auto-generated method stub Intent mainActivityIntent = new Intent(NewActionRuleActivity.this, MainActivity.class);
-         * NewActionRuleActivity.this.startActivity(mainActivityIntent); =======
-         */
+
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getActionBar().setTitle(R.string.actionlist);
+
         Intent newActionRuleIntent = this.getIntent();
         this.ruleText.append(newActionRuleIntent.getStringExtra("triggerrule"));
         triggerID = newActionRuleIntent.getIntExtra("triggerID", 0);
         this.setContentView(R.layout.activity_newrule);
-
-        // Code for creating the new rule and navigate to the Rule Review View
-        this.buttoncreate = (Button) this.findViewById(R.id.buttoncreate);
-        this.buttoncreate.setEnabled(false);
-        this.buttoncreate.setVisibility(View.INVISIBLE);
 
         /**
          * Declaring UI items for Actions
@@ -75,148 +67,115 @@ public class NewActionRuleActivity extends Activity {
          **/
         this.checkBoxWifiON.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxWifiON.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Set WiFi ON");
-                    actionID = ActionIdConstants.WIFI_ON;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxWifiON.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxWifiON.isChecked(), "Set WiFi ON", ActionIdConstants.WIFI_ON);
             }
         });
 
         this.checkBoxWifiOFF.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxWifiOFF.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Set WiFi OFF");
-                    actionID = ActionIdConstants.WIFI_OFF;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxWifiOFF.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxWifiOFF.isChecked(), "Set WiFi OFF",
+                        ActionIdConstants.WIFI_OFF);
             }
         });
 
         this.checkBoxsilent.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxsilent.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Put Phone on Silent");
-                    actionID = ActionIdConstants.PHONE_SILENT;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxsilent.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxsilent.isChecked(), "Put Phone on Silent",
+                        ActionIdConstants.PHONE_SILENT);
             }
         });
         this.checkBoxflight.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxflight.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Put Phone on Flight Mode");
-                    actionID = ActionIdConstants.FLIGHT_MODE_ON;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxflight.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxflight.isChecked(), "Put Phone on Flight Mode",
+                        ActionIdConstants.FLIGHT_MODE_ON);
             }
         });
         this.checkBoxsms.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxsms.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Send SMS");
-                    actionID = ActionIdConstants.SMS_SEND;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxsms.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxsms.isChecked(), "Send SMS", ActionIdConstants.SMS_SEND);
             }
         });
         this.checkBoxalarm.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxalarm.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Start Alarm");
-                    actionID = ActionIdConstants.FLIGHT_MODE_ON;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxalarm.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxalarm.isChecked(), "Start Alarm",
+                        ActionIdConstants.FLIGHT_MODE_ON);
             }
         });
         this.checkBoxshownotification.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxshownotification.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Show Notification");
-                    actionID = ActionIdConstants.NOTIFICATION;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxshownotification.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxshownotification.isChecked(), "Show Notification",
+                        ActionIdConstants.NOTIFICATION);
             }
         });
         this.checkBoxvibrate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                if (NewActionRuleActivity.this.checkBoxvibrate.isChecked()) {
-                    NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), "Vibrate");
-                    actionID = ActionIdConstants.VIBRATE_ACTION;
-                    NewActionRuleActivity.this.checkenabled = false;
-                    NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
-                    NewActionRuleActivity.this.checkBoxvibrate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setEnabled(true);
-                    NewActionRuleActivity.this.buttoncreate.setVisibility(View.VISIBLE);
-                } else {
-                    NewActionRuleActivity.this.CancelSelection();
-                }
+                NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxvibrate.isChecked(), "Vibrate",
+                        ActionIdConstants.VIBRATE_ACTION);
             }
         });
 
-        // Code for creating the new rule and navigate to the Rule Review View
-        this.buttoncreate.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                NewActionRuleActivity.this.ruleText.append("," + NewActionRuleActivity.this.actionString.toString());
-                String rule = NewActionRuleActivity.this.ruleText.toString();
-                boolean isCreated = NewActionRuleActivity.this.createRule();
-                if(isCreated) {
-                	Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
-	                Intent restartService = new Intent(NewActionRuleActivity.this, SensorService.class);
-	                restartService.putExtra(ActionIdConstants.TRIGGERID, triggerID);
-	                restartService.putExtra(ActionIdConstants.ACTION_STATE, NewActionRuleActivity.this.enabled);
-	                NewActionRuleActivity.this.startService(restartService);
-	                Intent ruleReviewintent = new Intent(NewActionRuleActivity.this, RuleReviewActivity.class);
-	                NewActionRuleActivity.this.startActivity(ruleReviewintent);
-                } else {
-                	Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), R.string.message_rule_already_exist, Toast.LENGTH_LONG).show();
-                }
+    }
 
+    private void setAction(final boolean isChecked, final String actionString, final int actionId) {
+        if (isChecked) {
+            NewActionRuleActivity.this.actionString.replace(0, NewActionRuleActivity.this.actionString.length(), actionString);
+            actionID = actionId;
+            NewActionRuleActivity.this.checkenabled = false;
+            NewActionRuleActivity.this.changeCheckBoxState(NewActionRuleActivity.this.checkenabled);
+            NewActionRuleActivity.this.checkBoxvibrate.setEnabled(true);
+            NewActionRuleActivity.this.actionSelected = true;
+        } else {
+            NewActionRuleActivity.this.CancelSelection();
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        MenuInflater inflater = this.getMenuInflater();
+        inflater.inflate(R.menu.action_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+     */
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+        case R.id.action_create:
+            if (this.actionSelected) {
+                this.startRuleReviewActivity();
             }
-        });
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
+    /**
+     * 
+     */
+    private void startRuleReviewActivity() {
+        NewActionRuleActivity.this.ruleText.append("," + NewActionRuleActivity.this.actionString.toString());
+        String rule = NewActionRuleActivity.this.ruleText.toString();
+        boolean isCreated = NewActionRuleActivity.this.createRule();
+        if (isCreated) {
+            Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), rule, Toast.LENGTH_SHORT).show();
+            Intent restartService = new Intent(NewActionRuleActivity.this, SensorService.class);
+            restartService.putExtra(ActionIdConstants.TRIGGERID, triggerID);
+            restartService.putExtra(ActionIdConstants.ACTION_STATE, NewActionRuleActivity.this.enabled);
+            NewActionRuleActivity.this.startService(restartService);
+            Intent ruleReviewintent = new Intent(NewActionRuleActivity.this, RuleReviewActivity.class);
+            NewActionRuleActivity.this.startActivity(ruleReviewintent);
+        } else {
+            Toast.makeText(NewActionRuleActivity.this.getApplicationContext(), R.string.message_rule_already_exist, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void CancelSelection() {
@@ -224,8 +183,7 @@ public class NewActionRuleActivity extends Activity {
         actionID = -1;
         NewActionRuleActivity.this.changeCheckBoxState(true);
         NewActionRuleActivity.this.unCheckBox();
-        NewActionRuleActivity.this.buttoncreate.setEnabled(false);
-        NewActionRuleActivity.this.buttoncreate.setVisibility(View.INVISIBLE);
+        this.actionSelected = false;
     }
 
     public void changeCheckBoxState(final boolean state) {
@@ -253,10 +211,10 @@ public class NewActionRuleActivity extends Activity {
     private boolean createRule() {
         RuleManager rulemanager = RuleManager.getInstance();
         boolean result = false;
-	        if ((actionID != -1) || (triggerID != -1)) {
-	        	result = rulemanager.createRule(NewActionRuleActivity.triggerID, NewActionRuleActivity.actionID, this.ruleText.toString(), this.additionInfo,
-	                    this.enabled, this.getApplicationContext());
-	        }
+        if ((actionID != -1) || (triggerID != -1)) {
+            result = rulemanager.createRule(NewActionRuleActivity.triggerID, NewActionRuleActivity.actionID, this.ruleText.toString(),
+                    this.additionInfo, this.enabled, this.getApplicationContext());
+        }
         return result;
     }
 }

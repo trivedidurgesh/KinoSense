@@ -3,7 +3,7 @@
     <string name="app_name">KinoSense</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>    
+    <string name="title_activity_main">KinoSense</string>    
     <string name="Kinosense">KINOSENSE</string>
     <string name="rule">New Rule</string>
     <string name="reviewrule">Review Rule</string>
@@ -41,11 +41,13 @@
     <string name="shownotification">Notification</string>   
     <string name="vibrate">Vibrate</string>  
     <string name="save">Save</string>  
-    <string name="Edit">Edit</string>   
+    <string name="edit">Edit</string>   
     <string name="delete">Delete</string>   
     <string name="dialog_title_delete">Delete the Rule</string>    
     <string name="dialog_message_delete">Do you really want to Delete the rules</string>   
     <string name="message_rule_already_exist">Rule Already Exist!</string>
    <!-- <string name=""></string> -->
+    <string name="action_next">Next</string>
+    <string name="action_create">Create</string>
 
 </resources>

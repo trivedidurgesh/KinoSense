@@ -4,29 +4,17 @@
     android:layout_height="wrap_content"
     android:background="@drawable/back4" >
 
-    <TextView
-        android:id="@+id/textviewAction"
-        android:layout_width="fill_parent"
-        android:layout_height="35dip"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/back5"
-        android:gravity="center_horizontal"
-        android:text="@string/actionlist"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#000000"
-        android:textSize="25sp" />
-
     <!-- Adding Scroll View for the Rule List -->
 
     <ScrollView
         android:id="@+id/actionScrollview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/actionButtonPanel"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textviewAction"
-        android:fillViewport="true" >
+        android:layout_alignParentTop="true"
+        android:fillViewport="true"
+        android:paddingTop="10dp" >
 
         <!-- IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
 
@@ -223,27 +211,4 @@
             <!-- Bottom view for Previous and Next Screen -->
         </RelativeLayout>
     </ScrollView>
-    <!-- Adding Relative Layout for the Button Panel -->
-
-    <RelativeLayout
-        android:id="@+id/actionButtonPanel"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/back5" >
-
-        <Button
-            android:id="@+id/buttoncreate"
-            android:layout_width="wrap_content"
-            android:layout_height="50dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/button"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/create"
-            android:textColor="#ffffff" />
-
-    </RelativeLayout>
 </RelativeLayout>

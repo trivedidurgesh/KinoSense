@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -62,7 +63,6 @@ public class RuleReviewActivity extends Activity {
         for (int iterateCount = 0; iterateCount < ruleArray.size(); iterateCount++) {
             myListItems.add(ruleArray.get(iterateCount).getRuleText());
         }
-        ruleList.setEnabled(false);
 
         editBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
@@ -74,14 +74,12 @@ public class RuleReviewActivity extends Activity {
                         ruleList.setItemChecked(iterateCount, ruleArray.get(iterateCount).getState());
                     }
                     deleteBox.setEnabled(false);
-                    ruleList.setEnabled(true);
                     buttonreviewdelte.setText(R.string.save);
                 } else {
                     ruleList.setAdapter(adapter);
                     ruleList.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
                     buttonreviewdelte.setVisibility(View.INVISIBLE);
                     deleteBox.setEnabled(true);
-                    ruleList.setEnabled(false);
                 }
             }
         });
@@ -92,14 +90,12 @@ public class RuleReviewActivity extends Activity {
                     ruleList.setAdapter(editableAdapter);
                     ruleList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
                     editBox.setEnabled(false);
-                    ruleList.setEnabled(true);
                     buttonreviewdelte.setText(R.string.delete);
                 } else {
                     ruleList.setAdapter(adapter);
                     ruleList.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
                     buttonreviewdelte.setVisibility(View.INVISIBLE);
                     editBox.setEnabled(true);
-                    ruleList.setEnabled(false);
                 }
             }
         });
@@ -131,8 +127,10 @@ public class RuleReviewActivity extends Activity {
             public void onClick(final View v) {
                 final ArrayList<Rule> ruleArray = rulemanager.getRules(RuleReviewActivity.this.getApplicationContext());
                 if (editBox.isChecked()) {
+                    SparseBooleanArray sparseBooleanArray = ruleList.getCheckedItemPositions();
                     for (int index = 0; index < ruleList.getCount(); index++) {
-                        boolean state = ((CheckedTextView) ruleList.getChildAt(index)).isChecked();
+                        // boolean state = ((CheckedTextView) ruleList.getChildAt(index)).isChecked();
+                        boolean state = sparseBooleanArray.get(index);
 
                         if (state != ruleArray.get(index).getState()) {
                             rulemanager.updateRule(ruleArray.get(index).getRuleId(), String.valueOf(state), RuleReviewActivity.this);
@@ -144,9 +142,11 @@ public class RuleReviewActivity extends Activity {
                 } else if (deleteBox.isChecked()) {
 
                     final boolean[] stateValue = new boolean[ruleList.getCount()];
-                    for (int index = 0; index < ruleList.getCount(); index++) {
 
-                        boolean state = ((CheckedTextView) ruleList.getChildAt(index)).isChecked();
+                    SparseBooleanArray sparseBooleanArray = ruleList.getCheckedItemPositions();
+
+                    for (int index = 0; index < ruleList.getCount(); index++) {
+                        boolean state = sparseBooleanArray.get(index);
                         stateValue[index] = state;
                     }
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RuleReviewActivity.this);
@@ -155,7 +155,7 @@ public class RuleReviewActivity extends Activity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                                 public void onClick(final DialogInterface dialog, final int id) {
-                                    for (int index = 0; index < stateValue.length; index++) {
+                                    for (int index = (stateValue.length - 1); index >= 0; index--) {
                                         if (stateValue[index]) {
                                             rulemanager.deleteRule(ruleArray.get(index).getRuleId(), RuleReviewActivity.this);
                                             myListItems.remove(index);
@@ -185,10 +185,10 @@ public class RuleReviewActivity extends Activity {
         });
 
     }
-    
+
     @Override
     public void onBackPressed() {
-    	Intent ruleReviewintent = new Intent(this, MainActivity.class);
-    	startActivity(ruleReviewintent);
+        Intent ruleReviewintent = new Intent(this, MainActivity.class);
+        this.startActivity(ruleReviewintent);
     }
 }

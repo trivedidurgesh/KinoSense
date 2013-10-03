@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="bottom"
-    android:background="@drawable/back4"
+    android:background="#E5E4E2"
     android:gravity="fill_vertical"
     android:orientation="vertical" >
 
@@ -22,7 +22,7 @@
         android:id="@+id/buttompanel"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="@drawable/back5"
+        android:background="#808080"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true" >
 

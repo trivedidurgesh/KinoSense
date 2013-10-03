@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/back4" >
+    android:background="#E5E4E2" >
 
     <!-- Adding Scroll View for the Trigger List -->
 
@@ -31,7 +31,7 @@
                 android:layout_toLeftOf="@+id/checkBoxlowbattery"
                 android:text="@string/lowbattery"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -40,7 +40,7 @@
                 android:layout_height="50dip"
                 android:layout_alignParentRight="true"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
 
             <!-- Trigger for Battery Full -->
 
@@ -53,7 +53,7 @@
                 android:layout_below="@+id/textviewlowbattery"
                 android:text="@string/batterycharged"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -63,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxlowbattery"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
 
             <!-- Trigger for HeadPhone Connected -->
 
@@ -76,7 +76,7 @@
                 android:layout_below="@+id/textviewbatteryfull"
                 android:text="@string/headphoneconnected"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -86,7 +86,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxbatteryfull"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
 
             <!-- Trigger for HeadPhone DisConnected -->
 
@@ -100,7 +100,7 @@
                 android:layout_below="@+id/textviewheadphoneconnected"
                 android:text="@string/headphonedisconnected"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -110,7 +110,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxheadphoneconnected"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
             <!-- Trigger for Incoming Call -->
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_below="@+id/textviewheadphonedisconnected"
                 android:text="@string/incomingcall"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -132,7 +132,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxheadphonedisconnected"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
 
             <!-- Trigger for Shake -->
 
@@ -145,7 +145,7 @@
                 android:layout_below="@+id/textviewincomingcall"
                 android:text="@string/shake"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -155,7 +155,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxincomingcall"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
 
             <!-- Trigger for Sim Card Change -->
 
@@ -168,7 +168,7 @@
                 android:layout_below="@+id/textviewshake"
                 android:text="@string/simcardchange"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -178,7 +178,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxshake"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
 
             <!-- Trigger for Device Unlocked -->
 
@@ -191,7 +191,7 @@
                 android:layout_below="@+id/textviewsimcardchange"
                 android:text="@string/unlockdevice"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -201,7 +201,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxsimcardchange"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
             <!-- Trigger for WiFi Detected -->
 
             <TextView
@@ -213,7 +213,7 @@
                 android:layout_below="@+id/textviewunlockdevice"
                 android:text="@string/wifidetected"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#fff8dc"
+                android:textColor="#0000A0"
                 android:textSize="20sp" />
 
             <CheckBox
@@ -223,7 +223,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/checkBoxunlockdevice"
                 android:text="@string/select"
-                android:textColor="#ffffff" />
+                android:textColor="#0000A0" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

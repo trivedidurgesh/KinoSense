@@ -189,6 +189,8 @@ public class NewTriggerRuleActivity extends Activity {
         case R.id.action_next:
             if (this.triggerSelected) {
                 this.startActionRuleActivity();
+            } else {
+                Toast.makeText(this, this.getString(R.string.select_trigger_warning), Toast.LENGTH_LONG);
             }
             return true;
         default:

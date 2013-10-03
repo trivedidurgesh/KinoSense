@@ -151,6 +151,8 @@ public class NewActionRuleActivity extends Activity {
         case R.id.action_create:
             if (this.actionSelected) {
                 this.startRuleReviewActivity();
+            } else {
+                Toast.makeText(this, this.getString(R.string.select_action_warning), Toast.LENGTH_LONG);
             }
             return true;
         default:

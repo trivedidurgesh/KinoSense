@@ -3,4 +3,12 @@
           android:title="@string/action_add_rule"
           android:icon="@drawable/ic_action_new"
           android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_save_selected_rule_states"
+          android:title="@string/onOff"
+          android:icon="@drawable/ic_action_save"
+          android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_delete_selected_rule"
+          android:title="@string/delete"
+          android:icon="@drawable/ic_action_discard"
+          android:showAsAction="ifRoom" />
 </menu>

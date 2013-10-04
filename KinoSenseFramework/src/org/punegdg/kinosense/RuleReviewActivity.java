@@ -17,12 +17,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
@@ -37,8 +35,12 @@ import android.widget.ListView;
 public class RuleReviewActivity extends Activity {
     static ArrayAdapter<Rule> adapter;
     static ArrayList<Rule> ruleArray;
+    static ArrayAdapter<Rule> editableAdapter;
     // Database for storing Rule
     SQLiteDatabase db_ob;
+    private MenuItem saveMenuItem, deleteMenuItem;
+    private CheckBox deleteBox, editBox;
+    private ListView ruleList;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,152 +51,137 @@ public class RuleReviewActivity extends Activity {
         Intent startServiceIntent = new Intent(this.getApplicationContext(), SensorService.class);
         this.startService(startServiceIntent);
 
-        final Button buttonreviewdelte = (Button) this.findViewById(R.id.buttonreviewdelete);
-        final CheckBox deleteBox = (CheckBox) this.findViewById(R.id.checkboxdelete);
-        final CheckBox editBox = (CheckBox) this.findViewById(R.id.checkboxedit);
-        final ListView ruleList = (ListView) this.findViewById(R.id.rulelist);
+        this.deleteBox = (CheckBox) this.findViewById(R.id.checkboxdelete);
+        this.editBox = (CheckBox) this.findViewById(R.id.checkboxedit);
+        this.ruleList = (ListView) this.findViewById(R.id.rulelist);
         final RuleManager rulemanager = RuleManager.getInstance();
         RuleReviewActivity.ruleArray = rulemanager.getRules(this.getApplicationContext());
         adapter = new RuleListAdaptor(this, android.R.layout.simple_list_item_1, RuleReviewActivity.ruleArray);
 
-        final ArrayAdapter<Rule> editableAdapter = new RuleListAdaptor(this, android.R.layout.simple_list_item_multiple_choice,
-                RuleReviewActivity.ruleArray);
-
-        // final ArrayAdapter<String> editableAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,
-        // myListItems);
-        // myListItems.clear();
+        editableAdapter = new RuleListAdaptor(this, android.R.layout.simple_list_item_multiple_choice, RuleReviewActivity.ruleArray);
 
         if (RuleReviewActivity.ruleArray.size() > 0) {
-            deleteBox.setVisibility(View.VISIBLE);
-            editBox.setVisibility(View.VISIBLE);
+            this.deleteBox.setVisibility(View.VISIBLE);
+            this.editBox.setVisibility(View.VISIBLE);
         }
 
-        // for (int iterateCount = 0; iterateCount < this.ruleArray.size(); iterateCount++) {
-        // myListItems.add(this.ruleArray.get(iterateCount).getRuleText());
-        // }
-        ruleList.setAdapter(adapter);
+        this.ruleList.setAdapter(adapter);
 
-        editBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        this.editBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
                 if (isChecked) {
-                    ruleList.setAdapter(editableAdapter);
-                    ruleList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-                    // final ArrayList<Rule> ruleArray = rulemanager.getRules(RuleReviewActivity.this.getApplicationContext());
+                    RuleReviewActivity.this.ruleList.setAdapter(editableAdapter);
+                    RuleReviewActivity.this.ruleList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
                     for (int iterateCount = 0; iterateCount < ruleArray.size(); iterateCount++) {
-                        ruleList.setItemChecked(iterateCount, ruleArray.get(iterateCount).getState());
+                        RuleReviewActivity.this.ruleList.setItemChecked(iterateCount, ruleArray.get(iterateCount).getState());
                     }
-                    deleteBox.setEnabled(false);
-                    buttonreviewdelte.setText(R.string.save);
+                    RuleReviewActivity.this.deleteBox.setEnabled(false);
                 } else {
-                    ruleList.setAdapter(adapter);
-                    ruleList.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-                    buttonreviewdelte.setVisibility(View.INVISIBLE);
-                    deleteBox.setEnabled(true);
+                    RuleReviewActivity.this.ruleList.setAdapter(adapter);
+                    RuleReviewActivity.this.ruleList.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+                    RuleReviewActivity.this.saveMenuItem.setVisible(false);
+                    RuleReviewActivity.this.deleteBox.setEnabled(true);
                 }
             }
         });
 
-        deleteBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        this.deleteBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
                 if (isChecked) {
-                    ruleList.setAdapter(editableAdapter);
-                    ruleList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-                    editBox.setEnabled(false);
-                    buttonreviewdelte.setText(R.string.delete);
+                    RuleReviewActivity.this.ruleList.setAdapter(editableAdapter);
+                    RuleReviewActivity.this.ruleList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+                    RuleReviewActivity.this.editBox.setEnabled(false);
                 } else {
-                    ruleList.setAdapter(adapter);
-                    ruleList.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-                    buttonreviewdelte.setVisibility(View.INVISIBLE);
-                    editBox.setEnabled(true);
+                    RuleReviewActivity.this.ruleList.setAdapter(adapter);
+                    RuleReviewActivity.this.ruleList.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+                    RuleReviewActivity.this.deleteMenuItem.setVisible(false);
+                    RuleReviewActivity.this.editBox.setEnabled(true);
                 }
             }
         });
 
-        ruleList.setOnItemClickListener(new OnItemClickListener() {
+        this.ruleList.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(final AdapterView<?> arg0, final View arg1, final int item, final long arg3) {
-                if (editBox.isChecked()) {
-                    // final ArrayList<Rule> ruleArray = rulemanager.getRules(RuleReviewActivity.this.getApplicationContext());
-                    for (int index = 0; index < ruleList.getCount(); index++) {
-                        boolean state = ((CheckedTextView) ruleList.getChildAt(index)).isChecked();
+                if (RuleReviewActivity.this.editBox.isChecked()) {
+                    for (int index = 0; index < RuleReviewActivity.this.ruleList.getCount(); index++) {
+                        boolean state = ((CheckedTextView) RuleReviewActivity.this.ruleList.getChildAt(index)).isChecked();
                         if (state != ruleArray.get(index).getState()) {
-                            buttonreviewdelte.setVisibility(View.VISIBLE);
+                            RuleReviewActivity.this.saveMenuItem.setVisible(true);
                             break;
                         } else {
-                            buttonreviewdelte.setVisibility(View.INVISIBLE);
+                            RuleReviewActivity.this.saveMenuItem.setVisible(false);
                         }
                     }
-                } else if (deleteBox.isChecked()) {
-                    if (ruleList.getCheckedItemCount() > 0) {
-                        buttonreviewdelte.setVisibility(View.VISIBLE);
+                } else if (RuleReviewActivity.this.deleteBox.isChecked()) {
+                    if (RuleReviewActivity.this.ruleList.getCheckedItemCount() > 0) {
+                        RuleReviewActivity.this.deleteMenuItem.setVisible(true);
                     } else {
-                        buttonreviewdelte.setVisibility(View.INVISIBLE);
+                        RuleReviewActivity.this.deleteMenuItem.setVisible(false);
                     }
                 }
             }
         });
+    }
 
-        buttonreviewdelte.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                // final ArrayList<Rule> ruleArray = rulemanager.getRules(RuleReviewActivity.this.getApplicationContext());
-                if (editBox.isChecked()) {
-                    SparseBooleanArray sparseBooleanArray = ruleList.getCheckedItemPositions();
-                    for (int index = 0; index < ruleList.getCount(); index++) {
-                        // boolean state = ((CheckedTextView) ruleList.getChildAt(index)).isChecked();
-                        boolean state = sparseBooleanArray.get(index);
+    private void updateRuleList() {
+        final RuleManager rulemanager = RuleManager.getInstance();
 
-                        if (state != ruleArray.get(index).getState()) {
-                            ruleArray.get(index).setState(String.valueOf(state));
-                            rulemanager.updateRule(ruleArray.get(index).getRuleId(), String.valueOf(state), RuleReviewActivity.this);
+        if (this.editBox.isChecked()) {
+            SparseBooleanArray sparseBooleanArray = this.ruleList.getCheckedItemPositions();
+            for (int index = 0; index < this.ruleList.getCount(); index++) {
+                // boolean state = ((CheckedTextView) ruleList.getChildAt(index)).isChecked();
+                boolean state = sparseBooleanArray.get(index);
+
+                if (state != ruleArray.get(index).getState()) {
+                    ruleArray.get(index).setState(String.valueOf(state));
+                    rulemanager.updateRule(ruleArray.get(index).getRuleId(), String.valueOf(state), RuleReviewActivity.this);
+                }
+                adapter.notifyDataSetChanged();
+                editableAdapter.notifyDataSetChanged();
+            }
+
+        } else if (this.deleteBox.isChecked()) {
+
+            final boolean[] stateValue = new boolean[this.ruleList.getCount()];
+
+            SparseBooleanArray sparseBooleanArray = this.ruleList.getCheckedItemPositions();
+
+            for (int index = 0; index < this.ruleList.getCount(); index++) {
+                boolean state = sparseBooleanArray.get(index);
+                stateValue[index] = state;
+            }
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RuleReviewActivity.this);
+            alertDialogBuilder.setTitle(R.string.dialog_title_delete);
+            alertDialogBuilder.setMessage(R.string.dialog_message_delete).setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                        public void onClick(final DialogInterface dialog, final int id) {
+                            for (int index = (stateValue.length - 1); index >= 0; index--) {
+                                if (stateValue[index]) {
+                                    rulemanager.deleteRule(ruleArray.get(index).getRuleId(), RuleReviewActivity.this);
+                                    ruleArray.remove(index);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            editableAdapter.notifyDataSetChanged();
+                            if (ruleArray.size() == 0) {
+                                RuleReviewActivity.this.editBox.setVisibility(View.GONE);
+                                RuleReviewActivity.this.deleteBox.setVisibility(View.GONE);
+                            }
                         }
-                        adapter.notifyDataSetChanged();
-                        editableAdapter.notifyDataSetChanged();
-                    }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, final int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
 
-                } else if (deleteBox.isChecked()) {
-
-                    final boolean[] stateValue = new boolean[ruleList.getCount()];
-
-                    SparseBooleanArray sparseBooleanArray = ruleList.getCheckedItemPositions();
-
-                    for (int index = 0; index < ruleList.getCount(); index++) {
-                        boolean state = sparseBooleanArray.get(index);
-                        stateValue[index] = state;
-                    }
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RuleReviewActivity.this);
-                    alertDialogBuilder.setTitle(R.string.dialog_title_delete);
-                    alertDialogBuilder.setMessage(R.string.dialog_message_delete).setCancelable(false)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
-                                public void onClick(final DialogInterface dialog, final int id) {
-                                    for (int index = (stateValue.length - 1); index >= 0; index--) {
-                                        if (stateValue[index]) {
-                                            rulemanager.deleteRule(ruleArray.get(index).getRuleId(), RuleReviewActivity.this);
-                                            ruleArray.remove(index);
-                                        }
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                    editableAdapter.notifyDataSetChanged();
-                                    if (ruleArray.size() == 0) {
-                                        editBox.setVisibility(View.GONE);
-                                        deleteBox.setVisibility(View.GONE);
-                                    }
-                                }
-                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                public void onClick(final DialogInterface dialog, final int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-
-                }
-                buttonreviewdelte.setVisibility(View.INVISIBLE);
-                editBox.setChecked(false);
-                deleteBox.setChecked(false);
-
-            }
-        });
-
+        }
+        this.saveMenuItem.setVisible(false);
+        this.deleteMenuItem.setVisible(false);
+        this.editBox.setChecked(false);
+        this.deleteBox.setChecked(false);
     }
 
     /*
@@ -205,6 +192,10 @@ public class RuleReviewActivity extends Activity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = this.getMenuInflater();
         inflater.inflate(R.menu.rule_review_menu, menu);
+        this.saveMenuItem = menu.getItem(1);
+        this.deleteMenuItem = menu.getItem(2);
+        this.saveMenuItem.setVisible(false);
+        this.deleteMenuItem.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -220,6 +211,14 @@ public class RuleReviewActivity extends Activity {
             Intent newruleintent = new Intent(RuleReviewActivity.this, NewTriggerRuleActivity.class);
             RuleReviewActivity.this.startActivity(newruleintent);
             return true;
+        case R.id.action_save_selected_rule_states:
+            this.updateRuleList();
+            return true;
+        case R.id.action_delete_selected_rule:
+            this.updateRuleList();
+            return true;
+            // case R.id.action_select_all:
+            // return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -227,8 +226,6 @@ public class RuleReviewActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        // Intent ruleReviewintent = new Intent(this, MainActivity.class);
-        // this.startActivity(ruleReviewintent);
         this.moveTaskToBack(true);
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

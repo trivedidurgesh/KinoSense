@@ -41,7 +41,8 @@
     <string name="shownotification">Notification</string>   
     <string name="vibrate">Vibrate</string>  
     <string name="save">Save</string>  
-    <string name="edit">Edit</string>   
+    <string name="edit">Edit</string>
+    <string name="onOff">On/Off</string>   
     <string name="delete">Delete</string>   
     <string name="dialog_title_delete">Delete the Rule</string>    
     <string name="dialog_message_delete">Do you really want to Delete the rules</string>   
@@ -52,5 +53,6 @@
     <string name="action_add_rule">Add</string>
     <string name="select_trigger_warning">Select at least one trigger</string>
     <string name="select_action_warning">Select at least one action</string>
+    <string name="active_rule_green">Currently active rules are shown in green</string>
 
 </resources>

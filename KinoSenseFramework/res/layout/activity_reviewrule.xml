@@ -11,17 +11,37 @@
         android:id="@+id/rulelist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_above="@+id/message_panel"
         android:drawSelectorOnTop="false"
         android:fastScrollEnabled="true"
         android:textColor="#ffffff" >
+
     </ListView>
-  
-    <!-- Bottom view for Previous and Next Screen -->
+    
+    <FrameLayout
+        android:id="@+id/message_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#E5E4E2"
+        android:orientation="horizontal"
+        android:layout_above="@+id/buttompanel" >
+        
+        <TextView
+            android:id="@+id/textview_active_note"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/active_rule_green"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="italic"
+            android:textSize="16sp" />
+        
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/buttompanel"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="#808080"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true" >
@@ -32,26 +52,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="left"
-            android:text="@string/edit" 
+            android:text="@string/onOff" 
             android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/buttonreviewdelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/button"
-            android:padding="2dp"
-            android:text="@string/delete"
-            android:textColor="#ffffff"
-            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/checkboxdelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
             android:layout_gravity="right"
             android:text="@string/delete"
             android:visibility="gone" />

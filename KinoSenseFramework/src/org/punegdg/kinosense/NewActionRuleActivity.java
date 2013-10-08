@@ -1,8 +1,10 @@
 package org.punegdg.kinosense;
 
 import org.punegdg.kinosense.actions.ActionIdConstants;
+import org.punegdg.kinosense.dialogs.CustomDialog;
 import org.punegdg.kinosense.eventsource.SensorService;
 import org.punegdg.kinosense.rule.RuleManager;
+import org.punegdg.kinosense.triggers.TriggerIdConstants;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,6 +37,7 @@ public class NewActionRuleActivity extends Activity {
     boolean checkenabled = true;
     boolean ischecked = false;
     private boolean actionSelected;
+    CustomDialog mydialog;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -92,6 +95,10 @@ public class NewActionRuleActivity extends Activity {
         });
         this.checkBoxsms.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                if (isChecked && (triggerID == TriggerIdConstants.INCOMING_CALL)) {
+                    NewActionRuleActivity.this.mydialog = new CustomDialog(NewActionRuleActivity.this, "Enter text to send");
+                    NewActionRuleActivity.this.mydialog.createMessageOnlyDialog().show();
+                }
                 NewActionRuleActivity.this.setAction(NewActionRuleActivity.this.checkBoxsms.isChecked(), "Send SMS", ActionIdConstants.SMS_SEND);
             }
         });
@@ -213,9 +220,10 @@ public class NewActionRuleActivity extends Activity {
     private boolean createRule() {
         RuleManager rulemanager = RuleManager.getInstance();
         boolean result = false;
+        String info = this.mydialog.getJSONString();
         if ((actionID != -1) || (triggerID != -1)) {
             result = rulemanager.createRule(NewActionRuleActivity.triggerID, NewActionRuleActivity.actionID, this.ruleText.toString(),
-                    this.additionInfo, this.enabled, this.getApplicationContext());
+                    info != null ? info : this.additionInfo, this.enabled, this.getApplicationContext());
         }
         return result;
     }

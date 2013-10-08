@@ -96,7 +96,7 @@ public class IncomingCallTrigger extends BroadcastReceiver implements BroadCastR
         Intent callIntent = new Intent(TriggerReceiver.ACTION_KINOSENSE_TRIGGER);
         // Broadcast TriggerName and PhoneNumber
         // callIntent.putExtra("trigger", "INCOMING_CALL");
-        intent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.INCOMING_CALL);
+        callIntent.putExtra(TriggerIdConstants.TIGGER_ID, TriggerIdConstants.INCOMING_CALL);
         callIntent.putExtra("number", incomingNumber);
 
         /**

@@ -15,6 +15,9 @@ package org.punegdg.kinosense.actions;
 
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.telephony.SmsManager;
 
@@ -55,14 +58,25 @@ public class SmsAction implements AbstractAction {
          */
         String action = (String) smsData.get("action");
         String mNumber = (String) smsData.get("number");
+        String message = (String) smsData.get("message");
+        if (message != null) {
+            try {
+                JSONObject json = new JSONObject(message);
+                message = (String) json.get("message");
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         boolean state = (Boolean) smsData.get(ActionIdConstants.DISABLEACTION);
 
         if ("IsBusy".equals(action) && state) {
-            this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm busy right now. Will call you back later", null, null);
+            this.smsmgr.sendTextMessage(mNumber, null, message != null ? message : "Hey, I'm busy right now. Will call you back later", null, null);
         } else if ("IsDriving".equals(action) && state) {
             this.smsmgr.sendTextMessage(mNumber, null, "Hey, I'm driving right now. Will call you back later", null, null);
         } else {
-            this.smsmgr.sendTextMessage(mNumber, null, action, null, null);
+            this.smsmgr.sendTextMessage(mNumber, null, message != null ? message : "Hey, I'm busy right now. Will call you back later", null, null);
         }
         // More such Action Messages to be added.
     }

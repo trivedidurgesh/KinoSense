@@ -47,6 +47,8 @@ public class TriggerReceiver extends BroadcastReceiver {
     public static Boolean smsSent = false;
 
     private Context context;
+    private Intent currentIntent;
+    private int triggerID;
 
     /**
      * Rule list read from rule database
@@ -60,9 +62,9 @@ public class TriggerReceiver extends BroadcastReceiver {
         this.ruleList = RuleManager.getInstance().createRules();
     }
 
-    private void findAndPerformAction(final int triggerId) {
+    private void findAndPerformAction() {
         for (Rule rule : this.ruleList) {
-            if (triggerId == rule.getTriggerId()) {
+            if (this.triggerID == rule.getTriggerId()) {
                 this.performAction(rule);
             }
         }
@@ -112,12 +114,24 @@ public class TriggerReceiver extends BroadcastReceiver {
             flightaction.perform(flightmodeData);
             break;
         case ActionIdConstants.SMS_SEND:
+            String incomingnumber = null;
+            switch (this.triggerID) {
+            case TriggerIdConstants.INCOMING_CALL:
+
+                incomingnumber = this.currentIntent.getStringExtra("number");
+                break;
+            default:
+                break;
+            }
+
             AbstractAction smsAction = new SmsAction();
+
             smsAction.onCreate(this.context);
             Map<String, Object> smsData = new HashMap<String, Object>();
             smsData.put(ActionIdConstants.ACTION_ID, actionId);
             smsData.put("message", rule.getAdditionalInformation());
             smsData.put(ActionIdConstants.DISABLEACTION, rule.getState());
+            smsData.put("number", incomingnumber);
             // FIXME Phone Number to be set through UI
             smsAction.perform(smsData);
             break;
@@ -154,10 +168,10 @@ public class TriggerReceiver extends BroadcastReceiver {
             Intent bootIntent = new Intent(context, SensorService.class);
             context.startService(bootIntent);
         }
+        this.currentIntent = intent;
+        this.triggerID = intent.getIntExtra(TriggerIdConstants.TIGGER_ID, -1);
 
-        int triggerId = intent.getIntExtra(TriggerIdConstants.TIGGER_ID, -1);
-
-        this.findAndPerformAction(triggerId);
+        this.findAndPerformAction();
 
     }
 }
